@@ -468,6 +468,44 @@ body.forceLandscape #modal .guideText,body.forcePortrait #modal .guideText{max-h
  #app.landscapeUI .controls .tools{min-height:46px}
  #app.landscapeUI #controls #help{min-height:23px!important}
 }
+
+/* v58: compact landscape D-pad with iPhone status bar / Dynamic Island clearance.
+   In virtual landscape the portrait SCREEN TOP becomes the game LEFT, so use
+   safe-area-inset-top, not safe-area-inset-left. Keep the board and controls in
+   the same grid columns. Only the D-pad rail changes; stage data stays intact. */
+#app.landscapeUI{
+ --fb-left-rail:clamp(122px,15.5vw,144px);
+ --fb-dpad-edge:30px;
+ grid-template-columns:var(--fb-left-rail) minmax(0,1fr) clamp(144px,18.9vw,190px)!important;
+}
+#app.landscapeUI #controls{
+ grid-template-columns:var(--fb-left-rail) minmax(0,1fr) clamp(144px,18.9vw,190px)!important;
+}
+#app.landscapeUI #controls .dpad{
+ grid-template-columns:repeat(3,var(--fb-dpad-edge))!important;
+ grid-template-rows:repeat(3,var(--fb-dpad-edge))!important;
+ gap:2px!important;
+ justify-self:end!important;
+ margin:0 3px 0 0!important;
+}
+#app.landscapeUI #controls .dpad button{
+ min-height:var(--fb-dpad-edge)!important;
+ height:var(--fb-dpad-edge)!important;
+ font-size:17px!important;
+}
+#app.landscapeUI #controls .padcenter{font-size:15px!important}
+/* Physical iPhone landscape: avoid the notch on the actual left edge. */
+body.fbIphone #app.landscapeUI{
+ --fb-left-rail:max(160px, calc(env(safe-area-inset-left,0px) + 100px));
+}
+/* CSS-rotated iPhone landscape: the physical top edge is the logical left. */
+body.fbIphone #app.virtualLandscape{
+ --fb-left-rail:max(160px, calc(env(safe-area-inset-top,0px) + 100px));
+}
+/* The small captions stay out of the safe-area on CSS-rotated iPhones. */
+body.fbIphone #app.virtualLandscape header>div:first-child{
+ left:max(8px,env(safe-area-inset-top,0px))!important;
+}
 </style></head><body>
 <main id="app"><header><div><div class="brand"><span>❖</span> FROSTBOUND</div><div class="eyebrow">氷渡りの冒険</div></div><div class="topactions"><button class="small flat" id="layoutToggle" aria-label="表示向き切り替え">横</button><button class="small flat" id="sound" aria-label="効果音切り替え">音 OFF</button><button class="small flat" id="pause" aria-label="一時停止">Ⅱ</button></div></header>
 <div class="hud"><div class="metric"><div class="label">STAGE</div><div class="value" id="stage">01</div></div><div class="metric"><div class="label">TOTAL SCORE</div><div class="value" id="score">0</div></div><div class="metric"><div class="label">TIME LEFT</div><div class="value" id="time">— <small>sec</small></div></div></div><div class="timer"><i id="timebar"></i></div>
@@ -583,6 +621,7 @@ function gameCanvasPoint(clientX,clientY){
 function physicalLandscape(){return innerWidth>innerHeight*1.05;}
 function useLandscapeLayout(){return layoutMode==='landscape'||(layoutMode!=='portrait'&&physicalLandscape());}
 function refreshLayout(){
+ document.body.classList.toggle('fbIphone',/iPhone|iPod/i.test(navigator.userAgent));
  const landscape=useLandscapeLayout(),physical=physicalLandscape();
  const virtualLandscape=landscape&&!physical,virtualPortrait=!landscape&&physical;
  $('app').classList.toggle('landscapeUI',landscape);
