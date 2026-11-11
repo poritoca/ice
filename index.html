@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ja"><head>
-<meta name="frostbound-build" content="v59">
+<meta name="frostbound-build" content="v60">
 <!-- v55: 7 radically distinct animated weapon systems; 50 weapons total and certified route safeguards. -->
 <meta name="theme-color" content="#282a34">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -475,7 +475,7 @@ body.forceLandscape #modal .guideText,body.forcePortrait #modal .guideText{max-h
    the same grid columns. Only the D-pad rail changes; stage data stays intact. */
 #app.landscapeUI{
  --fb-left-rail:clamp(122px,15.5vw,144px);
- --fb-dpad-edge:30px;
+ --fb-dpad-edge:44px;
  grid-template-columns:var(--fb-left-rail) minmax(0,1fr) clamp(144px,18.9vw,190px)!important;
 }
 #app.landscapeUI #controls{
@@ -491,23 +491,81 @@ body.forceLandscape #modal .guideText,body.forcePortrait #modal .guideText{max-h
 #app.landscapeUI #controls .dpad button{
  min-height:var(--fb-dpad-edge)!important;
  height:var(--fb-dpad-edge)!important;
- font-size:17px!important;
+ font-size:24px!important;
 }
-#app.landscapeUI #controls .padcenter{font-size:15px!important}
+#app.landscapeUI #controls .padcenter{font-size:19px!important}
 /* Physical iPhone landscape: avoid the notch on the actual left edge. */
 /* v59: reserve another 24–30px of fully tappable clearance. iOS can
    intercept touches near its status/gesture region even if a button is drawn. */
 body.fbIphone #app.landscapeUI{
-  --fb-left-rail:max(184px, calc(env(safe-area-inset-left,0px) + 126px));
+  --fb-left-rail:max(240px, calc(env(safe-area-inset-left,0px) + 192px));
 }
 /* CSS-rotated iPhone: the real device TOP becomes the game's LEFT.
    Use the top inset plus a deliberate finger-safe margin. */
 body.fbIphone #app.virtualLandscape{
-  --fb-left-rail:max(190px, calc(env(safe-area-inset-top,0px) + 132px));
+  --fb-left-rail:max(250px, calc(env(safe-area-inset-top,0px) + 196px));
 }
 /* The small captions stay out of the safe-area on CSS-rotated iPhones. */
 body.fbIphone #app.virtualLandscape header>div:first-child{
  left:max(8px,env(safe-area-inset-top,0px))!important;
+}
+
+/* v60 Safari-safe layout: visible viewport, not the *largest* viewport.
+   Safari's address and tab bars cannot be hidden by webpage CSS. */
+:root{
+ --fb-visible-h:100dvh;
+ --fb-visible-w:100vw;
+ -webkit-text-size-adjust:100%;text-size-adjust:100%;
+}
+html,body,#app,#modal{ -webkit-text-size-adjust:100%;text-size-adjust:100%; }
+#app{height:var(--fb-visible-h)!important;}
+#app.landscapeUI{height:var(--fb-visible-h)!important;}
+#app.virtualLandscape,
+body.forceLandscape #modal.overlay{
+ left:var(--fb-visible-w)!important;top:0!important;
+ width:var(--fb-visible-h)!important;height:var(--fb-visible-w)!important;
+}
+#app.virtualPortrait,
+body.forcePortrait #modal.overlay{
+ top:var(--fb-visible-h)!important;left:0!important;
+ width:var(--fb-visible-h)!important;height:var(--fb-visible-w)!important;
+}
+/* Support 44px-class taps without ever moving the D-pad back into the notch.
+   Layout rails are calculated separately for physical vs CSS-rotated phones. */
+#app.landscapeUI{--fb-dpad-edge:44px;}
+#app.landscapeUI #controls .dpad{
+ gap:3px!important; margin-right:6px!important;
+}
+#app.landscapeUI #controls .dpad button{
+ min-width:44px;min-height:44px!important;height:44px!important;
+ font-size:25px!important;line-height:1!important;
+}
+@media (max-height:300px) and (orientation:landscape){
+ #app.landscapeUI{--fb-dpad-edge:40px;}
+ #app.landscapeUI #controls .dpad button{
+  min-width:40px;min-height:40px!important;height:40px!important;
+ }
+}
+/* Stable guide typography across Safari font inflation, CSS rotation and re-render.
+   Set a size on the actual labels rather than relying on inherited button fonts. */
+#modal .fbGuideDialog{
+ width:100%;min-width:0;
+ -webkit-text-size-adjust:100%!important;text-size-adjust:100%!important;
+}
+#modal .fbGuideDialog .guideTop{font-size:11px!important;line-height:1.25!important;}
+#modal .fbGuideDialog .guideName{font-size:18px!important;line-height:1.2!important;}
+#modal .fbGuideDialog .guideText{font-size:11px!important;line-height:1.4!important;
+ overflow-wrap:anywhere;-webkit-text-size-adjust:100%!important;}
+#modal .fbGuideDialog .row button,
+#modal .fbGuideDialog .guideSkip{
+ font-size:12px!important;line-height:1.2!important;
+ padding:5px 6px!important;min-height:33px!important;
+ white-space:normal!important;-webkit-text-size-adjust:100%!important;
+}
+#modal .fbGuideDialog .manualCategory button{
+ font-size:10px!important;line-height:1.15!important;
+ padding:4px 8px!important;min-height:28px!important;
+ white-space:nowrap!important;-webkit-text-size-adjust:100%!important;
 }
 </style></head><body>
 <main id="app"><header><div><div class="brand"><span>❖</span> FROSTBOUND</div><div class="eyebrow">氷渡りの冒険</div></div><div class="topactions"><button class="small flat" id="layoutToggle" aria-label="表示向き切り替え">横</button><button class="small flat" id="sound" aria-label="効果音切り替え">音 OFF</button><button class="small flat" id="pause" aria-label="一時停止">Ⅱ</button></div></header>
@@ -623,7 +681,18 @@ function gameCanvasPoint(clientX,clientY){
 }
 function physicalLandscape(){return innerWidth>innerHeight*1.05;}
 function useLandscapeLayout(){return layoutMode==='landscape'||(layoutMode!=='portrait'&&physicalLandscape());}
+function fbSyncVisibleViewport(){
+ const vp=window.visualViewport;
+ // Safari's regular-tab toolbar changes visualViewport.height during a session.
+ const h=Math.max(220,Math.round(vp?.height||window.innerHeight));
+ const w=Math.max(240,Math.round(vp?.width||window.innerWidth));
+ const style=document.documentElement.style;
+ const vh=h+'px',vw=w+'px';
+ if(style.getPropertyValue('--fb-visible-h')!==vh)style.setProperty('--fb-visible-h',vh);
+ if(style.getPropertyValue('--fb-visible-w')!==vw)style.setProperty('--fb-visible-w',vw);
+}
 function refreshLayout(){
+ fbSyncVisibleViewport();
  document.body.classList.toggle('fbIphone',/iPhone|iPod/i.test(navigator.userAgent));
  const landscape=useLandscapeLayout(),physical=physicalLandscape();
  const virtualLandscape=landscape&&!physical,virtualPortrait=!landscape&&physical;
@@ -658,7 +727,10 @@ async function toggleLayoutMode(){
 }
 addEventListener('resize',()=>requestAnimationFrame(refreshLayout));
 addEventListener('orientationchange',()=>setTimeout(refreshLayout,120));
-if(window.visualViewport)visualViewport.addEventListener('resize',()=>requestAnimationFrame(refreshLayout));
+if(window.visualViewport){
+ visualViewport.addEventListener('resize',()=>requestAnimationFrame(refreshLayout));
+ visualViewport.addEventListener('scroll',()=>requestAnimationFrame(refreshLayout));
+}
 function save(){try{localStorage.setItem('frostbound.v1',JSON.stringify({name:lastName,records,infiniteRecords,simpleRecords,personalBests,sound}));return true;}catch(e){toast('このブラウザでは記録を保存できません');return false;}}
 function register(){let pool=simpleMode?simpleRecords:unlimitedMode?infiniteRecords:records;pool=pool.filter(r=>r.id!==runId);pool.push({id:runId,name:lastName||'たびびと',score,stage,scoreVersion:3,orientation:runOrientation,date:new Date().toLocaleDateString('ja-JP')});pool=trimScoreList(pool);if(simpleMode)simpleRecords=pool;else if(unlimitedMode)infiniteRecords=pool;else records=pool;save();}
 function noClock(){return practiceMode||unlimitedMode;}
@@ -679,7 +751,7 @@ let killFX=[],demoAttackAt=0;const ATTACK_DELAY=260;let safeWitness=null,routeUI
 function showOrientationChoice(){
  // Before a choice, keep the selector upright in the device's actual orientation.
  layoutMode='auto';refreshLayout();
- modal('<div class="orientationChoice"><div class="kicker">DISPLAY MODE</div><h2>画面の向きを選ぶ</h2><p>遊び始める向きを選択してください。後から右上の「横／縦」でも切り替えられます。</p><div class="row"><button id="choosePortrait" class="primary"><span class="orientGlyph">▯</span>縦画面</button><button id="chooseLandscape" class="gold"><span class="orientGlyph">▭</span>横画面</button></div></div>');
+ modal('<div class="orientationChoice"><div class="kicker">DISPLAY MODE</div><h2>画面の向きを選ぶ</h2><p>遊び始める向きを選択してください。後から右上の「横／縦」でも切り替えられます。Safariの通常タブでは上下のブラウザバーが残ります。全画面に近い表示は「ホーム画面に追加」から起動してください。</p><div class="row"><button id="choosePortrait" class="primary"><span class="orientGlyph">▯</span>縦画面</button><button id="chooseLandscape" class="gold"><span class="orientGlyph">▭</span>横画面</button></div></div>');
  $('choosePortrait').onclick=()=>{layoutMode='portrait';refreshLayout();showTitle();};
  $('chooseLandscape').onclick=()=>{layoutMode='landscape';refreshLayout();showTitle();try{screen.orientation?.lock?.('landscape').catch(()=>{});}catch(_){}};
 }
@@ -1831,38 +1903,30 @@ let guide=null,lootOwner=null,lootRunSeed=0,lootSerial=0;
 const TRAITS={swift:'速射：攻撃間隔を短縮',heavy:'強打：威力を強化',reach:'広域：攻撃範囲を拡張',steady:'均衡：威力と扱いやすさを両立'};
 
 const MANUAL_CORE=[
- ['ice','滑る氷','方向を1回押すと、壁や障害物に当たるかゴールに入るまで進みます。氷の途中では止まれません。向きを変えるのは停止した後です。'],
- ['ground','地面と長押し','茶色の地面は1マスずつ歩きます。方向ボタンや矢印キーを押し続けると、つながった地面を続けて歩けます。地面だけの歩行は評価0手です。'],
- ['wall','壁と行き止まり','壁は通れません。赤く示した手前で止まります。壁を利用して氷での停止位置を作りましょう。'],
- ['goal','ゴールの結晶','金色の結晶に入れば面クリアです。岩で穴を埋める条件のある面では、指定数の穴を埋めてから進みましょう。'],
- ['frag','薄氷が割れる','薄氷は初めて入るとひびが入り、そこを離れると穴になります。2回目は入れません。帰り道を残すための「新しい壁」としても利用します。'],
- ['pit','通れない穴','黒い穴は絶対に渡れません。岩を穴へ押し込んで足場にすると、初めて上を通れます。デモでも穴の上を歩き抜けません。'],
- ['boulder','岩を押す','岩は押せますが引けません。岩の手前で止まってからもう一度同じ方向で押すことがあります。押す先に壁や岩がある場合は移動できません。'],
- ['switch','床スイッチ','スイッチを踏むたび A の壁と B の壁の開閉が交代します。通れる状態と止まる位置が変わります。'],
- ['wait','待機とタイミング','何も押さなければ待機できます。罠は24拍周期で変化するため、赤い危険マスが消えるタイミングを狙いましょう。'],
- ['ice','方向キー・スワイプ','方向キー・矢印キー・WASD・盤面のスワイプで操作できます。氷では滑走し、地面では1マス歩きます。'],
- ['ice','タップで強めの追従ズーム','盤面をタップすると約7×8マスを見渡せる強めの拡大。再タップで全体表示へ戻ります。カメラは主人公をなめらかに追い、盤面のスワイプは従来どおり移動です。長押しでは敵を狙えます。'],
- ['ice','2本指で自由に倍率変更','盤面上で2本の指を広げるピンチアウトは拡大、つまむピンチインは縮小です。1.0～5.0倍の間で細かく調整でき、指を離してもその倍率を維持。1回タップすると全体表示に戻ります。ピンチは移動として扱われません。'],
- ['ground','最短手数の数え方','氷で1回滑ると通常1手。地面の歩行は0手ですが岩を1マス押すと1手です。待機は0手。クリア画面には今回と最短を表示します。'],
- ['ice','詰み防止と巻き戻し','方向入力でクリア不可能になる場合は操作を防ぎます。巻き戻しは元の盤面に戻せますが評価手数にはペナルティがあります。'],
- ['ice','解答の確認','「ここからの解答」で最短経路を確認できます。時間制限ありのメインでは道しるべを消費しておまかせ移動もできます。'],
- ['goal','クリアと記録','面クリアは最短手数を中心にシンプル表示。名前つき記録は時間切れ・冒険失敗・自滅など終了したときにまとめて保存します。'],
- ['ice','武器とレアリティ','COMMONは弱い敵を1〜2回、RAREは中型の敵を1〜2回で倒す目安です。EPIC・LEGENDは硬い敵に強くなります。範囲・発射速度・固有効果も確認しましょう。'],
- ['ice','拾った武器の弾数','宝箱から得た武器にはランダムな弾数がつきます。敵が多い面は弾数を少し多めに抽選。攻撃が外れても1発消費します。最後の1発を撃つと、無制限に撃てる標準銃へ自動で切り替わるので攻撃不能にはなりません。'],
- ['ice','時限爆発する銃','「時限・」とついた銃は、弾が敵や障害物に当たると爆弾を設置し、約0.6秒後に周囲をまとめて爆破します。弾数制ですが、爆風は複数の敵・罠に有効です。自動攻略では爆発までその場で待ちます。'],
- ['ice','武器の射程・狙い','タップで自動照準、攻撃ボタンを上下左右へフリックして方向を指定できます。どの武器も正面の見通せる3～5マス内に短い確定射線があります。壁・岩の向こうには届きません。模範解答中は武器の演出が移動停止中も進み、敵を倒せないときは安全救済攻撃で通行を再開します。'],
- ['ice','星の爆弾と道具','星の爆弾は周囲5マスの敵・敵弾・罠を一掃します。対象がいなければ消費しません。砂時計・岩や床の道具は道具袋から使えます。'],
- ['ground','同行キャラの役割','護衛は敵への攻撃、氷解の精霊は罠解除、守灯の精霊は敵弾消去、月影の使い魔は攻撃と罠解除。主人公のそばへ素早く追従します。'],
- ['wall','敵と危険なマス','敵そのものや飛び道具、作動中の罠に当たると失敗です。赤い予告を見て移動・待機を選びます。'],
- ['goal','最短ルートの鑑賞','「眺める」では実際の生成ステージとその最短ルートをアニメで再生します。練習や編集もできます。']
+ ['ice','滑走と方向操作','氷では方向キー・矢印キー・WASD・盤面スワイプで滑走します。壁・停止床・ゴールなどで止まるまで曲がれません。'],
+ ['ground','地面と手数','茶色の地面は1マスずつ歩け、方向キーの長押しで連続歩行できます。地面だけの歩行は評価0手、岩を1マス押すと1手です。'],
+ ['wall','壁を使って止まる','壁は通れません。手前で止まる位置を利用して、次の滑走方向を選びます。'],
+ ['goal','ゴールとクリア条件','金色の結晶へ入るとクリア。ただし、穴埋め数が条件の面では指定数を満たしてからゴールへ向かいます。'],
+ ['frag','薄氷は一度きり','薄氷は通るとひびが入り、離れた後に穴になります。戻れない道を作るので順番に注意しましょう。'],
+ ['pit','穴と足場','黒い穴はそのままでは通行不可。岩を落として埋めると、その上を通れるようになります。'],
+ ['boulder','押せる岩','岩は押せても引けません。手前で止まってから同じ方向に押す場合があります。行き先が塞がっていると押せません。'],
+ ['switch','切替スイッチと壁','スイッチを踏むたびに切替壁AとBの開閉が入れ替わります。通れる道と停止位置が変わります。'],
+ ['wait','罠のタイミング','罠は周期的に動きます。赤い作動中の場所は危険。緑の休止中を見計らって進み、触れると壊せる装置もあります。'],
+ ['ice','拡大とカメラ','盤面をタップすると拡大・全体表示を切り替えられます。2本指のピンチでも倍率を調整可能。スワイプは移動です。'],
+ ['ice','武器の攻撃方法','攻撃ボタンをタップして自動照準、上下左右にフリックして向きを指定。武器ごとに軌跡や特殊効果が異なります。壁・岩は基本的に射線を遮ります。'],
+ ['ice','弾数と標準銃','宝箱の武器は弾数付きで、空撃ちでも弾を使います。弾が尽きると弾数無制限の標準銃に切り替わり、攻撃不能にはなりません。'],
+ ['ice','詰み防止と解答','解けなくなる移動は可能な範囲で防止します。「戻す」「解答」を使えますが、戻すと評価や時間に影響する場合があります。'],
+ ['ice','道具と時限攻撃','道具袋では砂時計や星の爆弾などを使えます。時限爆発系の武器は着弾後に少し遅れて爆発するため、発射直後に当たらなくても待ってみましょう。'],
+ ['ground','同行キャラ','同行キャラは種類ごとに攻撃・罠解除・敵弾消去など役割が異なり、主人公を追いかけます。'],
+ ['goal','模範解答と記録','「眺める」では解答経路をアニメ再生し、練習もできます。スコアはプレイ開始時の縦・横を区別して保存します。']
 ];
-function manualEntries(){let signatures=[['iai','居合残影 · 走りながら斬る','攻撃すると残影状態に。氷で滑る途中も地面の連続歩行中も、通過したマスの周囲に大きな抜刀円弧が重なります。同じ敵への多段ヒットは抑制し、移動が終わると残り時間で周囲を薙ぎます。'],['ricochet','跳ね返る万華弾','正面と斜めに3～5発。壁・岩・盤面端に当たると反射し、弾ごとに残り反射回数がランダムです。細い尾と衝突リングで軌跡を確認できます。'],['chain','連鎖雷撃','正面の敵へ直撃した後、近くの別の敵へ順番に電撃を渡します。各連鎖の経路は細い稲妻で表示し、障害物を抜ける無条件の攻撃にはしません。'],['orbit','旋回護衛刃','発動すると2～3枚の刃が主人公の周囲を巡回。滑走してもついてきて、近寄った敵へ短い間隔で追撃します。大群を抜けたいときに便利です。']].map(([type,name,text])=>({kind:'weapon',type,name,text,group:'武器'}));let basics=MANUAL_CORE.map(([type,name,text])=>({kind:'floor',type,name,text,group:'基本'}));let floors=Object.entries(TERRAIN).filter(([type])=>!['ground','pit','switch','gateA','gateB'].includes(type)).map(([type,name])=>({kind:'floor',type,name,text:type==='brake'?'踏むと必ず停止する床。次の1手で向きを選べます。':type==='switch'?'踏むとA/Bの壁が反転します。':type==='gateA'||type==='gateB'?'開閉状態の合うときだけ通り抜けられます。閉じたら手前で止まります。':'矢印・線で示した方向からだけ入れます。逆方向からの侵入はできません。',group:'床と岩'}));let hazards=[...['spike','pendulum','fire','rock'].map(type=>({kind:'hazard',type,name:{spike:'棘床',pendulum:'振り子の鉄球',fire:'火球装置',rock:'往復する岩'}[type],text:'危険な赤マスを避けましょう。緑で休止中のときは触れると装置を壊せます。',group:'罠・ギミック'})),...Object.entries(EXTRA_HAZARDS).map(([type,data])=>({kind:'hazard',type,name:data[0],text:data[3]+'。赤い範囲は危険、緑の休止中は破壊可能です。',group:'罠・ギミック'}))];let monsters=Object.entries(enemyNames).map(([type,name])=>({kind:'enemy',type,name,text:enemyDescription(type)+'。敵の接触や飛び道具に注意。武器でHPを削って倒せます。',hp:enemyHP(type),group:'モンスター'}));return [...basics,...signatures,...Object.entries(V51_INFO).map(([type,[name,text]])=>({kind:'weapon',type,name,text,group:'武器'})),...Object.entries(V54_INFO).map(([type,[name,text]])=>({kind:'weapon',type,name,text,group:'武器'})),...Object.entries(V55_INFO).map(([type,[name,text]])=>({kind:'weapon',type,name,text,group:'武器'})),...uniqueGuides(floors),...hazards,...monsters];}
-function openManual(fromTitle=false){let entries=manualEntries(),savedLeft=pausedLeft;mode='manual';guide={entries,page:0,at:performance.now(),last:-1,preview:null,manual:true};function exit(){guide=null;closeModal();if(fromTitle){showTitle('other');}else{mode='playing';tickAt=performance.now();deadline=tickAt+savedLeft;}}function show(){if(!guide||mode!=='manual')return;let e=entries[guide.page];guide.preview=guideBoard(e);guide.at=performance.now();guide.last=-1;let kinds=['基本','武器','床と岩','罠・ギミック','モンスター'];modal('<div class="guideTop"><span>動くフィールド図鑑</span><span>'+(guide.page+1)+' / '+entries.length+'</span></div><div class="manualCategory">'+kinds.map(k=>'<button data-group="'+k+'" class="'+(e.group===k?'gold':'flat')+'">'+k+'</button>').join('')+'</div><h2 class="guideName">'+esc(e.name)+(e.hp?' <small>HP '+e.hp+'</small>':'')+'</h2><canvas id="guideCanvas" width="216" height="168" aria-label="'+esc(e.name)+'の動作見本"></canvas><div id="guideState" class="guideState"></div><p class="guideText">'+esc(e.text)+'</p><div class="row"><button id="manualPrev" '+(guide.page===0?'disabled':'')+'>◀ 前へ</button><button class="primary" id="manualNext">'+(guide.page===entries.length-1?'最初へ':'次へ ▶')+'</button></div><p class="manualBottom">ページを選ぶと実際の床・モンスター・罠が動きます</p><button id="manualExit" class="flat guideSkip">図鑑を閉じる</button>');document.querySelectorAll('#modal [data-group]').forEach(b=>b.onclick=()=>{guide.page=entries.findIndex(x=>x.group===b.dataset.group);show();});$('manualPrev').onclick=()=>{guide.page--;show();};$('manualNext').onclick=()=>{guide.page=(guide.page+1)%entries.length;show();};$('guideCanvas').onclick=()=>$('manualNext')?.click();$('guideCanvas').title='画像をタップすると次の解説へ';$('manualExit').onclick=exit;drawGuide(performance.now());}show();}
+function manualEntries(){let signatures=[['iai','居合残影 · 走りながら斬る','攻撃すると残影状態に。氷で滑る途中も地面の連続歩行中も、通過したマスの周囲に大きな抜刀円弧が重なります。同じ敵への多段ヒットは抑制し、移動が終わると残り時間で周囲を薙ぎます。'],['ricochet','跳ね返る万華弾','正面と斜めに3～5発。壁・岩・盤面端に当たると反射し、弾ごとに残り反射回数がランダムです。細い尾と衝突リングで軌跡を確認できます。'],['chain','連鎖雷撃','正面の敵へ直撃した後、近くの別の敵へ順番に電撃を渡します。各連鎖の経路は細い稲妻で表示し、障害物を抜ける無条件の攻撃にはしません。'],['orbit','旋回護衛刃','発動すると2～3枚の刃が主人公の周囲を巡回。滑走してもついてきて、近寄った敵へ短い間隔で追撃します。大群を抜けたいときに便利です。']].map(([type,name,text])=>({kind:'weapon',type,name,text,group:'武器'}));let basics=MANUAL_CORE.map(([type,name,text])=>({kind:'floor',type,name,text,group:'基本'}));let floors=Object.entries(TERRAIN).filter(([type])=>!['ground','pit','switch','gateA','gateB'].includes(type)).map(([type,name])=>({kind:'floor',type,name,text:type==='brake'?'踏むと停止する床。次の操作で向きを変えられます。':type==='hrail'?'左右方向にだけ通れるゲートです。':type==='vrail'?'上下方向にだけ通れるゲートです。':'矢印の向きから入る場合だけ通れます。逆向きでは手前で停止します。',group:'床と岩'}));let hazards=[...['spike','pendulum','fire','rock'].map(type=>({kind:'hazard',type,name:{spike:'棘床',pendulum:'振り子の鉄球',fire:'火球装置',rock:'往復する岩'}[type],text:'危険な赤マスを避けましょう。緑で休止中のときは触れると装置を壊せます。',group:'罠・ギミック'})),...Object.entries(EXTRA_HAZARDS).map(([type,data])=>({kind:'hazard',type,name:data[0],text:data[3]+'。赤い範囲は危険、緑の休止中は破壊可能です。',group:'罠・ギミック'}))];let monsters=Object.entries(enemyNames).map(([type,name])=>({kind:'enemy',type,name,text:enemyDescription(type)+'。敵の接触や飛び道具に注意。武器でHPを削って倒せます。',hp:enemyHP(type),group:'モンスター'}));return [...basics,...signatures,...Object.entries(V51_INFO).map(([type,[name,text]])=>({kind:'weapon',type,name,text,group:'武器'})),...Object.entries(V54_INFO).map(([type,[name,text]])=>({kind:'weapon',type,name,text,group:'武器'})),...Object.entries(V55_INFO).map(([type,[name,text]])=>({kind:'weapon',type,name,text,group:'武器'})),...uniqueGuides(floors),...hazards,...monsters];}
+function openManual(fromTitle=false){let entries=manualEntries(),savedLeft=pausedLeft;mode='manual';guide={entries,page:0,at:performance.now(),last:-1,preview:null,manual:true};function exit(){guide=null;closeModal();if(fromTitle){showTitle('other');}else{mode='playing';tickAt=performance.now();deadline=tickAt+savedLeft;}}function show(){if(!guide||mode!=='manual')return;let e=entries[guide.page];guide.preview=guideBoard(e);guide.at=performance.now();guide.last=-1;let kinds=['基本','武器','床と岩','罠・ギミック','モンスター'];modal('<div class="fbGuideDialog"><div class="guideTop"><span>動くフィールド図鑑</span><span>'+(guide.page+1)+' / '+entries.length+'</span></div><div class="manualCategory">'+kinds.map(k=>'<button data-group="'+k+'" class="'+(e.group===k?'gold':'flat')+'">'+k+'</button>').join('')+'</div><h2 class="guideName">'+esc(e.name)+(e.hp?' <small>HP '+e.hp+'</small>':'')+'</h2><canvas id="guideCanvas" width="216" height="168" aria-label="'+esc(e.name)+'の動作見本"></canvas><div id="guideState" class="guideState"></div><p class="guideText">'+esc(e.text)+'</p><div class="row"><button id="manualPrev" '+(guide.page===0?'disabled':'')+'>◀ 前へ</button><button class="primary" id="manualNext">'+(guide.page===entries.length-1?'最初へ':'次へ ▶')+'</button></div><p class="manualBottom">ページを選ぶと実際の床・モンスター・罠が動きます</p><button id="manualExit" class="flat guideSkip">図鑑を閉じる</button></div>');document.querySelectorAll('#modal [data-group]').forEach(b=>b.onclick=()=>{guide.page=entries.findIndex(x=>x.group===b.dataset.group);show();});$('manualPrev').onclick=()=>{guide.page--;show();};$('manualNext').onclick=()=>{guide.page=(guide.page+1)%entries.length;show();};$('guideCanvas').onclick=()=>$('manualNext')?.click();$('guideCanvas').title='画像をタップすると次の解説へ';$('manualExit').onclick=exit;drawGuide(performance.now());}show();}
 
 function guideEntries(){
  let list=[];
  for(let k of new Set((board.hazards||[]).map(h=>h.type)))list.push({kind:'hazard',type:k,name:EXTRA_HAZARDS[k]?.[0]||{spike:'棘',pendulum:'振り子',fire:'火球装置',rock:'動く岩'}[k],text:(EXTRA_HAZARDS[k]?.[3]||{spike:'周期的に棘が飛び出す。',pendulum:'鉄球が左右に振れる。',fire:'発射口から火球が流れる。',rock:'岩が3マスを往復する。'}[k])+' 赤は危険、緑は休止中。'});
- for(let k of new Set((board.terrain||[]).map(f=>f.type)))list.push({kind:'floor',type:k,name:TERRAIN[k],text:k==='ground'?'地面は1マスずつ歩けます。岩押しは1手。':k==='pit'?'穴は通れません。岩で埋めると通れます。':['switch','gateA','gateB'].includes(k)?'スイッチでA/Bの壁が交互に開閉します。':k==='brake'?'ここで滑走が止まります。':'矢印・レールの方向に沿って通れます。'});
+ for(let k of new Set((board.terrain||[]).map(f=>f.type)))list.push({kind:'floor',type:k,name:TERRAIN[k],text:k==='ground'?'1マスずつ歩けます。岩押しは1手です。':k==='pit'?'穴は岩で埋めるまで通れません。':['switch','gateA','gateB'].includes(k)?'スイッチを踏むとAとBの壁の開閉が逆転します。':k==='brake'?'この床で滑走が止まります。':k==='hrail'?'左右方向のみ通れます。':k==='vrail'?'上下方向のみ通れます。':'矢印と同じ方向からのみ入れます。'});
  if(rockStarts(board).length)list.push({kind:'floor',type:'boulder',name:'押せる岩',text:'岩は押せますが引けません。穴を埋めれば足場になります。'+(board.requiredFill?' この面は穴埋めがクリア条件です。':'')});
  if(board.frag.length)list.push({kind:'floor',type:'frag',name:'薄氷',text:'通るとひびが入り、離れると穴になります。'});
  for(let k of new Set(entities.map(e=>e.type)))list.push({kind:'enemy',type:k,name:enemyNames[k],text:enemyDescription(k)+'。攻撃して倒そう。',hp:enemyHP(k)});
@@ -1907,7 +1971,7 @@ function stageBriefing(continueGame){if(mode==='route'){guide=null;closeModal();
  const enemies=unseen.filter(e=>e.kind==='enemy').slice(0,2);
  const picked=uniqueGuides([...first,...floor,...hazards,...enemies]);
  for(const e of unseen)if(picked.length<6&&!picked.some(x=>guideKey(x)===guideKey(e)))picked.push(e);
- guide={entries:picked.slice(0,6),page:0,at:performance.now(),last:-1,watching,token};let done=false;function finish(){if(done||token!==genToken||mode!=='briefing')return;done=true;if(guide)guide.entries.forEach(e=>currentGuideSeen().add(guideKey(e)));guide=null;closeModal();if(watching){mode='route';routeLast=performance.now();thinkUntil=thinkMode?routeLast+thinkingDelay():0;return;}mode='ready';let start=()=>{mode='ready';$('countdown').style.display='flex';continueGame();};if(!collectChest(false,start))start();}function page(){if(!guide)return;if(!guide.entries.length){finish();return;}let e=guide.entries[guide.page];guide.preview=guideBoard(e);guide.at=performance.now();guide.last=-1;modal('<div class="guideTop"><span>この面のガイド</span><span>'+(guide.page+1)+' / '+guide.entries.length+'</span></div><h2 class="guideName">'+e.name+(e.hp?' <small>HP '+e.hp+'</small>':'')+'</h2><canvas id="guideCanvas" width="216" height="168" aria-label="'+e.name+'の動作見本"></canvas><div id="guideState" class="guideState"></div><p class="guideText">'+e.text+'</p><div class="row"><button id="guidePrev" '+(guide.page===0?'disabled':'')+'>前へ</button><button class="primary" id="guideNext">'+(guide.page===guide.entries.length-1?'開始':'次へ')+'</button></div><button class="flat guideSkip" id="briefStart">すべてスキップして開始</button><button class="flat guideSkip" id="hideGuide">次から表示しない</button>');$('guidePrev').onclick=()=>{guide.interacted=true;guide.page--;page();};$('guideNext').onclick=()=>{guide.interacted=true;if(guide.page===guide.entries.length-1)finish();else{guide.page++;page();}};$('guideCanvas').onclick=()=>$('guideNext')?.click();$('guideCanvas').title='画像をタップすると次の解説へ';$('briefStart').onclick=finish;$('hideGuide').onclick=()=>{setGuideHidden(true);finish();};drawGuide(performance.now());}page();if(watching)setTimeout(()=>{if(guide&&!guide.interacted)finish();},5000);}
+ guide={entries:picked.slice(0,6),page:0,at:performance.now(),last:-1,watching,token};let done=false;function finish(){if(done||token!==genToken||mode!=='briefing')return;done=true;if(guide)guide.entries.forEach(e=>currentGuideSeen().add(guideKey(e)));guide=null;closeModal();if(watching){mode='route';routeLast=performance.now();thinkUntil=thinkMode?routeLast+thinkingDelay():0;return;}mode='ready';let start=()=>{mode='ready';$('countdown').style.display='flex';continueGame();};if(!collectChest(false,start))start();}function page(){if(!guide)return;if(!guide.entries.length){finish();return;}let e=guide.entries[guide.page];guide.preview=guideBoard(e);guide.at=performance.now();guide.last=-1;modal('<div class="fbGuideDialog"><div class="guideTop"><span>この面のガイド</span><span>'+(guide.page+1)+' / '+guide.entries.length+'</span></div><h2 class="guideName">'+e.name+(e.hp?' <small>HP '+e.hp+'</small>':'')+'</h2><canvas id="guideCanvas" width="216" height="168" aria-label="'+e.name+'の動作見本"></canvas><div id="guideState" class="guideState"></div><p class="guideText">'+e.text+'</p><div class="row"><button id="guidePrev" '+(guide.page===0?'disabled':'')+'>前へ</button><button class="primary" id="guideNext">'+(guide.page===guide.entries.length-1?'開始':'次へ')+'</button></div><button class="flat guideSkip" id="briefStart">すべてスキップして開始</button><button class="flat guideSkip" id="hideGuide">次から表示しない</button></div>');$('guidePrev').onclick=()=>{guide.interacted=true;guide.page--;page();};$('guideNext').onclick=()=>{guide.interacted=true;if(guide.page===guide.entries.length-1)finish();else{guide.page++;page();}};$('guideCanvas').onclick=()=>$('guideNext')?.click();$('guideCanvas').title='画像をタップすると次の解説へ';$('briefStart').onclick=finish;$('hideGuide').onclick=()=>{setGuideHidden(true);finish();};drawGuide(performance.now());}page();if(watching)setTimeout(()=>{if(guide&&!guide.interacted)finish();},5000);}
 // Same sprites and hazard phases as gameplay; all preview state is local and restored.
 
 function floorDemoState(b,k,age){let cycle=age%4600,phase=Math.floor(cycle/480),p=29,m=0,state='',moving=false;
