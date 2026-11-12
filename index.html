@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ja"><head>
-<meta name="frostbound-build" content="v60">
+<meta name="frostbound-build" content="v61">
 <!-- v55: 7 radically distinct animated weapon systems; 50 weapons total and certified route safeguards. -->
 <meta name="theme-color" content="#282a34">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -567,6 +567,59 @@ body.forcePortrait #modal.overlay{
  padding:4px 8px!important;min-height:28px!important;
  white-space:nowrap!important;-webkit-text-size-adjust:100%!important;
 }
+
+/* v61: clear miniature 16x8 tile arena. Title card can scroll if the phone has browser chrome. */
+#modal canvas.titleArcade,#modal .titleCompact .titleArcade{width:100%;height:auto;max-height:178px;max-width:320px;aspect-ratio:320/178;object-fit:contain;touch-action:manipulation;image-rendering:pixelated;cursor:crosshair}
+body.forceLandscape #modal .titleCompact .titleArcade,body.forcePortrait #modal .titleCompact .titleArcade{max-height:142px;height:auto;aspect-ratio:320/178;object-fit:contain}
+@media(max-height:590px){#modal canvas.titleArcade{max-height:132px}}
+
+/* v62: The entire title menu must fit the CURRENT visible viewport. */
+#modal.fbTitleOnly{box-sizing:border-box;overflow:hidden!important;padding:clamp(5px,1.4vh,12px)!important;align-items:center!important;justify-content:center!important}
+#modal.fbTitleOnly>.card{box-sizing:border-box;min-height:0!important;max-height:calc(var(--fb-visible-h,100dvh) - 16px)!important;max-width:440px!important;padding:clamp(9px,2vh,17px) clamp(10px,3vw,19px)!important;overflow:hidden!important}
+#modal.fbTitleOnly .titleCompact{padding:0!important;display:flex;flex-direction:column;align-items:stretch;gap:clamp(3px,.65vh,7px);min-height:0}
+#modal.fbTitleOnly .titleCompact .kicker{font-size:9px;line-height:1.1;margin:0!important}
+#modal.fbTitleOnly .titleCompact h1{font-size:clamp(23px,6vw,30px)!important;line-height:1.04;margin:0!important;letter-spacing:1px}
+#modal.fbTitleOnly .titleCompact .subtitle{font-size:10px!important;line-height:1.15;margin:0!important}
+#modal.fbTitleOnly .titleCompact .titleArcade{display:block;align-self:center;width:min(100%,320px)!important;height:auto!important;max-width:320px!important;max-height:none!important;aspect-ratio:320/154!important;object-fit:contain!important;margin:2px auto!important;flex:none;touch-action:none!important;user-select:none!important;-webkit-user-select:none!important}
+#modal.fbTitleOnly .titleCompact .titleTabs{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;gap:5px!important;margin:0!important}
+#modal.fbTitleOnly .titleCompact .titleTabs button{min-height:35px!important;padding:5px 3px!important;font-size:13px!important}
+#modal.fbTitleOnly .titleCompact .titleActions{display:flex;flex-direction:column;gap:6px!important;margin:0!important;width:100%}
+#modal.fbTitleOnly .titleCompact .titleActions button{margin:0!important;min-height:40px!important;padding:6px 7px!important;font-size:13px!important;line-height:1.2}
+#modal.fbTitleOnly .titleCompact .fine{font-size:10px!important;line-height:1.2!important;margin:0!important}
+@media(max-height:710px) and (orientation:portrait){
+ #modal.fbTitleOnly>.card{padding:8px 12px!important}
+ #modal.fbTitleOnly .titleCompact{gap:3px}
+ #modal.fbTitleOnly .titleCompact h1{font-size:24px!important}
+ #modal.fbTitleOnly .titleCompact .titleArcade{width:min(100%,280px)!important}
+ #modal.fbTitleOnly .titleCompact .titleTabs button{min-height:32px!important}
+ #modal.fbTitleOnly .titleCompact .titleActions{gap:5px!important}
+ #modal.fbTitleOnly .titleCompact .titleActions button{min-height:36px!important}
+}
+/* Physical landscape: two orderly columns. Canvas keeps its actual aspect ratio. */
+@media(orientation:landscape) and (max-height:560px){
+ #modal.fbTitleOnly>.card{max-width:min(760px,97vw)!important;max-height:calc(var(--fb-visible-h,100dvh) - 10px)!important;padding:8px 11px!important}
+ #modal.fbTitleOnly .titleCompact{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:'tag tabs' 'heading actions' 'subtitle actions' 'scene actions' 'fine actions';column-gap:13px;row-gap:2px;align-items:start;text-align:left}
+ #modal.fbTitleOnly .titleCompact .kicker{grid-area:tag}
+ #modal.fbTitleOnly .titleCompact h1{grid-area:heading;font-size:clamp(19px,3.1vw,25px)!important}
+ #modal.fbTitleOnly .titleCompact .subtitle{grid-area:subtitle}
+ #modal.fbTitleOnly .titleCompact .titleArcade{grid-area:scene;width:min(100%,270px)!important;max-width:270px!important;margin:3px 0!important;justify-self:start}
+ #modal.fbTitleOnly .titleCompact .titleTabs{grid-area:tabs}
+ #modal.fbTitleOnly .titleCompact .titleTabs button{min-height:29px!important;font-size:11px!important}
+ #modal.fbTitleOnly .titleCompact .titleActions{grid-area:actions;gap:4px!important}
+ #modal.fbTitleOnly .titleCompact .titleActions button{min-height:32px!important;font-size:11px!important}
+ #modal.fbTitleOnly .titleCompact .fine{grid-area:fine}
+}
+/* iPhone CSS-rotated landscape: CSS viewport remains portrait, but the modal is rotated. */
+body.forceLandscape #modal.fbTitleOnly>.card,body.forcePortrait #modal.fbTitleOnly>.card{max-width:min(720px,97%)!important;max-height:calc(var(--fb-visible-w,100vw) - 12px)!important;padding:7px 10px!important}
+body.forceLandscape #modal.fbTitleOnly .titleCompact,body.forcePortrait #modal.fbTitleOnly .titleCompact{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:'tag tabs' 'heading actions' 'subtitle actions' 'scene actions' 'fine actions';gap:2px 10px;text-align:left}
+body.forceLandscape #modal.fbTitleOnly .titleCompact .kicker,body.forcePortrait #modal.fbTitleOnly .titleCompact .kicker{grid-area:tag}
+body.forceLandscape #modal.fbTitleOnly .titleCompact h1,body.forcePortrait #modal.fbTitleOnly .titleCompact h1{grid-area:heading;font-size:21px!important}
+body.forceLandscape #modal.fbTitleOnly .titleCompact .subtitle,body.forcePortrait #modal.fbTitleOnly .titleCompact .subtitle{grid-area:subtitle}
+body.forceLandscape #modal.fbTitleOnly .titleCompact .titleArcade,body.forcePortrait #modal.fbTitleOnly .titleCompact .titleArcade{grid-area:scene;width:min(100%,245px)!important;max-width:245px!important;aspect-ratio:320/154!important;max-height:none!important;margin:3px 0!important;justify-self:start}
+body.forceLandscape #modal.fbTitleOnly .titleCompact .titleTabs,body.forcePortrait #modal.fbTitleOnly .titleCompact .titleTabs{grid-area:tabs}
+body.forceLandscape #modal.fbTitleOnly .titleCompact .titleActions,body.forcePortrait #modal.fbTitleOnly .titleCompact .titleActions{grid-area:actions;gap:4px!important}
+body.forceLandscape #modal.fbTitleOnly .titleCompact .titleActions button,body.forcePortrait #modal.fbTitleOnly .titleCompact .titleActions button{min-height:32px!important;font-size:11px!important;padding:4px!important}
+body.forceLandscape #modal.fbTitleOnly .titleCompact .fine,body.forcePortrait #modal.fbTitleOnly .titleCompact .fine{grid-area:fine}
 </style></head><body>
 <main id="app"><header><div><div class="brand"><span>❖</span> FROSTBOUND</div><div class="eyebrow">氷渡りの冒険</div></div><div class="topactions"><button class="small flat" id="layoutToggle" aria-label="表示向き切り替え">横</button><button class="small flat" id="sound" aria-label="効果音切り替え">音 OFF</button><button class="small flat" id="pause" aria-label="一時停止">Ⅱ</button></div></header>
 <div class="hud"><div class="metric"><div class="label">STAGE</div><div class="value" id="stage">01</div></div><div class="metric"><div class="label">TOTAL SCORE</div><div class="value" id="score">0</div></div><div class="metric"><div class="label">TIME LEFT</div><div class="value" id="time">— <small>sec</small></div></div></div><div class="timer"><i id="timebar"></i></div>
@@ -745,8 +798,8 @@ function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;',
 function toast(s){$('toast').textContent=s;$('toast').classList.remove('hidden');clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').classList.add('hidden'),2100);}
 function updateSound(){$('sound').textContent='音 '+(sound?'ON':'OFF');}
 function beep(freq=440,duration=.07,type='square'){if(!sound)return;try{audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();audioCtx.resume();let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(.025,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+duration);o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+duration);}catch(e){}}
-function modal(html){$('modal').classList.toggle('lootModal',html.includes('weaponCompare'));$('modal').innerHTML='<section class="card">'+html+'</section>';$('modal').classList.remove('hidden');}
-function closeModal(){$('modal').classList.add('hidden');$('modal').classList.remove('lootModal');$('modal').innerHTML='';}
+function modal(html){$('modal').classList.toggle('fbTitleOnly',html.includes('titleCompact'));$('modal').classList.toggle('lootModal',html.includes('weaponCompare'));$('modal').innerHTML='<section class="card">'+html+'</section>';$('modal').classList.remove('hidden');}
+function closeModal(){$('modal').classList.add('hidden');$('modal').classList.remove('lootModal','fbTitleOnly');$('modal').innerHTML='';}
 let killFX=[],demoAttackAt=0;const ATTACK_DELAY=260;let safeWitness=null,routeUICache=null;let thinkMode=false,thinkUntil=0,previousWatch=null,customSession=null,editorDraft=null;let watchMode=false,replaySpeed=.5,surrenderCount=0,surrenderAt=0;
 function showOrientationChoice(){
  // Before a choice, keep the selector upright in the device's actual orientation.
@@ -755,7 +808,21 @@ function showOrientationChoice(){
  $('choosePortrait').onclick=()=>{layoutMode='portrait';refreshLayout();showTitle();};
  $('chooseLandscape').onclick=()=>{layoutMode='landscape';refreshLayout();showTitle();try{screen.orientation?.lock?.('landscape').catch(()=>{});}catch(_){}};
 }
-function showTitle(tab='play'){routeMotion=null;autoLootActive=false;$('app').classList.remove('hintOpen');endStageLoad();autoRun=null;stageEscort=null;currentHint=null;$('hintDetails').innerHTML='';simpleMode=false;$('app').classList.remove('simpleMode');$('deathPanel').style.display='none';guide=null;watchMode=false;customSession=null;blockHint=null;genToken++;mode='title';motion=null;moveBuffer=null;practiceMode=false;$('routePanel').style.display='none';$('controls').style.display='flex';$('countdown').style.display='none';board=prepare(JSON.parse(JSON.stringify(BANK[0])));pos=board.start;mask=0;fit();let body=tab==='play'?'<button class="primary" id="startBtn">メイン · 時間あり</button><button class="primary" id="unlimitedBtn">メイン · 時間なし</button><button class="primary" id="simpleBtn">高難度パズル</button><button class="flat miniWatch" id="watchBtn"><canvas class="watchPreview" data-mini="watch" width="54" height="28" aria-hidden="true"></canvas>眺める・模範解答</button>':tab==='work'?'<button class="primary" id="shopBtn">強化・買い物</button><button class="primary" id="editorBtn">ステージを作る</button><button class="flat" id="importTitle">JSONを読み込む</button>':'<button class="primary" id="rankBtn">TOP 5</button><button class="flat" id="rulesBtn">遊び方</button><button class="flat" id="installInfoBtn">端末に保存</button><button class="flat" id="settingsBtn">設定</button>';modal('<div class="hero titleCompact"><div class="kicker">ICE SLIDE PUZZLE</div><h1>FROST<span>BOUND</span></h1><div class="subtitle">氷渡りの冒険</div><canvas class="miniScene titleArcade" data-mini="title" width="320" height="94" role="button" tabindex="0" aria-label="手榴弾ミニゲーム。狙う場所をタップして連鎖爆発、右上で恒久強化。ウェーブごとに能力を選択"></canvas><div class="row titleTabs">'+[['play','遊ぶ'],['work','工房'],['other','その他']].map(([id,label])=>'<button id="title_'+id+'" aria-pressed="'+(id===tab)+'" class="'+(id===tab?'gold':'flat')+'">'+label+'</button>').join('')+'</div><div class="titleActions">'+body+'</div><p class="fine">◉ '+meta.coins.toLocaleString()+'　♥ '+meta.lives+'</p></div>');const arcadeCanvas=document.querySelector('#modal canvas.titleArcade');if(arcadeCanvas){arcadeCanvas.addEventListener('pointerdown',e=>{e.preventDefault();if(e.button>0)return;let rect=arcadeCanvas.getBoundingClientRect(),x,y;if($('app').classList.contains('virtualLandscape')){x=(e.clientY-rect.top)/rect.height*320;y=(rect.right-e.clientX)/rect.width*94;}else if($('app').classList.contains('virtualPortrait')){x=(rect.bottom-e.clientY)/rect.height*320;y=(e.clientX-rect.left)/rect.width*94;}else{x=(e.clientX-rect.left)/rect.width*320;y=(e.clientY-rect.top)/rect.height*94;}titleArcadeTap(x,y,performance.now());});arcadeCanvas.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();titleArcadeTap(195,48,performance.now());}});}for(let id of ['play','work','other'])$('title_'+id).onclick=()=>showTitle(id);if(tab==='play'){$('startBtn').onclick=()=>confirmMode('timed',()=>startRun());$('unlimitedBtn').onclick=()=>confirmMode('relaxed',()=>startRun(true));$('simpleBtn').onclick=()=>confirmMode('simple',()=>startRun(true,true));$('watchBtn').onclick=()=>confirmMode('watch',()=>{watchMode=true;previousWatch=null;customSession=null;practiceMode=true;unlimitedMode=true;stage=1;score=0;clearReturn=null;replaySpeed=.5;newStage();});}else if(tab==='work'){$('editorBtn').onclick=()=>confirmMode('editor',()=>openEditor());$('shopBtn').onclick=()=>showShop(()=>showTitle('work'));$('importTitle').onclick=()=>{openEditor();$('editImport').onclick();};}else{$('rankBtn').onclick=()=>showRanks(false);$('rulesBtn').onclick=()=>showHelp(true);$('settingsBtn').onclick=()=>showSettings();$('installInfoBtn').onclick=showInstallHelp;}$('status').textContent='金色の結晶を目指そう。';}
+function showTitle(tab='play'){tab=['play','work','other'].includes(tab)?tab:'play';routeMotion=null;autoLootActive=false;$('app').classList.remove('hintOpen');endStageLoad();autoRun=null;stageEscort=null;currentHint=null;$('hintDetails').innerHTML='';simpleMode=false;$('app').classList.remove('simpleMode');$('deathPanel').style.display='none';guide=null;watchMode=false;customSession=null;blockHint=null;genToken++;mode='title';motion=null;moveBuffer=null;practiceMode=false;$('routePanel').style.display='none';$('controls').style.display='flex';$('countdown').style.display='none';board=prepare(JSON.parse(JSON.stringify(BANK[0])));pos=board.start;mask=0;fit();let body=tab==='play'?'<button class="primary" id="startBtn">メイン · 時間あり</button><button class="primary" id="unlimitedBtn">メイン · 時間なし</button><button class="primary" id="simpleBtn">高難度パズル</button><button class="flat miniWatch" id="watchBtn"><canvas class="watchPreview" data-mini="watch" width="54" height="28" aria-hidden="true"></canvas>眺める・模範解答</button>':tab==='work'?'<button class="primary" id="shopBtn">強化・買い物</button><button class="primary" id="editorBtn">ステージを作る</button><button class="flat" id="importTitle">JSONを読み込む</button>':'<button class="primary" id="rankBtn">TOP 5</button><button class="flat" id="rulesBtn">遊び方</button><button class="flat" id="installInfoBtn">端末に保存</button><button class="flat" id="settingsBtn">設定</button>';modal('<div class="hero titleCompact"><div class="kicker">ICE SLIDE PUZZLE</div><h1>FROST<span>BOUND</span></h1><div class="subtitle">氷渡りの冒険</div><canvas class="miniScene titleArcade" data-mini="title" width="320" height="154" role="button" tabindex="0" aria-label="氷上迎撃。標準銃で自動射撃し、タップか長押しで特殊武器を撃つ。武器箱が定期的に届く"></canvas><div class="row titleTabs">'+[['play','遊ぶ'],['work','工房'],['other','その他']].map(([id,label])=>'<button id="title_'+id+'" aria-pressed="'+(id===tab)+'" class="'+(id===tab?'gold':'flat')+'">'+label+'</button>').join('')+'</div><div class="titleActions">'+body+'</div><p class="fine">◉ '+meta.coins.toLocaleString()+'　♥ '+meta.lives+'</p></div>');const arcadeCanvas=document.querySelector('#modal canvas.titleArcade');if(arcadeCanvas){
+ const pointFor=e=>{const rect=arcadeCanvas.getBoundingClientRect(),height=ARCADE_CANVAS_HEIGHT;
+  if($('app').classList.contains('virtualLandscape'))return {x:(e.clientY-rect.top)/rect.height*320,y:(rect.right-e.clientX)/rect.width*height};
+  if($('app').classList.contains('virtualPortrait'))return {x:(rect.bottom-e.clientY)/rect.height*320,y:(e.clientX-rect.left)/rect.width*height};
+  return {x:(e.clientX-rect.left)/rect.width*320,y:(e.clientY-rect.top)/rect.height*height};
+ };
+ arcadeCanvas.addEventListener('pointerdown',e=>{if(e.button>0)return;e.preventDefault();let p=pointFor(e);
+  titleArcadeTap(p.x,p.y,performance.now());if(p.y>=19&&(!titleArcade?.shop&&!titleArcade?.choice&&!titleArcade?.deadUntil)){
+   arcadeHeldPointer={pointerId:e.pointerId,point:p,target:arcadeCanvas};try{arcadeCanvas.setPointerCapture(e.pointerId);}catch(_){}
+  }
+ });
+ arcadeCanvas.addEventListener('pointermove',e=>{if(arcadeHeldPointer?.pointerId===e.pointerId)arcadeHeldPointer.point=pointFor(e);});
+ for(let eventName of ['pointerup','pointercancel','lostpointercapture'])arcadeCanvas.addEventListener(eventName,e=>{if(arcadeHeldPointer?.pointerId===e.pointerId)arcadeClearHold();});
+ arcadeCanvas.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();titleArcadeTap(210,89,performance.now());}});
+}for(let id of ['play','work','other'])$('title_'+id).onclick=()=>showTitle(id);if(tab==='play'){$('startBtn').onclick=()=>confirmMode('timed',()=>startRun());$('unlimitedBtn').onclick=()=>confirmMode('relaxed',()=>startRun(true));$('simpleBtn').onclick=()=>confirmMode('simple',()=>startRun(true,true));$('watchBtn').onclick=()=>confirmMode('watch',()=>{watchMode=true;previousWatch=null;customSession=null;practiceMode=true;unlimitedMode=true;stage=1;score=0;clearReturn=null;replaySpeed=.5;newStage();});}else if(tab==='work'){$('editorBtn').onclick=()=>confirmMode('editor',()=>openEditor());$('shopBtn').onclick=()=>showShop(()=>showTitle('work'));$('importTitle').onclick=()=>{openEditor();$('editImport').onclick();};}else{$('rankBtn').onclick=()=>showRanks(false);$('rulesBtn').onclick=()=>showHelp(true);$('settingsBtn').onclick=()=>showSettings();$('installInfoBtn').onclick=showInstallHelp;}$('status').textContent='金色の結晶を目指そう。';}
 
 let installEvent=null;
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEvent=e;});
@@ -779,7 +846,7 @@ function showRanks(which=simpleMode?2:unlimitedMode?1:0,orientation=useLandscape
  modal('<div class="kicker">LOCAL HALL OF FAME</div><h2>氷渡りの記録</h2><p>'+['メインモード','時間無制限エンドレス','シンプル高難度'][n]+' · <b>'+current+'</b></p>'+ (list.length?list.map((r,i)=>'<div class="record"><span><b>0'+(i+1)+'</b>　'+esc(r.name)+' <small>【'+scoreOrientationLabel(r.orientation)+'】</small><br><small>　 STAGE '+r.stage+' · '+esc(r.date||'')+'</small></span><strong>'+r.score.toLocaleString()+'</strong></div>').join(''):'<p>この画面向きの記録はまだありません。</p>')+'<p class="fine">モード・縦横別の上位5件を保存。旧記録は向きが不明なため別表示です。</p><div class="row"><button id="switchOrientation" class="flat">画面：'+current+'</button><button id="switchRanks" class="flat">モード切替</button></div><button class="primary" id="backTitle">トップへ</button>');
  $('switchOrientation').onclick=()=>showRanks(n,orientation==='portrait'?'landscape':orientation==='landscape'?'legacy':'portrait');
  $('switchRanks').onclick=()=>showRanks((n+1)%3,orientation);
- $('backTitle').onclick=showTitle;
+ $('backTitle').onclick=()=>showTitle('other');
 }
 function showHelp(fromTitle=false){if(!fromTitle&&mode!=='playing')return;if(!fromTitle){pausedLeft=Math.max(0,deadline-performance.now());mode='help';}modal('<div class="kicker">FIELD GUIDE</div><h2>氷の洞窟の歩き方</h2><p>氷では方向を押すと壁・岩・穴などの手前まで滑ります。地面では1マスずつ歩き、長押しすると連続で歩けます。</p><p>薄氷は通過後に穴になります。岩は引けず、押し込んだ穴は足場にできます。敵は主人公のマスにも入り、接触すると死亡します。早めに武器・道具・同行キャラで対処しましょう。模範解答とおまかせ走行は、武器が届かず接触が避けられない場合だけ緊急迎撃して続行します。</p><p>盤面タップで大きく拡大し、もう一度タップすると全体表示に戻ります。2本指のピンチアウトでさらに拡大、ピンチインで縮小でき、1～5倍まで自由に調整できます。ピンチ後もタップ1回で全体表示に戻れます。カメラはキャラを滑らかに追います。盤面の長押しでは敵を狙ったり仕掛けを確認できます。拾った武器はランダムな弾数つきで、使い切ると弾数無制限の標準銃に戻ります。手榴弾は着地点がばらつき、レア品ほど複数の爆発が連鎖します。レーザーは壁を貫通し、超レアでは3列分の太い光線になります。</p><p class="fine">ガイドの画像はゲームと同じ仕組みで描画し、通れる床と通れない床の判定を反映します。初めての人向けに、操作・床・岩・全ギミック・モンスター・武器・道具をページ送りで解説します。</p><button class="gold" id="openManual" style="width:100%">▶ 動く図鑑で詳しく見る</button><button class="primary" id="helpBack">'+(fromTitle?'トップへ':'ゲームに戻る')+'</button>');$('openManual').onclick=()=>openManual(fromTitle);$('helpBack').onclick=()=>{if(fromTitle)showTitle('other');else{closeModal();mode='playing';tickAt=performance.now();deadline=tickAt+pausedLeft;}};}
 // Generation runs off the UI thread. Every accepted board has an exact BFS solution.
@@ -822,6 +889,7 @@ function buildCertifiedWideHard(q,portrait=false){
  b=reflectPuzzle(b,Math.floor(Math.random()*4));
  return b;
 }
+const hardRecentLayouts=[],hardRecentBases=[];
 function chooseScreenFillingHard(target){
  const space=measuredBoardSpace();if(!space)return null;
  const portrait=!useLandscapeLayout(),aw=space.w,ah=space.h;
@@ -834,10 +902,19 @@ function chooseScreenFillingHard(target){
   return {q,px,score};
  }).filter(x=>x.px>=16).sort((a,b)=>b.score-a.score);
  if(!viable.length)return null;
- const best=viable[0].score;
- const nearby=viable.filter(x=>x.score>=best-.12);
- const selected=nearby[Math.floor(Math.random()*nearby.length)];
- return buildCertifiedWideHard(selected.q,portrait);
+  const best=viable[0].score;
+  // v61: widen the near-best pool, favor a *different certified maze*, not just a mirror.
+  const nearby=viable.filter(x=>x.score>=best-.38);
+  let pool=nearby.filter(x=>!hardRecentLayouts.includes(x.q.b+':'+x.q.f+':'+x.q.w+':'+x.q.h+':'+x.q.x.join(',')));
+  if(!pool.length){hardRecentLayouts.length=0;pool=nearby;}
+  const mostRecent=new Set(hardRecentBases.slice(-3));
+  const diverse=pool.filter(x=>!mostRecent.has(x.q.b));
+  if(diverse.length)pool=diverse;
+  const selected=pool[Math.floor(Math.random()*pool.length)];
+  hardRecentLayouts.push(selected.q.b+':'+selected.q.f+':'+selected.q.w+':'+selected.q.h+':'+selected.q.x.join(','));
+  if(hardRecentLayouts.length>20)hardRecentLayouts.shift();
+  hardRecentBases.push(selected.q.b);if(hardRecentBases.length>6)hardRecentBases.shift();
+  return buildCertifiedWideHard(selected.q,portrait);
 }
 const hardSeen=new Set();
 function takeReadyHardPuzzle(target){
@@ -860,14 +937,50 @@ function simpleCachedStage(){
  $('difficulty').textContent='最短 '+pathCost(board)+'手 · 岩 × 地面 × 薄氷 × 切替壁';
  return true;
 }
-function simpleNewStage(){if(simpleCachedStage())return;endStageLoad();stageBest=0;mode='generating';motion=null;moveBuffer=null;closeModal();$('routePanel').style.display='none';$('countdown').style.display='none';let target=Math.random()<.25?40:32,seed=(Math.random()*4294967296)>>>0,attempt=0,token=++genToken,started=performance.now(),maxAttempts=100000,maxMs=60000,genWorker=null,url=null,done=false;
-modal('<div class="genbox"><div class="kicker">ICE LABYRINTH</div><h2>氷の難問を生成中</h2><p>最短'+target+'手以上<br>岩・地面・薄氷・切替壁を検証</p><div class="genbar" role="progressbar" aria-label="探索枠の進捗" aria-valuemin="0" aria-valuemax="100"><i id="genFill"></i></div><p id="genLabel">探索を開始…</p><p class="fine">探索枠を使い切った場合も、同じ手数条件の検証済み盤面で始まります。</p><button id="genCancel">タイトルへ戻る</button></div>');
-function cleanup(){if(genWorker)genWorker.terminate();if(url)URL.revokeObjectURL(url);genWorker=null;url=null;}
-function progress(n){attempt=n;let elapsed=performance.now()-started,pct=Math.min(99,Math.floor(Math.max(n/maxAttempts,elapsed/maxMs)*100));$('genFill').style.width=pct+'%';$('genLabel').textContent='探索枠 '+pct+'% · '+n.toLocaleString()+'候補 · '+(elapsed/1000).toFixed(1)+'秒';}
-function finish(b){if(done||token!==genToken){cleanup();return;}done=true;cleanup();if(!b){let pool=target>=40?[7882,62842]:[7882,12607,62842],recent=simpleNewStage.recent||[],choices=pool.flatMap(s=>Array.from({length:8},(_,v)=>[s,v])).filter(([s,v])=>!recent.includes(s+':'+v));if(!choices.length)choices=pool.map(s=>[s,0]);let [s,v]=choices[Math.floor(Math.random()*choices.length)];b=reflectPuzzle(compactCandidate(s,target),v);simpleNewStage.recent=[...recent,s+':'+v].slice(-20);}board=prepare(b);stageTemplate=rawBoard(board);setupStage();$('areaName').textContent='シンプル高難度 · '+board.w+'×'+board.h;$('difficulty').textContent='最短 '+pathCost(board)+'手 · 岩 × 地面 × 薄氷 × 切替壁';}
-$('genCancel').onclick=()=>{done=true;cleanup();showTitle();};
-function batch(){if(done||token!==genToken){cleanup();return;}let end=performance.now()+8,b=null;for(let k=0;k<32&&!b&&performance.now()<end&&attempt<maxAttempts;k++)b=compactCandidate((seed+attempt++)>>>0,target);progress(attempt);if(b||attempt>=maxAttempts||performance.now()-started>=maxMs)finish(b);else setTimeout(batch,0);}
-try{let source=$('engine').textContent+'\nonmessage=e=>{let {seed,target,maxAttempts,maxMs}=e.data,start=performance.now(),last=start;for(let n=0;n<maxAttempts;n++){let b=compactCandidate((seed+n)>>>0,target);if(b){postMessage({b});return;}let now=performance.now();if(now-last>100){postMessage({n:n+1});last=now;}if(now-start>=maxMs)break;}postMessage({b:null});};';url=URL.createObjectURL(new Blob([source],{type:'text/javascript'}));genWorker=new Worker(url);genWorker.onmessage=e=>{if(done||token!==genToken){cleanup();return;}if('b' in e.data)finish(e.data.b);else progress(e.data.n);};genWorker.onerror=()=>{cleanup();setTimeout(batch,0);};genWorker.postMessage({seed,target,maxAttempts,maxMs});}catch(e){cleanup();setTimeout(batch,0);}}
+function simpleNewStage(){
+  endStageLoad();stageBest=0;mode='generating';motion=null;moveBuffer=null;
+  closeModal();$('routePanel').style.display='none';$('countdown').style.display='none';
+  $('app').classList.toggle('simpleMode',true);
+  const target=Math.random()<.3?40:32,token=++genToken;
+  const seed=(Math.random()*4294967296)>>>0,started=performance.now(),duration=4300;
+  const totalAttempts=3600;let attempts=0,done=false,hardWorker=null,hardURL=null;
+  modal('<div class="genbox"><div class="kicker">ICE LABYRINTH</div><h2>難問の迷宮を探索中</h2><p>最短'+target+'手以上の候補を確認。毎回異なる迷宮を優先します。</p><div class="genbar" role="progressbar" aria-label="迷宮生成の進捗" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="genFill"></i></div><p id="genLabel">0% · 迷宮を準備しています</p><p class="fine">探索が難しい場合は、解答・最短手数を検証済みの別の難問を使用します。</p><button id="genCancel" class="flat">タイトルへ戻る</button></div>');
+  let ticker=null,limitTimer=null;
+  const cancel=()=>{done=true;clearInterval(ticker);clearTimeout(limitTimer);if(hardWorker)hardWorker.terminate();if(hardURL)URL.revokeObjectURL(hardURL);hardWorker=null;hardURL=null;};
+  $('genCancel').onclick=()=>{if(done)return;cancel();genToken++;showTitle('play');};
+  const progress=()=>{if(done||token!==genToken)return;const elapsed=performance.now()-started;
+    const pct=Math.min(93,Math.max(2,Math.floor(Math.max(elapsed/duration,attempts/totalAttempts)*92)));
+    const bar=$('genFill'),label=$('genLabel');if(!bar||!label)return;
+    bar.style.width=pct+'%';bar.parentElement?.setAttribute('aria-valuenow',pct);
+    label.textContent=pct+'% · '+attempts.toLocaleString()+'候補を調査 · '+(elapsed/1000).toFixed(1)+'秒';
+  };
+  const finish=(candidate)=>{if(done||token!==genToken)return;done=true;
+    clearInterval(ticker);clearTimeout(limitTimer);if(hardWorker)hardWorker.terminate();if(hardURL)URL.revokeObjectURL(hardURL);
+    let b=candidate;
+    // A newly solved puzzle that leaves much of the screen empty is less useful than a fitting certified puzzle.
+    const space=measuredBoardSpace();if(b&&useLandscapeLayout()&&b.h>b.w)b=orientLandscapeBoard(b);
+    if(b&&space){const pixel=Math.min(space.w/b.w,space.h/b.h);
+      if(b.w*pixel*b.h*pixel/(space.w*space.h)<.68)b=null;}
+    if(!b)b=chooseScreenFillingHard(target)||takeReadyHardPuzzle(target);
+    if(!b){showTitle('play');toast('盤面の読み込みに失敗しました');return;}
+    if($('genFill')){$('genFill').style.width='100%';$('genLabel').textContent='100% · 解答検証済みの迷宮が完成';}
+    // Let the player actually see the completed progress bar before entering the stage.
+    setTimeout(()=>{if(token!==genToken)return;board=prepare(b);stageTemplate=rawBoard(board);setupStage();
+      $('areaName').textContent='シンプル高難度 · '+board.w+'×'+board.h;
+      $('difficulty').textContent='最短 '+pathCost(board)+'手 · 岩 × 地面 × 薄氷 × 切替壁';},Math.max(180,700-(performance.now()-started)));
+  };
+  ticker=setInterval(progress,80);progress();limitTimer=setTimeout(()=>finish(null),duration+120);
+  // The worker is optional: iOS private browsing and local file URLs can block workers.
+  try{
+    const workerCode=$('engine').textContent+`
+onmessage=e=>{const{seed,target,duration}=e.data;let found=null,n=0,start=performance.now(),last=0;while(n<3600&&performance.now()-start<duration){found=compactCandidate((seed+n)>>>0,target);n++;if(found)break;if(performance.now()-last>155){last=performance.now();postMessage({n});}}postMessage({n,board:found});};`;
+    hardURL=URL.createObjectURL(new Blob([workerCode],{type:'text/javascript'}));hardWorker=new Worker(hardURL);
+    hardWorker.onmessage=e=>{if(done||token!==genToken)return;attempts=e.data.n||attempts;progress();if('board' in e.data)finish(e.data.board);};
+    hardWorker.onerror=()=>{if(done||token!==genToken)return;finish(null);};
+    hardWorker.postMessage({seed,target,duration:Math.min(3600,duration-500)});
+  }catch(_){/* The already-validated puzzle pool remains available. */}
+}
+
 
 
 // v57: measure the *real CSS playfield* after controls / safe-area insets / virtual
@@ -978,7 +1091,7 @@ $('reset').onclick=()=>{if(mode!=='playing')return;autoRun=null;stageEscort=null
 // overwhelming careful routing. Undo/reset costs survive restoring the board.
 function evaluateScore(b,steps,left,total,combo,timed){const n=pathCost(b),e=Math.max(1,n,steps),extra=Math.max(0,steps-n),ratio=n===0?(steps===0?1:0):n/e;const base=Math.round((1000+n*140+(b.w-2)*(b.h-2)*4+b.used*80+b.twice*120)*puzzleReward(b));const route=Math.round(base*(.3+.7*Math.pow(ratio,1.5)));const perfect=extra===0?Math.round(base*.08):0;const speed=timed?Math.round(base*.02*Math.max(0,Math.min(1,left/total))):0;const grade=extra===0?'S · PERFECT':extra<=Math.max(1,Math.floor(n*.1))?'A+ · EXCELLENT':extra<=Math.max(2,Math.floor(n*.25))?'A · GREAT':extra<=Math.ceil(n*.5)?'B · GOOD':'C · CLEAR';return {base,route,perfect,speed,extra,grade,ratio,total:Math.round((route+perfect+speed)*combo)};}
 function boardKey(){return (simpleMode?'S':unlimitedMode?'U':'T')+':'+board.w+':'+board.start+':'+board.goal+':'+board.frag.join(',')+':'+board.cells.join('');}
-function clearStage(){autoRun=null;autoLootActive=false;if(autoFreeStage){clearFreeAuto();return;}playerBolts=[];timedBombs=[];blastFX=[];rewardClear();if(customSession){customSession.unlocked=true;try{localStorage.setItem('frostbound.clear.'+customSession.key,'1');}catch(e){}}mode='clear';remaining=noClock()?0:Math.max(0,(deadline-performance.now())/1000);beep(660,.12);setTimeout(()=>beep(990,.18),130);let result=evaluateScore(board,effort,remaining,limit,multiplier(),!noClock());let attempt=practiceMode?0:result.total;pendingScore=practiceMode?0:Math.max(0,attempt-stageBest);stageBest=Math.max(stageBest,attempt);score+=pendingScore;let personal=null;if(!practiceMode&&!autoPaidStage){let key=boardKey(),old=personalBests[key];personal=old&&Number.isFinite(old.effort)?Math.min(old.effort,effort):effort;delete personalBests[key];personalBests[key]={effort:personal};let keys=Object.keys(personalBests);while(keys.length>60)delete personalBests[keys.shift()];save();}$('score').textContent=score.toLocaleString();let shortest=pathCost(board),difference=effort-shortest;modal('<div class="kicker">'+(practiceMode?'PRACTICE COMPLETE':autoPaidStage?'GUIDED CLEAR':'CRYSTAL FOUND!')+'</div><h2>STAGE '+String(stage).padStart(2,'0')+' CLEAR!</h2><canvas class="miniScene" data-mini="clear" width="320" height="56" aria-hidden="true"></canvas><div class="clearMoves"><div><small>今回</small><strong>'+effort+' 手</strong></div><div><small>最短手数</small><strong>'+shortest+' 手</strong></div></div><p class="clearNote">'+(difference<=0?'★ 最短手数を達成！':difference+'手差でクリア！')+(practiceMode?' · 練習扱い':'')+'</p>'+(practiceMode?'<button class="primary" id="practiceDone">トップへ</button>':'<button class="primary" id="nextStage">次のステージへ →</button><button class="flat guideSkip" id="endRun">冒険を終える</button>'));installClearReplay();if(practiceMode){$('practiceDone').onclick=showTitle;return;}$('nextStage').onclick=()=>{stage++;newStage();};$('endRun').onclick=showTitle;}
+function clearStage(){autoRun=null;autoLootActive=false;if(autoFreeStage){clearFreeAuto();return;}playerBolts=[];timedBombs=[];blastFX=[];rewardClear();if(customSession){customSession.unlocked=true;try{localStorage.setItem('frostbound.clear.'+customSession.key,'1');}catch(e){}}mode='clear';remaining=noClock()?0:Math.max(0,(deadline-performance.now())/1000);beep(660,.12);setTimeout(()=>beep(990,.18),130);let result=evaluateScore(board,effort,remaining,limit,multiplier(),!noClock());let attempt=practiceMode?0:result.total;pendingScore=practiceMode?0:Math.max(0,attempt-stageBest);stageBest=Math.max(stageBest,attempt);score+=pendingScore;let personal=null;if(!practiceMode&&!autoPaidStage){let key=boardKey(),old=personalBests[key];personal=old&&Number.isFinite(old.effort)?Math.min(old.effort,effort):effort;delete personalBests[key];personalBests[key]={effort:personal};let keys=Object.keys(personalBests);while(keys.length>60)delete personalBests[keys.shift()];save();}$('score').textContent=score.toLocaleString();let shortest=pathCost(board),difference=effort-shortest;modal('<div class="kicker">'+(practiceMode?'PRACTICE COMPLETE':autoPaidStage?'GUIDED CLEAR':'CRYSTAL FOUND!')+'</div><h2>STAGE '+String(stage).padStart(2,'0')+' CLEAR!</h2><canvas class="miniScene" data-mini="clear" width="320" height="56" aria-hidden="true"></canvas><div class="clearMoves"><div><small>今回</small><strong>'+effort+' 手</strong></div><div><small>最短手数</small><strong>'+shortest+' 手</strong></div></div><p class="clearNote">'+(difference<=0?'★ 最短手数を達成！':difference+'手差でクリア！')+(practiceMode?' · 練習扱い':'')+'</p>'+(practiceMode?'<button class="primary" id="practiceDone">トップへ</button>':'<button class="primary" id="nextStage">次のステージへ →</button><button class="flat guideSkip" id="endRun">冒険を終える</button>'));installClearReplay();if(practiceMode){$('practiceDone').onclick=()=>showTitle('play');return;}$('nextStage').onclick=()=>{stage++;newStage();};$('endRun').onclick=()=>showTitle('play');}
 
 
 let clearReturn=null;
@@ -994,7 +1107,7 @@ function routeUI(){$('routeSteps').style.display='none';$('routeSteps').innerHTM
 function setRouteStep(step){routeMotion=null;routeAuto=false;routeIndex=Math.max(0,Math.min(board.path.length,step));routeFrame=routeStates[routeIndex].frame;seekDemoWorld(routeFrame);$('routePlay').textContent='▶ 再生';routeUI();}
 $('speed').onclick=()=>{let speeds=[.25,.5,.75,1,1.5,2];replaySpeed=speeds[(speeds.indexOf(replaySpeed)+1)%speeds.length];$('speed').textContent='速度 ×'+replaySpeed;routeMotion=null;routeLast=performance.now();};$('routePrev').onclick=()=>setRouteStep(routeIndex-1);$('routeNext').onclick=()=>setRouteStep(routeIndex+1);$('routePlay').onclick=()=>{routeAuto=!routeAuto;routeMotion=null;routeLast=performance.now();routeBombAt=routeLast;routeCombatAt=routeLast;routeShotAt=routeLast;$('routePlay').textContent=routeAuto?'Ⅱ 停止':'▶ 再生';};$('finish').onclick=()=>{if(watchMode){showTitle();return;}if(returnToClear())return;endAttempt('TIME UP · 冒険終了');};
 
-$('sound').onclick=()=>{sound=!sound;updateSound();save();beep();};$('help').onclick=()=>showHelp(false);$('pause').onclick=()=>{if(mode!=='playing')return;pausedLeft=Math.max(0,deadline-performance.now());mode='paused';modal('<div class="kicker">TAKE A BREATH</div><h2>ひとやすみ</h2><p>時計を止めています。<br>準備ができたら、冒険の続きを。</p><button class="primary" id="resume">再開する</button><button class="gold guideSkip" id="pauseShop">旅人の工房</button><button class="flat guideSkip" id="pauseSettings">設定</button><button class="flat" id="quit" style="width:100%;margin-top:10px">冒険を終了する</button>');$('resume').onclick=()=>{closeModal();deadline=performance.now()+pausedLeft;tickAt=performance.now();mode='playing';};$('pauseShop').onclick=()=>showShop(()=>{mode='playing';deadline=performance.now()+pausedLeft;$('pause').onclick();});$('pauseSettings').onclick=()=>showSettings(()=>{mode='playing';deadline=performance.now()+pausedLeft;$('pause').onclick();});$('quit').onclick=showTitle;};
+$('sound').onclick=()=>{sound=!sound;updateSound();save();beep();};$('help').onclick=()=>showHelp(false);$('pause').onclick=()=>{if(mode!=='playing')return;pausedLeft=Math.max(0,deadline-performance.now());mode='paused';modal('<div class="kicker">TAKE A BREATH</div><h2>ひとやすみ</h2><p>時計を止めています。<br>準備ができたら、冒険の続きを。</p><button class="primary" id="resume">再開する</button><button class="gold guideSkip" id="pauseShop">旅人の工房</button><button class="flat guideSkip" id="pauseSettings">設定</button><button class="flat" id="quit" style="width:100%;margin-top:10px">冒険を終了する</button>');$('resume').onclick=()=>{closeModal();deadline=performance.now()+pausedLeft;tickAt=performance.now();mode='playing';};$('pauseShop').onclick=()=>showShop(()=>{mode='playing';deadline=performance.now()+pausedLeft;$('pause').onclick();});$('pauseSettings').onclick=()=>showSettings(()=>{mode='playing';deadline=performance.now()+pausedLeft;$('pause').onclick();});$('quit').onclick=()=>showTitle('play');};
 let heldPointer=null,heldKey=null;
 function holdMove(t){let h=heldPointer||heldKey;if(!h||t<h.next||mode!=='playing'||motion||autoRun||!board)return;if(board.tm[pos]!=='ground'&&!filledAt(board,mask,pos)){h.next=t+130;return;}let dest=staticSlide(board,pos,mask,h.d);if(!dest.trace.length||dest.cost!==0){h.next=t+140;return;}h.next=t+108;move(h.d);}
 // Four-way extended touch pad: the visible buttons stay compact, but gaps/corners
@@ -1548,98 +1661,405 @@ const ARCADE_PERKS=['爆風拡大','速射装填','連鎖増幅'];
 let titleArcade=null;
 function titleProgress(){let value={best:0,bestWave:1,bestCombo:0,coins:0,levels:[0,0,0],runs:0,totalKills:0};try{let stored=JSON.parse(localStorage.getItem(TITLE_ARCADE_SAVE)||'{}');for(let k of ['best','bestWave','bestCombo','coins','runs','totalKills'])if(Number.isFinite(stored[k]))value[k]=Math.max(0,stored[k]);if(Array.isArray(stored.levels))value.levels=Array.from({length:3},(_,i)=>Math.min(8,Math.max(0,Number(stored.levels[i])||0)));value.best=Math.max(value.best,Number(localStorage.getItem(TITLE_ARCADE_KEY))||0);}catch(_){}return value;}
 function titleSaveProgress(meta){try{localStorage.setItem(TITLE_ARCADE_SAVE,JSON.stringify(meta));localStorage.setItem(TITLE_ARCADE_KEY,String(meta.best));}catch(_){}}
+// v61 title arena: self-contained defense on a true 16x8 tile grid.
+// Uses the main game's rollWeapon, weapon palettes, original player and enemy sprite renderers.
+const ARCADE_COLS=16,ARCADE_ROWS=7,ARCADE_TILE=17,ARCADE_LEFT=24,ARCADE_TOP=19;
+const ARCADE_HERO=4*ARCADE_COLS+7;
+const ARCADE_CANVAS_HEIGHT=154;
+let arcadeHeldPointer=null;
+function arcadeRollSpecial(){return rollWeapon(rng((Math.random()*4294967296)>>>0),false);}
+function arcadeAmmoFor(w,starter=false){return Math.max(3,Math.min(9,Math.round((w?.ammo||18)*.23)+(starter?2:0)));}
+function arcadeMagazineFor(w){return w?.cooldown>=650?2:w?.tier>=2?3:4;}
+function arcadeManualInterval(a){return Math.max(155,Math.min(500,Math.round((a.weapon?.cooldown||270)*.58)-(a.meta.levels[1]||0)*9-(a.boosts[1]||0)*13));}
+function arcadeReloadMs(a){return Math.max(650,1600+(a.weapon?.tier||0)*100-(a.meta.levels[1]||0)*80-(a.boosts[1]||0)*110);}
+function arcadeManualWait(a,t){return Math.max(0,Math.max(a.reloadUntil||0,a.manualReadyAt||0)-t);}
+function arcadeClearHold(){arcadeHeldPointer=null;}
+window.addEventListener('blur',arcadeClearHold);
+const ARCADE_ENEMY_TYPES=['slime','bat','ghost','spider','beetle','crow','skull','mimic','doll','wolf','reaper','armor'];
+const ARCADE_MAPS=[
+ [[4,2],[4,3],[4,5],[11,2],[11,5],[11,6],[7,1],[8,6],[2,5],[13,2]],
+ [[3,2],[3,5],[5,1],[5,6],[10,1],[10,6],[12,3],[12,5],[8,2],[7,6]],
+ [[4,1],[4,6],[6,2],[6,6],[10,2],[10,6],[12,1],[12,6],[2,3],[13,4]],
+ [[3,2],[3,6],[5,3],[5,5],[9,2],[10,5],[12,2],[12,6],[7,1],[8,6]]
+];
+function arcadeDist(a){const d=Array(ARCADE_COLS*ARCADE_ROWS).fill(999),queue=[ARCADE_HERO];d[ARCADE_HERO]=0;
+ for(let j=0;j<queue.length;j++){let p=queue[j],x=p%ARCADE_COLS,y=p/ARCADE_COLS|0;for(let [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){let xx=x+dx,yy=y+dy;if(xx<0||xx>=ARCADE_COLS||yy<0||yy>=ARCADE_ROWS)continue;let q=yy*ARCADE_COLS+xx;if(a.walls.has(q)||d[q]!==999)continue;d[q]=d[p]+1;queue.push(q);}}return d;
+}
+function arcadeEdge(a){let pool=[];for(let p=0;p<ARCADE_COLS*ARCADE_ROWS;p++){let x=p%ARCADE_COLS,y=p/ARCADE_COLS|0;if(!a.walls.has(p)&&a.dist[p]<999&&(x===0||y===0||x===ARCADE_COLS-1||y===ARCADE_ROWS-1))pool.push(p);}return pool[Math.floor(Math.random()*pool.length)]??0;}
+function arcadeNext(a,p){let d=a.dist[p],x=p%ARCADE_COLS,y=p/ARCADE_COLS|0,candidates=[];
+ for(let [dx,dy] of [[0,1],[1,0],[0,-1],[-1,0]]){let xx=x+dx,yy=y+dy;if(xx>=0&&xx<ARCADE_COLS&&yy>=0&&yy<ARCADE_ROWS){let q=yy*ARCADE_COLS+xx;if(a.dist[q]<d)candidates.push(q);}}
+ return candidates.length?candidates[Math.floor(Math.random()*candidates.length)]:p;
+}
+function arcadeXY(p){return {x:ARCADE_LEFT+(p%ARCADE_COLS+.5)*ARCADE_TILE,y:ARCADE_TOP+((p/ARCADE_COLS|0)+.5)*ARCADE_TILE};}
 function newTitleArcade(t,meta=titleProgress()){
- return {meta,enemies:[{x:242,type:'ghost',speed:11,hp:1,maxHP:1,size:8,boss:false,born:t,hit:0,exploded:false},{x:295,type:'turtle',speed:9,hp:2,maxHP:2,size:8,boss:false,born:t,hit:0,exploded:false}],bombs:[],blasts:[],particles:[],kills:0,combo:0,peakCombo:0,earned:0,wave:1,waveAt:t,start:t,at:t,nextSpawn:t+650,lastAuto:t-1200,lastManual:t-1500,lastRegen:t,charge:3,maxCharge:3,boosts:[0,0,0],choice:null,choiceAt:0,shop:false,deadUntil:0,flashFrom:0,bossWave:0,shake:0};
+ arcadeClearHold();
+ let m=ARCADE_MAPS[Math.floor(Math.random()*ARCADE_MAPS.length)],walls=new Set(m.map(([x,y])=>y*ARCADE_COLS+x));
+ const starter=arcadeRollSpecial();
+ let a={meta,walls,dist:null,enemies:[],items:[],fx:[],stars:[],weapon:starter,ammo:arcadeAmmoFor(starter,true),magazineLeft:arcadeMagazineFor(starter),reloadUntil:0,manualReadyAt:t,autoSpecialReadyAt:t+1900,autoSpecialCount:0,kills:0,wave:1,waveAt:t,start:t,at:t,nextSpawn:t+460,nextItem:t+1600,lastAuto:t-950,lastManual:t-950,invuln:0,lives:3,maxLives:3,earned:0,boosts:[0,0,0],choice:null,choiceAt:0,shop:false,deadUntil:0,flashFrom:0,shake:0,combo:0,lastKill:t,spawned:0};
+ a.dist=arcadeDist(a);arcadeSpawnEnemy(a,t);return a;
 }
 function arcadeUpgradeCost(a,i){return 10+10*a.meta.levels[i]+Math.floor(a.meta.levels[i]**2*2);}
-function arcadeBuy(a,i){if(i<0||i>=3)return;if(a.meta.levels[i]>=8)return;if(a.meta.coins<arcadeUpgradeCost(a,i))return;a.meta.coins-=arcadeUpgradeCost(a,i);a.meta.levels[i]++;titleSaveProgress(a.meta);beep(810,.04,'triangle');}
-function arcadeChoose(a,i){i=Math.max(0,Math.min(2,i));a.boosts[i]++;a.choice=null;a.nextSpawn=Math.max(a.nextSpawn,performance.now()+650);beep(850,.07,'triangle');}
-function titleThrow(t,manual=false,targetX=null){if(!titleArcade)titleArcade=newTitleArcade(t);let a=titleArcade;
- if(a.deadUntil||a.choice||a.shop)return false;
- if(manual){if(a.charge<=0||t-a.lastManual<175)return false;a.lastManual=t;a.charge--;
- }else{if(t-a.lastAuto<3050)return false;a.lastAuto=t;}
- const closest=a.enemies.slice().sort((x,y)=>x.x-y.x)[0];let aimed=targetX==null?(closest?closest.x-closest.speed*.30:200):targetX;
- let count=1+(manual&&a.combo>=12?1:0)+(manual&&a.boosts[1]>=3?1:0);
- for(let j=0;j<count;j++){
-  let spread=manual?7:18,center=Math.max(65,Math.min(315,aimed+(Math.random()-.5)*spread+(j?(-1+2*Math.random())*24:0)));
-  a.bombs.push({fromX:49,x:center,at:t+j*100,landing:t+335+j*100,explode:t+650+j*145,radius:23+5*a.meta.levels[0]+7*a.boosts[0]+(manual?3:0),damage:manual?1.25:1,chain:manual});
+function arcadeBuy(a,i){if(i<0||i>=3||a.meta.levels[i]>=8)return;if(a.meta.coins<arcadeUpgradeCost(a,i))return;
+ a.meta.coins-=arcadeUpgradeCost(a,i);a.meta.levels[i]++;titleSaveProgress(a.meta);beep(820,.04,'triangle');}
+function arcadeChoose(a,i){i=Math.max(0,Math.min(2,i));a.boosts[i]++;a.choice=null;a.nextSpawn=Math.max(a.nextSpawn,performance.now()+240);beep(840,.04,'triangle');}
+function arcadeSpawnEnemy(a,t){if(a.enemies.length>=58)return;
+ let available=ARCADE_ENEMY_TYPES.slice(0,Math.min(ARCADE_ENEMY_TYPES.length,3+Math.floor(a.wave/1.3)));
+ const elite=a.wave%4===0&&a.spawned%9===0;
+ let type=elite?'reaper':available[Math.floor(Math.random()*available.length)];
+ let p=arcadeEdge(a),base=Math.max(1,Math.round(enemyHP(type)/19));
+ const hp=base+Math.floor((a.wave-1)/3)+(elite?2:0);
+ a.enemies.push({p,from:p,moveAt:t,stepMs:600,hp,maxHP:hp,type,hit:0,shield:type==='armor'||type==='beetle'?1:0,elite,born:t,id:++a.spawned,splits:type==='slime'&&a.wave>=4,dashed:false,lastWeb:t});
+ a.fx.push({kind:'spawn',p,at:t,life:430,color:elite?'#ffacba':'#c1c6fa'});
+}
+function arcadeSpawnItem(a,t){if(a.items.length>=9)return;
+ let p=arcadeEdge(a);const heart=a.lives<2&&Math.random()<.17;
+ let w=heart?null:arcadeRollSpecial();
+ let ammo=heart?0:arcadeAmmoFor(w);
+ a.items.push({p,from:p,moveAt:t,nextMove:t+250,weapon:w,heart,ammo,at:t});a.fx.push({kind:'spawn',p,at:t,life:420,color:'#ffe7a0'});
+}
+// v64: the same interpolated screen position drives rendering, collision, and impact feedback.
+function arcadeEnemyXY(e,t){
+ const f=Math.max(0,Math.min(1,(t-e.moveAt)/Math.max(1,e.stepMs)));
+ const from=arcadeXY(e.from),to=arcadeXY(e.p);
+ return {x:from.x+(to.x-from.x)*f,y:from.y+(to.y-from.y)*f};
+}
+function arcadePointSegmentDistance(p,v,w){
+ const dx=w.x-v.x,dy=w.y-v.y,len=dx*dx+dy*dy;
+ const u=len?Math.max(0,Math.min(1,((p.x-v.x)*dx+(p.y-v.y)*dy)/len)):0;
+ return Math.hypot(p.x-v.x-dx*u,p.y-v.y-dy*u);
+}
+function arcadeInZone(p,z,bodyRadius=0){
+ return z.kind==='circle'?Math.hypot(p.x-z.x,p.y-z.y)<=z.r+bodyRadius:
+ arcadePointSegmentDistance(p,z.a,z.b)<=z.r+bodyRadius;
+}
+function arcadeInZones(p,zones,bodyRadius=0){return zones.some(z=>arcadeInZone(p,z,bodyRadius));}
+function arcadeWeaponZones(a,w,target,t){
+ const h=arcadeXY(ARCADE_HERO),end=arcadeEnemyXY(target,t),s=w.shape||'bolt';
+ const circles=(x,y,r)=>({kind:'circle',x,y,r});
+ const segment=(p,q,r)=>({kind:'segment',a:{x:p.x,y:p.y},b:{x:q.x,y:q.y},r});
+ const areas=['grenade','square','scatter','lifegrid','nova','vortex','glyph','origami','meteor','mine','crescent','siphon','roulette'];
+ const chains=['chain','ricochet','constellation','tether','film','boomerang','harpoon','needle','portal','mirror','rewind','seeker','prism'];
+ const rings=['orbit','spiral','aegis','clock','lure','ring'];
+ const lines=['laser','line','rail','drill','shears','echo','shadowtax','iai','reaver','blade','spear','cross'];
+ let zones=[],points=[{x:h.x,y:h.y}],kind='projectile';
+ if(areas.includes(s)){
+   kind='area';zones.push(circles(end.x,end.y,['nova','meteor','vortex'].includes(s)?ARCADE_TILE*2.95:ARCADE_TILE*2.2));
+ }else if(chains.includes(s)){
+   kind='chain';let pool=a.enemies.filter(e=>e.hp>0&&e!==target),prev=end;
+   points.push({x:end.x,y:end.y});
+   for(let i=0;i<Math.min(4,1+(w.tier||0));i++){
+     let pick=null,best=ARCADE_TILE*5.0;
+     for(let e of pool){let q=arcadeEnemyXY(e,t),d=Math.hypot(q.x-prev.x,q.y-prev.y);if(d<best){best=d;pick={e,q};}}
+     if(!pick)break;
+     pool=pool.filter(e=>e!==pick.e);prev=pick.q;points.push({x:prev.x,y:prev.y});
+   }
+   for(let i=1;i<points.length;i++)zones.push(segment(points[i-1],points[i],ARCADE_TILE*.49));
+   points.slice(1).forEach(q=>zones.push(circles(q.x,q.y,ARCADE_TILE*.67)));
+ }else if(rings.includes(s)){
+   kind='orbit';zones.push(circles(h.x,h.y,ARCADE_TILE*3.0));
+   zones.push(segment(h,end,ARCADE_TILE*.62));points.push(end);
+ }else if(lines.includes(s)){
+   kind='line';zones.push(segment(h,end,ARCADE_TILE*(s==='shears'?1.15:.82)));zones.push(circles(end.x,end.y,ARCADE_TILE*.65));points.push(end);
+ }else{
+   zones.push(segment(h,end,ARCADE_TILE*.65));zones.push(circles(end.x,end.y,ARCADE_TILE*.75));points.push(end);
  }
- if(manual)beep(565,.034,'triangle');return true;
+ // Physical damage and graphic footprints both read these exact same shapes.
+ const tiles=[];
+ for(let p=0;p<ARCADE_COLS*ARCADE_ROWS;p++){
+   if(a.walls.has(p))continue;
+   if(arcadeInZones(arcadeXY(p),zones))tiles.push(p);
+ }
+ return {zones,points,tiles,kind,target:{x:end.x,y:end.y}};
 }
-function titleArcadeTap(x,y,t,W=320,H=94){if(!titleArcade)titleArcade=newTitleArcade(t);let a=titleArcade;
- if(a.deadUntil){if(t-a.flashFrom>700)titleArcade=newTitleArcade(t,a.meta);return;}
- if(a.shop){if(y<25&&x>W-75){a.shop=false;return;}if(y>27){arcadeBuy(a,Math.min(2,Math.floor(x/W*3)));return;}a.shop=false;return;}
- if(a.choice){arcadeChoose(a,Math.min(2,Math.floor(x/W*3)));return;}
- if(y<22&&x>W-73){a.shop=true;return;}
- titleThrow(t,true,x/W*320);
+function arcadeDeal(a,e,damage,t,color,tag='standard'){
+ if(!e||e.hp<=0)return 0;
+ const reduction=e.shield?Math.min(.6,.28+e.shield*.12):0;
+ if(e.type==='ghost'&&Math.sin(t/275+e.id)>0.65)damage*=.5;
+ const applied=Math.max(.6,damage*(1-reduction));e.hp-=applied;e.shield=Math.max(0,e.shield-1);e.hit=t;
+ const point=arcadeEnemyXY(e,t);
+ a.fx.push({kind:'hitBurst',x:point.x,y:point.y,at:t,life:360,color,damage:applied,tag,seed:e.id*17+Math.floor(t)});
+ if(e.hp<=0&&!e.killFx){
+   e.killFx=true;a.fx.push({kind:'killBurst',x:point.x,y:point.y,at:t,life:e.elite?770:610,color:e.elite?'#ffe3a1':color,elite:e.elite,seed:e.id*29+Math.floor(t)});
+ }
+ return applied;
 }
-function titleArcadeWave(a,t){a.wave++;a.waveAt=t;a.nextSpawn=t+600;a.charge=a.maxCharge;
- if(a.wave%3===0){a.choice=[...ARCADE_PERKS];a.choiceAt=t;}
- a.meta.bestWave=Math.max(a.meta.bestWave,a.wave);if(a.wave%5===0)a.bossWave=a.wave;
- titleSaveProgress(a.meta);
+function arcadeSpecialThreat(a,t){
+ if(!a.weapon||a.ammo<=0||a.reloadUntil>t||arcadeManualWait(a,t)>0||t<(a.autoSpecialReadyAt||0))return null;
+ const hero=arcadeXY(ARCADE_HERO),live=a.enemies.filter(e=>e.hp>0);
+ if(!live.length)return null;
+ let close=null,near=Infinity,cluster=null,maxNeighbours=0;
+ for(let e of live){let p=arcadeEnemyXY(e,t),d=Math.hypot(p.x-hero.x,p.y-hero.y);
+   if(d<near){near=d;close=e;}
+   if(d<=ARCADE_TILE*5){let n=live.filter(q=>Math.hypot(arcadeEnemyXY(q,t).x-p.x,arcadeEnemyXY(q,t).y-p.y)<=ARCADE_TILE*2.65).length;
+     if(n>maxNeighbours){maxNeighbours=n;cluster=e;}}
+ }
+ // Spend a limited shot only for imminent danger or a real clustered target.
+ if(near<=ARCADE_TILE*2.55)return close;
+ if(maxNeighbours>=3)return cluster;
+ return null;
 }
-function arcadeBlast(a,x,t,r,damage=1,depth=0){a.blasts.push({x,at:t,r});a.shake=Math.min(4,a.shake+1.5);
- for(let e of a.enemies)if(e.hp>0&&Math.abs(e.x-x)<r+e.size){let u=Math.abs(e.x-x)/(r+e.size),value=damage*(1.1-u*.35+(Math.abs(e.x-x)<12?.6:0));e.hp-=e.type==='turtle'?value*.75:value;e.hit=t;}
- if(depth<2){for(let e of a.enemies){if(e.hp>0||e.exploded)continue;e.exploded=true;
-  let prob=Math.min(.8,.08+.10*a.meta.levels[2]+.18*a.boosts[2]+(a.combo>=10?.13:0));
-  if(Math.random()<prob){let rr=Math.max(20,r*.62);a.bombs.push({fromX:e.x,x:e.x,at:t,landing:t,explode:t+130+depth*55,radius:rr,damage:.85,chain:true,linked:true});}
- }}
+function arcadeFire(a,t,point,manual=false,autoSpecial=false){
+ if(a.deadUntil||a.choice||a.shop||(!manual&&!a.enemies.length))return false;
+ if(manual){
+  if(!a.weapon||a.ammo<=0||arcadeManualWait(a,t)>0)return false;
+  a.manualReadyAt=t+arcadeManualInterval(a);a.lastManual=t;
+ }else{
+  if(t-a.lastAuto<Math.max(360,740-a.meta.levels[1]*45-a.boosts[1]*55)+(t<(a.slowUntil||0)?200:0))return false;
+  a.lastAuto=t;
+ }
+ const w=manual?a.weapon:standardGun(),hero=arcadeXY(ARCADE_HERO),spot=point||hero;
+ const live=a.enemies.filter(e=>e.hp>0);
+ const target=live.sort((u,v)=>{
+   const p=arcadeEnemyXY(u,t),q=arcadeEnemyXY(v,t);
+   return Math.hypot(p.x-spot.x,p.y-spot.y)-Math.hypot(q.x-spot.x,q.y-spot.y);
+ })[0];
+ if(!target){
+  if(!manual)return false;
+  // Empty practice cast: show its shape but preserve the precious magazine.
+  let x=Math.max(ARCADE_LEFT,Math.min(ARCADE_LEFT+ARCADE_COLS*ARCADE_TILE,spot.x));
+  let y=Math.max(ARCADE_TOP,Math.min(ARCADE_TOP+ARCADE_ROWS*ARCADE_TILE,spot.y));
+  if(Math.hypot(x-hero.x,y-hero.y)<10){x=Math.min(ARCADE_LEFT+ARCADE_COLS*ARCADE_TILE,hero.x+55);y=hero.y-12;}
+  a.fx.push({kind:'manual',x,y,from:{x:hero.x,y:hero.y},shape:w.shape,color:w.palette?.body||'#fff2ae',core:w.palette?.core||'#ffffff',at:t,life:590,zones:[],tiles:[],points:[hero,{x,y}],empty:true});
+  a.manualReadyAt=t+Math.min(arcadeManualInterval(a),260);a.lastShotType='manual';a.lastManual=t;
+  a.shotFlashUntil=t+350;a.shotNote='空撃ち（弾数消費なし）';beep(560,.025,'triangle');return true;
+ }
+ const color=manual?(w.palette?.body||'#e5f6ff'):'#9fb8c9';
+ const base=Math.max(.85,(w.power||17)/17);
+ const power=(manual?base*4.15:base*.98)*(1+a.meta.levels[0]*.11+a.boosts[0]*.22);
+ const geometry=manual?arcadeWeaponZones(a,w,target,t):{
+   zones:[{kind:'segment',a:hero,b:arcadeEnemyXY(target,t),r:4.5},{kind:'circle',...arcadeEnemyXY(target,t),r:9}],
+   points:[hero,arcadeEnemyXY(target,t)],tiles:[target.p],kind:'standard',target:arcadeEnemyXY(target,t)
+ };
+ let struck=0;
+ for(let e of a.enemies){if(e.hp<=0)continue;
+   const p=arcadeEnemyXY(e,t);
+   if(arcadeInZones(p,geometry.zones,5)){
+     arcadeDeal(a,e,power*(manual?1:.9),t,color,manual?'special':'standard');struck++;
+   }
+ }
+ // Attack range markers and damage are calculated from the identical geometry.
+ a.fx.push({kind:manual?'manual':'shotZone',from:hero,x:geometry.target.x,y:geometry.target.y,
+   zones:geometry.zones,tiles:geometry.tiles,points:geometry.points,shape:w.shape||'bolt',color,
+   core:w.palette?.core||'#ffffff',at:t,life:manual?560:290,empty:false,struck});
+ if(manual){
+  a.lastShotType=autoSpecial?'auto-special':'manual';
+  a.shotFlashUntil=t+(autoSpecial?350:510);
+  a.shotNote=autoSpecial?'危険を察知！ 特殊武器自動発動':'特殊攻撃 発動！';
+  a.ammo=Math.max(0,a.ammo-1);a.magazineLeft=Math.max(0,a.magazineLeft-1);
+  a.autoSpecialReadyAt=t+(autoSpecial?2800:1200);if(autoSpecial)a.autoSpecialCount=(a.autoSpecialCount||0)+1;
+  if(a.ammo===0){a.weapon=null;a.reloadUntil=0;a.magazineLeft=0;}
+  else if(a.magazineLeft===0){a.reloadUntil=t+arcadeReloadMs(a);a.manualReadyAt=a.reloadUntil;}
+  beep(540+(w.tier||0)*80,.035,'square');
+ }return true;
+}
+function titleArcadeTap(x,y,t,W=320,H=ARCADE_CANVAS_HEIGHT){if(!titleArcade)titleArcade=newTitleArcade(t);let a=titleArcade;
+ if(a.deadUntil){if(t-a.flashFrom>500)titleArcade=newTitleArcade(t,a.meta);return;}
+ if(a.shop){if(y<22&&x>235){a.shop=false;return;}arcadeBuy(a,Math.max(0,Math.min(2,Math.floor((x-12)/99))));return;}
+ if(a.choice){arcadeChoose(a,Math.max(0,Math.min(2,Math.floor((x-12)/99))));return;}
+ if(y<19&&x>239){a.shop=true;return;}
+ arcadeFire(a,t,{x,y},true);
+}
+function titleArcadeWave(a,t){a.wave++;a.waveAt=t;
+ if(a.wave%3===0){a.choice=true;a.choiceAt=t;}
+ a.meta.bestWave=Math.max(a.meta.bestWave,a.wave);titleSaveProgress(a.meta);
 }
 function updateTitleArcade(t){if(!titleArcade)titleArcade=newTitleArcade(t);let a=titleArcade;
  if(a.deadUntil){if(t>=a.deadUntil)titleArcade=newTitleArcade(t,a.meta);return;}
- let dt=Math.max(0,Math.min(70,t-a.at));a.at=t;
- if(a.shop||a.choice){if(a.choice&&t-a.choiceAt>6800)arcadeChoose(a,Math.floor(Math.random()*3));return;}
- let regen=Math.max(460,1500-125*a.meta.levels[1]-170*a.boosts[1]);
- if(t-a.lastRegen>=regen){a.lastRegen=t;if(a.charge<a.maxCharge)a.charge++;}
- if(t-a.waveAt>13500)titleArcadeWave(a,t);if(a.combo&&t-(a.lastKill||a.start)>3900)a.combo=0;
- if(t>=a.nextSpawn){
-  let boss=a.wave%5===0&&a.bossWave===a.wave;if(boss)a.bossWave=0;
-  let types=['ghost','turtle','wolf','hare','golem','beetle','knight'];let kind=boss?'turtle':types[Math.floor(Math.random()*Math.min(types.length,2+Math.floor(a.wave/2)))];
-  let speed=(boss?7:kind==='wolf'?17:kind==='ghost'?13:kind==='turtle'?8:11)+Math.min(23,a.wave*1.2)+Math.random()*3;
-  let hp=boss?5+Math.ceil(a.wave*.5):kind==='turtle'?2+Math.floor(a.wave/4):kind==='ghost'?1+Math.floor(a.wave/8):1+Math.floor(a.wave/6);
-  a.enemies.push({x:332+Math.random()*18,type:kind,speed,hp,maxHP:hp,size:boss?13:8,boss,born:t,hit:0,exploded:false});
-  a.nextSpawn=t+Math.max(390,1550-a.wave*82-Math.min(250,a.kills*2.5));
+ const dt=Math.min(75,Math.max(0,t-a.at));a.at=t;
+ if(a.shop)return;
+ if(a.choice){if(t-a.choiceAt>2900)arcadeChoose(a,Math.floor(Math.random()*3));return;}
+ if(t-a.reloadUntil>=0&&a.reloadUntil&&t>=a.reloadUntil){a.reloadUntil=0;a.magazineLeft=arcadeMagazineFor(a.weapon);}
+ if(arcadeHeldPointer&&arcadeHeldPointer.target===document.querySelector('#modal canvas.titleArcade'))arcadeFire(a,t,arcadeHeldPointer.point,true);
+ if(t-a.waveAt>10500)titleArcadeWave(a,t);
+ // Enemy pressure rises exponentially. An upper cap and a hard list limit protect Safari.
+ const interval=Math.max(145,1450*Math.pow(.80,a.wave-1)-Math.min(170,a.kills*1.9));
+ if(t>=a.nextSpawn){let amount=a.wave>=7&&Math.random()<.42?2:1;for(let j=0;j<amount;j++)arcadeSpawnEnemy(a,t);a.nextSpawn=t+interval;}
+ if(t>=a.nextItem){arcadeSpawnItem(a,t);a.nextItem=t+Math.max(1050,2200-a.wave*65);}
+ for(let e of a.enemies){let speed=(e.type==='bat'||e.type==='crow'||e.type==='wolf'?410:e.type==='reaper'?470:e.type==='armor'?890:610);
+  e.stepMs=Math.max(150,speed-a.wave*14);
+  if(t-e.moveAt>=e.stepMs){let p=arcadeNext(a,e.p);e.from=e.p;e.p=p;e.moveAt=t;
+   if(e.type==='reaper'&&!e.dashed&&a.dist[e.p]<=5&&a.dist[e.p]>1){e.dashed=true;e.p=arcadeNext(a,e.p);a.fx.push({kind:'beam',from:e.from,p:e.p,at:t,life:410,color:'#ffc1d2'});}
+   if(e.type==='spider'&&a.dist[e.p]<=3&&t-e.lastWeb>2600){e.lastWeb=t;a.slowUntil=t+900;a.fx.push({kind:'beam',from:e.p,p:ARCADE_HERO,at:t,life:430,color:'#e5f2fc'});}}
+  if(e.p===ARCADE_HERO&&t>=a.invuln){a.lives--;a.invuln=t+1000;
+   a.fx.push({kind:'blast',p:ARCADE_HERO,at:t,life:540,r:2,color:'#ff7b92'});e.hp=0;e.noScore=true;}
  }
- if(t-a.lastAuto>3100&&a.enemies.length)titleThrow(t,false);
- for(let e of a.enemies)e.x-=e.speed*dt/1000;
- for(let b of a.bombs)if(t>=b.explode&&!b.done){b.done=true;arcadeBlast(a,b.x,t,b.radius,b.damage,b.linked?1:0);}
- let defeated=a.enemies.filter(e=>e.hp<=0);
- for(let e of defeated){a.kills++;a.combo++;a.lastKill=t;a.peakCombo=Math.max(a.peakCombo,a.combo);let gained=e.boss?12:1+(a.combo>=8?1:0);a.earned+=gained;a.meta.coins+=gained;a.particles.push({x:e.x,y:54,at:t,kind:e.boss?'gold':'spark'});
-  a.meta.best=Math.max(a.meta.best,a.kills);a.meta.bestCombo=Math.max(a.meta.bestCombo,a.peakCombo);
+ for(let item of a.items){if(t>=item.nextMove){item.from=item.p;item.p=arcadeNext(a,item.p);item.moveAt=t;item.nextMove=t+220;}
+  if(item.p===ARCADE_HERO){if(item.heart)a.lives=Math.min(a.maxLives,a.lives+1);
+   else{a.weapon=item.weapon;a.ammo=item.ammo;a.magazineLeft=arcadeMagazineFor(item.weapon);a.reloadUntil=0;a.manualReadyAt=t+150;a.autoSpecialReadyAt=t+1150;}
+   item.collected=true;let c=item.weapon?.palette?.core||'#ffe29a';a.fx.push({kind:'blast',p:ARCADE_HERO,at:t,life:400,r:1,color:c});beep(900,.04,'triangle');}
  }
- a.enemies=a.enemies.filter(e=>e.hp>0);a.bombs=a.bombs.filter(b=>t<b.explode+80);a.blasts=a.blasts.filter(b=>t-b.at<460);a.particles=a.particles.filter(b=>t-b.at<520);
- a.shake*=.82;
- if(a.enemies.some(e=>e.x<52)){
-  a.deadUntil=t+1750;a.flashFrom=t;a.meta.best=Math.max(a.meta.best,a.kills);a.meta.bestWave=Math.max(a.meta.bestWave,a.wave);a.meta.totalKills+=a.kills;a.meta.runs++;
-  titleSaveProgress(a.meta);beep(170,.18,'sawtooth');
+ a.items=a.items.filter(e=>!e.collected&&t-e.at<15500);
+ // Auto-special never suppresses the infinite-ammo starter gun.
+ const threat=arcadeSpecialThreat(a,t);
+ if(threat){let p=arcadeEnemyXY(threat,t);arcadeFire(a,t,p,true,true);}
+ arcadeFire(a,t,null,false);
+ for(let e of [...a.enemies])if(e.hp<=0&&!e.noScore){
+  if(e.splits&&a.enemies.length<52){for(let i=0;i<2;i++){let p=arcadeNext(a,e.p);a.enemies.push({p,from:e.p,moveAt:t,stepMs:330,hp:1,maxHP:1,type:'mite',hit:0,shield:0,elite:false,born:t,id:++a.spawned,splits:false,dashed:true,lastWeb:t});}}
+  a.kills++;a.combo++;a.lastKill=t;
+  let gained=e.elite?5:1+(a.combo>=8?1:0);a.earned+=gained;a.meta.coins+=gained;// Kill bursts are emitted at the exact hit position in arcadeDeal().
+  a.meta.best=Math.max(a.meta.best,a.kills);
  }
+ a.enemies=a.enemies.filter(e=>e.hp>0);a.fx=a.fx.filter(f=>t-f.at<f.life).slice(-120);
+ if(a.combo&&t-a.lastKill>3700)a.combo=0;
+ if(a.lives<=0){a.deadUntil=t+2200;a.flashFrom=t;a.meta.bestWave=Math.max(a.meta.bestWave,a.wave);a.meta.totalKills+=a.kills;a.meta.runs++;titleSaveProgress(a.meta);beep(165,.16,'sawtooth');}
 }
 function withMiniCtx(c,fn){let saved=ctx;try{ctx=c;fn();}finally{ctx=saved;}}
 function miniHero(c,x,y,t,moving=true){withMiniCtx(c,()=>character(x,y,t,moving));}
 function miniEnemy(c,e,y,t){withMiniCtx(c,()=>{let x=Math.round(e.x),bob=Math.sin(t/220+e.born)>0?1:0;drawExtraEnemy({type:e.type},x,y,bob);});}
-function drawTitleArcade(c,t,W,H){updateTitleArcade(t);let a=titleArcade;if(!a)return;
- c.save();c.imageSmoothingEnabled=false;
- c.fillStyle='#192a3b';c.fillRect(0,0,W,H);c.fillStyle='#26394e';c.fillRect(0,H-26,W,26);
- for(let x=0;x<W;x+=24){c.fillStyle='#517b8e';c.fillRect(x,H-26,23,3);c.fillStyle='#34495d';c.fillRect(x+3,H-9,14,2);}
- for(let j=0;j<11;j++){let x=(j*56+t/60)%W,y=22+(j*21)%Math.max(24,H-53);c.fillStyle='#b5d6e8';c.fillRect(x,y,2,2);}
- let heroY=H-51;miniHero(c,27,heroY,t,true);if(t-a.lastManual<240&&t-a.lastManual>=0){c.fillStyle='#f4c69b';c.fillRect(46,heroY+10,6,5);}
- for(let e of a.enemies){miniEnemy(c,e,H-51,t);if(e.hp<e.maxHP){c.fillStyle='#48333e';c.fillRect(e.x+5,H-57,16,2);c.fillStyle=e.boss?'#ffd782':'#b5ecc9';c.fillRect(e.x+5,H-57,16*Math.max(0,e.hp)/e.maxHP,2);}if(e.boss){c.strokeStyle='#ffd26c';c.lineWidth=2;c.strokeRect(e.x+2,H-52,23,25);}}
- for(let b of a.bombs){if(t<b.at||t>b.explode)continue;let f=Math.max(0,Math.min(1,(t-b.at)/(b.landing-b.at||1))),x=b.fromX+(b.x-b.fromX)*f,y=H-33-Math.sin(f*Math.PI)*38;
-  if(t>b.landing){x=b.x;y=H-33+Math.sin(t/45);}
-  c.fillStyle='#242e3a';c.fillRect(x-4,y-3,9,9);c.fillStyle='#96ac83';c.fillRect(x-3,y-4,7,7);c.fillStyle='#ffeabb';c.fillRect(x+1,y-6,3,3);
- }
- for(let b of a.blasts){let u=(t-b.at)/460,r=b.r*Math.min(1,u*3);c.globalAlpha=Math.max(0,1-u);c.strokeStyle='#fff8bf';c.lineWidth=6*(1-u)+1;c.beginPath();c.arc(b.x,H-31,r,0,Math.PI*2);c.stroke();c.strokeStyle='#fda05c';c.lineWidth=2;c.beginPath();c.arc(b.x,H-31,r+5,0,Math.PI*2);c.stroke();c.globalAlpha=1;}
- for(let b of a.particles){let u=(t-b.at)/520;c.globalAlpha=Math.max(0,1-u);for(let j=0;j<5;j++){let angle=j*Math.PI*2/5+1.2;let px=b.x+Math.cos(angle)*24*u,py=H-43+Math.sin(angle)*20*u;c.fillStyle=b.kind==='gold'?'#ffe38f':'#fff7c9';c.fillRect(px,py,3,3);}c.globalAlpha=1;}
- c.fillStyle='#0c1a2ada';c.fillRect(0,0,W,20);c.font='bold 9px monospace';c.fillStyle='#fff0c3';c.fillText('討伐 '+a.kills+'  BEST '+a.meta.best+'   W'+a.wave,6,12);
- c.fillStyle='#abe8cc';c.font='8px monospace';c.fillText('◆'.repeat(a.charge)+'◇'.repeat(a.maxCharge-a.charge),165,12);
- c.fillStyle='#e6d4ab';c.fillText('強化 '+a.meta.coins+' ✦',253,12);
- if(a.combo>=3){c.fillStyle='#fff09e';c.font='bold 10px monospace';c.fillText(a.combo+' CHAIN',145,34);}
- if(a.shop||a.choice){c.fillStyle='rgba(12,19,34,.94)';c.fillRect(0,20,W,H-20);c.fillStyle='#e8f7ff';c.font='bold 11px monospace';c.fillText(a.shop?'恒久強化  ✦で購入  （右上で閉じる）':'WAVE '+a.wave+'  報酬を1つ選択',10,34);
-  for(let i=0;i<3;i++){let x=5+i*105;let active=!a.shop||a.meta.coins>=arcadeUpgradeCost(a,i);c.fillStyle=active?'#53667b':'#393a45';c.fillRect(x,39,100,H-44);c.strokeStyle='#8998a6';c.strokeRect(x+.5,39.5,99,H-45);c.fillStyle='#fff4cb';c.font='bold 10px sans-serif';c.fillText(ARCADE_PERKS[i],x+8,54);c.fillStyle='#d7e5ed';c.font='9px monospace';c.fillText(a.shop?'Lv'+a.meta.levels[i]+'  '+arcadeUpgradeCost(a,i)+'✦':'この冒険 +1',x+8,69);}
- }
- if(a.deadUntil){let u=Math.min(1,(t-a.flashFrom)/850);c.fillStyle='rgba(4,8,21,'+(.36+u*.62)+')';c.fillRect(0,0,W,H);c.fillStyle='#fff1c6';c.font='bold 15px monospace';c.fillText('GAME OVER  '+a.kills+' K.O.',56,45);c.font='10px monospace';c.fillText('BEST '+a.meta.best+'  +'+a.earned+'✦  TAP RETRY',64,64);}
+function arcadeSprite(c,type,x,y,t){c.save();c.translate(Math.round(x-8),Math.round(y-8));c.scale(.70,.70);
+ try{withMiniCtx(c,()=>drawExtraEnemy({type},0,0,Math.sin(t/200)>0?1:0));}catch(_){c.fillStyle='#dfd0e9';c.fillRect(4,4,18,18);}c.restore();}
+// v64: damage geometry and its small footprint indicators are the same object.
+function arcadeDrawZone(c,z,color,u){
+ c.save();c.globalAlpha=.13*(1-u);c.fillStyle=color;c.strokeStyle=color;c.lineWidth=1.3;
+ c.beginPath();
+ if(z.kind==='circle')c.arc(z.x,z.y,z.r,0,Math.PI*2);
+ else{c.lineCap='round';c.lineWidth=z.r*2;c.moveTo(z.a.x,z.a.y);c.lineTo(z.b.x,z.b.y);}
+ c.stroke();
+ if(z.kind==='circle'){c.fill();c.globalAlpha=.42*(1-u);c.lineWidth=1;c.stroke();}
  c.restore();
 }
+function arcadeDrawFootprint(c,f,u){
+ if(!f.zones?.length)return;
+ c.save();c.globalAlpha=Math.max(0,.88*(1-u));
+ for(let z of f.zones)arcadeDrawZone(c,z,f.color,u);
+ // Small universal four-pixel diamond on each real attackable tile. Walls are excluded.
+ const r=Math.max(1.2,2.4-u*1.2);
+ for(let p of f.tiles||[]){let q=arcadeXY(p);
+  c.strokeStyle='#faffdf';c.lineWidth=1;c.beginPath();c.moveTo(q.x,q.y-r-2);c.lineTo(q.x+r+2,q.y);
+  c.lineTo(q.x,q.y+r+2);c.lineTo(q.x-r-2,q.y);c.closePath();c.stroke();
+  c.fillStyle=f.color;c.fillRect(q.x-1,q.y-1,2,2);
+ }
+ c.restore();
+}
+function arcadeDrawSpecialFX(c,f,t){
+ const u=Math.min(1,Math.max(0,(t-f.at)/f.life)),alpha=Math.max(0,Math.min(1,(1-u)*2.2));
+ const origin=f.from||arcadeXY(ARCADE_HERO),end={x:f.x,y:f.y},s=f.shape||'bolt';
+ c.save();c.globalAlpha=alpha;c.lineCap='round';c.lineJoin='round';
+ // The universal footprint is rendered before the distinctive weapon flair.
+ arcadeDrawFootprint(c,f,u);
+ c.strokeStyle=f.color;c.fillStyle=f.core||'#ffffff';
+ c.beginPath();c.arc(origin.x,origin.y,2+(1-u)*5,0,Math.PI*2);c.fill();
+ const blade=['iai','crescent','shears','boomerang','blade','shadowtax','echo','film'].includes(s);
+ const electric=['chain','constellation','tether','harpoon','seeker'].includes(s);
+ const area=f.zones?.some(z=>z.kind==='circle'&&z.r>20);
+ const rings=['orbit','spiral','clock','aegis','lure','ring'].includes(s);
+ const segments=(f.points||[]);
+ if(segments.length>1){
+  for(let k=1;k<segments.length;k++){let v=segments[k-1],w=segments[k];
+   c.beginPath();c.moveTo(v.x,v.y);
+   const steps=electric?6:1;
+   for(let i=1;i<=steps;i++){let h=i/steps,x=v.x+(w.x-v.x)*h,y=v.y+(w.y-v.y)*h;
+    if(electric&&i<steps){x+=Math.sin(i*4.3+f.at)*2;y+=Math.cos(i*3.3+f.at)*2;}
+    c.lineTo(x,y);
+   }
+   c.lineWidth=blade?3.1:electric?2.2:2;c.stroke();
+  }
+ }
+ if(area){
+  const z=f.zones.find(z=>z.kind==='circle'&&z.r>20);
+  if(z){c.beginPath();c.arc(z.x,z.y,z.r*(.18+.82*u),0,Math.PI*2);c.lineWidth=2.5;c.stroke();
+   if(['glyph','lifegrid','origami'].includes(s)){
+     c.font='bold 13px monospace';c.textAlign='center';c.fillText(s==='glyph'?'✦':s==='origami'?'◇':'❖',z.x,z.y+4);
+   }
+  }
+ }
+ if(blade){c.beginPath();c.arc(end.x,end.y,8+u*6,-2.5+u,-.1+u);c.lineWidth=2.5;c.stroke();}
+ if(rings){c.beginPath();c.arc(origin.x,origin.y,9+u*11,u*4,u*4+Math.PI*1.3);c.lineWidth=2.5;c.stroke();}
+ // Dry fire is always seen, but the practice cast never claims a damage range.
+ if(f.empty){c.beginPath();c.arc(end.x,end.y,4+u*9,0,Math.PI*2);c.lineWidth=2;c.stroke();}
+ c.restore();
+}
+function arcadeDrawHitBurst(c,f,t){
+ const u=Math.min(1,Math.max(0,(t-f.at)/f.life)),x=f.x,y=f.y,a=Math.max(0,1-u);
+ const random=(n)=>{const v=Math.sin((f.seed||17)*.127+n*42.133)*43758.5453;return v-Math.floor(v);};
+ c.save();c.globalAlpha=a;
+ if(f.kind==='hitBurst'){
+  // White contact flash + compact directional sparks + readable floating damage number.
+  c.fillStyle='#fffef2';c.fillRect(x-3+(u*2),y-3,6,6);
+  c.strokeStyle=f.color;c.lineWidth=2;c.beginPath();c.arc(x,y,3+u*11,0,Math.PI*2);c.stroke();
+  for(let i=0;i<9;i++){let angle=i*Math.PI*2/9+random(i)*.28;
+   let r=4+u*(9+random(i+20)*11),size=1.5+(1-u)*2;
+   c.fillStyle=i%3===0?'#fffafa':f.color;
+   c.fillRect(x+Math.cos(angle)*r-size/2,y+Math.sin(angle)*r-size/2,size,size);
+  }
+  if(u<.8){c.font='bold 9px sans-serif';c.textAlign='center';c.lineWidth=2;c.strokeStyle='#122232';
+   const txt='-'+Math.max(1,Math.round(f.damage*10)/10);
+   c.strokeText(txt,x,y-12-u*12);c.fillStyle='#fff4bf';c.fillText(txt,x,y-12-u*12);}
+ }else{
+  // The kill effect is independent of the weapon's own trail and much larger.
+  const rad=6+u*(f.elite?34:26);
+  c.strokeStyle=f.elite?'#ffe0a6':'#d9ffff';c.lineWidth=(1-u)*4+1;
+  c.beginPath();c.arc(x,y,rad,0,Math.PI*2);c.stroke();
+  c.strokeStyle=f.color;c.lineWidth=1.5;c.beginPath();c.arc(x,y,rad*.65,.1,Math.PI*1.7);c.stroke();
+  for(let i=0;i<(f.elite?20:13);i++){let an=2*Math.PI*i/(f.elite?20:13)+random(i)*.2;
+   let dist=4+u*(19+random(i+19)*(f.elite?24:14));
+   let px=x+Math.cos(an)*dist,py=y+Math.sin(an)*dist;
+   c.save();c.translate(px,py);c.rotate(an+u*4);c.fillStyle=i%3===0?'#ffffff':i%3===1?f.color:'#ffcf83';
+   c.fillRect(-2,-2,2+(1-u)*5,2+(1-u)*5);c.restore();
+  }
+  if(u<.6){c.font=f.elite?'bold 13px sans-serif':'bold 10px sans-serif';c.textAlign='center';c.fillStyle='#ffe8af';c.fillText(f.elite?'ELITE BREAK!':'BREAK!',x,y-15-u*13);}
+ }
+ c.restore();
+}
+function drawTitleArcade(c,t,W,H){updateTitleArcade(t);let a=titleArcade;if(!a)return;
+ c.save();c.imageSmoothingEnabled=false;
+ c.fillStyle='#162734';c.fillRect(0,0,W,H);
+ // Map tiles use the actual board's icy-grid visual language: raised border, walls, cracks, covered squares.
+ for(let p=0;p<ARCADE_COLS*ARCADE_ROWS;p++){const x=ARCADE_LEFT+(p%ARCADE_COLS)*ARCADE_TILE,y=ARCADE_TOP+(p/ARCADE_COLS|0)*ARCADE_TILE,wall=a.walls.has(p);
+  c.fillStyle=wall?'#2b445c':(p%ARCADE_COLS+(p/ARCADE_COLS|0))%3===0?'#91cedd':'#a8e1ed';c.fillRect(x,y,ARCADE_TILE,ARCADE_TILE);
+  c.fillStyle=wall?'#172f42':'#c9f6ff';c.fillRect(x+1,y+1,ARCADE_TILE-2,2);c.fillRect(x+1,y+2,2,ARCADE_TILE-3);
+  c.fillStyle=wall?'#142b3c':'#699eaf';c.fillRect(x+ARCADE_TILE-2,y+3,2,ARCADE_TILE-3);c.fillRect(x+2,y+ARCADE_TILE-2,ARCADE_TILE-4,2);
+  if(wall){c.fillStyle='#476b83';c.fillRect(x+4,y+3,11,11);c.fillStyle='#a3cbd6';c.fillRect(x+12,y+5,4,9);}
+  else if((p*13)%9===0){c.fillStyle='#e9ffff';c.fillRect(x+9,y+4,1,7);c.fillRect(x+10,y+12,2,1);}
+ }
+ c.strokeStyle='#516b80';c.strokeRect(ARCADE_LEFT-.5,ARCADE_TOP-.5,ARCADE_COLS*ARCADE_TILE+1,ARCADE_ROWS*ARCADE_TILE+1);
+ for(let item of a.items){let k=Math.min(1,Math.max(0,(t-item.moveAt)/220)),from=arcadeXY(item.from),to=arcadeXY(item.p),x=from.x+(to.x-from.x)*k,y=from.y+(to.y-from.y)*k;
+  c.fillStyle='#5b3e36';c.fillRect(x-6,y-6,12,12);c.fillStyle=item.heart?'#f69baf':'#e6b768';c.fillRect(x-5,y-5,10,9);c.fillStyle='#fff3c8';c.fillRect(x-2,y-3,5,4);c.strokeStyle=item.weapon?.palette?.body||'#ffe7ab';c.strokeRect(x-7.5,y-7.5,15,15);
+ }
+ for(let e of a.enemies){let p=arcadeEnemyXY(e,t),x=p.x,y=p.y;
+  if(e.type==='mimic'&&a.dist[e.p]>3){c.fillStyle='#8c5e47';c.fillRect(x-7,y-7,14,14);c.fillStyle='#e6bb74';c.fillRect(x-6,y-7,12,4);c.fillStyle='#e8d59f';c.fillRect(x-1,y-3,3,5);}else arcadeSprite(c,e.type,x,y,t);
+  if(e.hit&&t-e.hit<170){c.fillStyle='#fff1e0aa';c.fillRect(x-6,y-7,14,14);}
+  if(e.elite||e.hp<e.maxHP){c.fillStyle='#3a3441';c.fillRect(x-7,y-10,14,2);c.fillStyle=e.elite?'#ff9cab':'#b8f1bc';c.fillRect(x-7,y-10,14*Math.max(0,e.hp)/e.maxHP,2);}
+ }
+ const hero=arcadeXY(ARCADE_HERO);c.save();c.translate(Math.round(hero.x-8),Math.round(hero.y-8));c.scale(.70,.70);
+ miniHero(c,0,0,t,false);c.restore();
+ if(t<a.invuln){c.strokeStyle='#fff9c4';c.lineWidth=2;c.strokeRect(hero.x-10.5,hero.y-10.5,21,21);}
+ // Telegraph/attack range below the brighter independent hit and kill events.
+ for(let f of a.fx.filter(f=>f.kind==='manual'||f.kind==='shotZone'))arcadeDrawSpecialFX(c,f,t);
+ for(let f of a.fx.filter(f=>f.kind!=='manual'&&f.kind!=='shotZone'&&f.kind!=='hitBurst'&&f.kind!=='killBurst')){
+  const u=Math.max(0,Math.min(1,(t-f.at)/f.life)),p=arcadeXY(f.p);
+  c.save();c.globalAlpha=Math.max(0,1-u);c.strokeStyle=f.color;c.lineWidth=2;
+  if(f.kind==='beam'){
+   let q=arcadeXY(f.from);c.beginPath();c.moveTo(q.x,q.y);c.lineTo(p.x,p.y);c.stroke();
+  }else{c.beginPath();c.arc(p.x,p.y,4+u*(f.kind==='blast'?9*(f.r||1):15),0,Math.PI*2);c.stroke();}
+  c.restore();
+ }
+ for(let f of a.fx.filter(f=>f.kind==='hitBurst'||f.kind==='killBurst'))arcadeDrawHitBurst(c,f,t);
+ // A short-lived but very visible confirmation for the distinct manual action.
+ if(t<(a.shotFlashUntil||0)){
+  let fade=Math.min(1,Math.max(0,(a.shotFlashUntil-t)/260));
+  c.save();c.globalAlpha=fade;c.fillStyle='#152b3ded';c.fillRect(85,ARCADE_TOP+1,151,19);
+  c.strokeStyle='#ffe5a1';c.strokeRect(85.5,ARCADE_TOP+1.5,150,18);
+  c.font='bold 11px sans-serif';c.fillStyle='#fff0c0';c.textAlign='center';c.fillText(a.shotNote||'特殊攻撃 発動！',160,ARCADE_TOP+14);c.restore();
+ }
+ // Compact HUD inside the game canvas, no separate title-game controls to take screen space.
+ c.fillStyle='#121c2be9';c.fillRect(0,0,W,19);c.font='bold 9px monospace';c.fillStyle='#fff1d2';c.fillText('討伐 '+a.kills+'  W'+a.wave+'  BEST '+a.meta.best,4,12);
+ c.fillStyle='#ffa6b4';c.fillText('♥'.repeat(Math.max(0,a.lives)),160,12);
+ c.fillStyle='#ffe9ac';c.fillText('強化 '+a.meta.coins+' ✦',238,12);
+ c.fillStyle='#111c2cef';c.fillRect(0,H-15,W,15);
+ const wait=arcadeManualWait(a,t),isReload=!!a.reloadUntil&&t<a.reloadUntil;
+ const label=a.weapon?(a.weapon.name+' '+a.ammo+'発'):'特殊武器なし';
+ c.font='bold 8px sans-serif';c.fillStyle='#e6f4fc';c.fillText('自動銃✦ / 特殊:'+(label.length>12?label.slice(0,11)+'…':label),4,H-4,204);
+ c.font='bold 9px sans-serif';c.fillStyle=isReload?'#ffe39d':wait>0?'#b5d8ee':'#aaf5d0';c.textAlign='right';
+ c.fillText(isReload?'装填 '+(wait/1000).toFixed(1)+'秒':wait>0?'次弾 '+(wait/1000).toFixed(1)+'秒':a.weapon?'画面タップで発射':'武器箱を待つ',W-4,H-4);c.textAlign='left';
+ if(isReload){c.fillStyle='#283e4d';c.fillRect(209,H-16,107,2);c.fillStyle='#ffe2a5';c.fillRect(209,H-16,107*Math.min(1,wait/arcadeReloadMs(a)),2);}
+ if(a.shop||a.choice){c.fillStyle='#111b2bf2';c.fillRect(0,19,W,H-34);c.fillStyle='#fff0cf';c.font='bold 12px sans-serif';c.fillText(a.shop?'✦ 恒久強化（右上で閉じる）':'WAVE '+a.wave+' 獲得能力を選択',15,45);
+  const perks=['威力アップ','速射・装填','防壁・耐久'];for(let i=0;i<3;i++){let x=8+i*103,price=arcadeUpgradeCost(a,i);c.fillStyle='#34485c';c.fillRect(x,60,99,57);c.strokeStyle='#899aac';c.strokeRect(x+.5,60.5,98,56);c.fillStyle='#ffe4ad';c.font='bold 10px sans-serif';c.fillText(perks[i],x+5,79);c.fillStyle='#daeaf3';c.font='9px monospace';c.fillText(a.shop?'Lv'+a.meta.levels[i]+' · '+price+'✦':'今回 +1',x+5,98);}
+ }
+ if(a.deadUntil){c.fillStyle='#101522ee';c.fillRect(0,19,W,H-34);c.fillStyle='#ffdfad';c.font='bold 16px monospace';c.fillText('GAME OVER',91,78);c.font='10px monospace';c.fillText('討伐 '+a.kills+'  WAVE '+a.wave+'   TAP RETRY',63,99);}
+ c.restore();
+}
+
 function drawMiniScenes(t){if(t-miniLast<42)return;miniLast=t;
  for(let canvas of document.querySelectorAll('#modal canvas[data-mini]')){
  const k=canvas.dataset.mini,c=canvas.getContext('2d');if(!c)continue;
@@ -1797,7 +2217,7 @@ function demoCombatGate(frameIndex,now=performance.now()){
 }
 function autoTick(afterBeat=false){if(!autoRun||mode!=='playing')return;function acknowledge(){let a=autoRun;if(!a?.pending)return true;if(moveSerial>a.pending.before){a.index++;a.wait=a.path[a.index]?.wait||0;a.pending=null;return true;}if(!motion){recoverAutoOrSkip('盤面変化で自動移動できません');return false;}return true;}if(autoRun.pending&&!acknowledge())return;if(motion||!autoRun)return;if(pendingExplosiveAttack()){autoRun.lastMoveAt=performance.now();return;}let a=autoRun.path[autoRun.index];if(!a){if(pos!==board.goal)recoverAutoOrSkip('解答の終点がゴールではありません');return;}if(autoRun.wait>0){if(!afterBeat)return;autoRun.wait--;if(autoRun.wait>0)return;}if(autoClearTrace(a.d,performance.now(),false))return;autoRun.pending={before:moveSerial};beginMove(a.d);if(mode==='checking')return;acknowledge();}
 
-function clearFreeAuto(){mode='clear';autoRun=null;remaining=0;modal('<div class="kicker">CLEAR</div><h2>STAGE '+String(stage).padStart(2,'0')+'</h2><p>おまかせクリア<br><small>この面のスコア・報酬は対象外</small></p><button id="autoNext" class="primary">次のステージへ</button><button id="autoHome" class="flat guideSkip">タイトルへ</button>');$('autoNext').onclick=()=>{stage++;newStage();};$('autoHome').onclick=showTitle;installClearReplay();}
+function clearFreeAuto(){mode='clear';autoRun=null;remaining=0;modal('<div class="kicker">CLEAR</div><h2>STAGE '+String(stage).padStart(2,'0')+'</h2><p>おまかせクリア<br><small>この面のスコア・報酬は対象外</small></p><button id="autoNext" class="primary">次のステージへ</button><button id="autoHome" class="flat guideSkip">タイトルへ</button>');$('autoNext').onclick=()=>{stage++;newStage();};$('autoHome').onclick=()=>showTitle('play');installClearReplay();}
 function timedCoinRate(){return !noClock()&&!practiceMode&&!customSession&&!watchMode?Math.min(2.5,1+.05*Math.max(0,stage-1)):1;}
 function helperName(k){return {guardian:'小さな護衛',spirit:'森の精霊',wisp:'灯火の精',fox:'月の子狐'}[k]||'助っ人';}
 function collectHelper(c,auto=false){if(!gearAllowed())return false;let kind=c.helper||'guardian';function take(){stageEscort=kind;resetEscort();toast(helperName(kind)+'がこの面だけ同行します');}if(auto){if(!stageEscort&&!meta.gear.escort)take();return false;}let oldMode=mode,left=deadline-performance.now();mode='loot';modal('<h2>'+helperName(kind)+'</h2><p>このステージだけ同行</p><p class="fine">'+({guardian:'近くの敵を攻撃。',spirit:'近くの仕掛けを解除。',wisp:'近くの敵弾を消す。',fox:'敵を攻撃し、仕掛けも解除。'}[kind])+' 主人公から離れると能力は休止。'+((stageEscort||meta.gear.escort)?'<br>同行者は1体。この面だけ交代します。':'')+'</p><button id="helperTake" class="primary">同行してもらう</button><button id="helperKeep" class="flat guideSkip">今のまま</button>');let finish=yes=>{if(yes)take();closeModal();mode=oldMode;deadline=performance.now()+left;tickAt=performance.now();};$('helperTake').onclick=()=>finish(true);$('helperKeep').onclick=()=>finish(false);return true;}
@@ -1935,7 +2355,7 @@ function guideEntries(){
 function guideBoard(entry){let b={w:9,h:7,cells:Array.from({length:63},(_,p)=>p<9||p>=54||p%9===0||p%9===8?1:0),start:29,goal:-1,frag:[],hazards:[],terrain:[]};let p=31,k=entry.type;if(entry.kind==='hazard'){let hz=EXTRA_HAZARDS[k]?makeExtra(k,['line','fan'].includes(EXTRA_HAZARDS[k][1])?29:p,1,9,7,0):k==='spike'?{type:k,p,offset:0}:k==='fire'?{type:k,wall:29,path:[30,31,32,33],offset:0}:k==='rock'?{type:k,path:[30,31,32],offset:0}:{type:k,path:[29,30,31,32,33],anchor:31,offset:0};b.hazards=[hz];}else if(entry.kind==='floor'){if(k==='boulder'){b.boulder=31;b.terrain=[{p:32,type:'pit'},{p:30,type:'ground'}];}else if(k==='pit'){b.terrain=[{p:31,type:'pit'}];}else if(k==='ground')b.terrain=[29,30,31,32,33].map(p=>({p,type:'ground'}));else if(k==='frag')b.frag=[p];else if(['switch','gateA','gateB'].includes(k))b.terrain=[{p:31,type:'switch'},{p:29,type:'gateA'},{p:33,type:'gateB'}];else if(k==='wall')b.cells[31]=1;else if(k==='goal')b.goal=33;else if(k==='wait')b.hazards=[{type:'spike',p:32,offset:0}];else if(k==='ice'){}else b.terrain=[{p,type:k}];}return prepare(b);}
 let hideStageGuide=false;try{hideStageGuide=localStorage.getItem('frostbound.hideGuide')==='1';}catch(e){}
 function setGuideHidden(value){hideStageGuide=value;try{localStorage.setItem('frostbound.hideGuide',value?'1':'0');}catch(e){toast('設定を保存できません。このプレイ中のみ適用します。');}}
-function showSettings(back=showTitle){modal('<h2>設定</h2><p>開始時のガイド</p><button class="primary" id="toggleGuide">'+(hideStageGuide?'非表示 · タップで表示にする':'表示中 · タップで非表示にする')+'</button><p class="fine">ラン内で初登場のものだけ表示します。模範解答では省略。</p><button id="resetGuideSeen" class="flat guideSkip">説明の既読をリセット</button><button class="flat guideSkip" id="settingsBack">戻る</button>');$('toggleGuide').onclick=()=>{setGuideHidden(!hideStageGuide);showSettings(back);};$('resetGuideSeen').onclick=()=>{runGuideSeen={main:new Set(),relaxed:new Set(),custom:new Set()};setGuideHidden(false);toast('次の開始時に説明を表示します');showSettings(back);};$('settingsBack').onclick=back;}
+function showSettings(back=()=>showTitle('other')){modal('<h2>設定</h2><p>開始時のガイド</p><button class="primary" id="toggleGuide">'+(hideStageGuide?'非表示 · タップで表示にする':'表示中 · タップで非表示にする')+'</button><p class="fine">ラン内で初登場のものだけ表示します。模範解答では省略。</p><button id="resetGuideSeen" class="flat guideSkip">説明の既読をリセット</button><button class="flat guideSkip" id="settingsBack">戻る</button>');$('toggleGuide').onclick=()=>{setGuideHidden(!hideStageGuide);showSettings(back);};$('resetGuideSeen').onclick=()=>{runGuideSeen={main:new Set(),relaxed:new Set(),custom:new Set()};setGuideHidden(false);toast('次の開始時に説明を表示します');showSettings(back);};$('settingsBack').onclick=back;}
 // Add restrictions only outside the certified path. Its shortest-move certificate remains valid.
 const SMALL_BANK=[{"terrain":[],"w":9,"h":11,"cells":[1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,1,1,0,1,1,0,0,1,1,1,1,0,0,1,0,0,0,0,1,1,0,1,0,0,0,0,0,1,1,0,0,0,1,0,0,0,1,1,1,0,1,1,0,1,0,1,1,0,0,0,0,0,0,1,1,1,0,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1],"start":10,"goal":77,"frag":[55],"hazards":[],"seed":573370,"path":[{"d":1,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":1,"wait":0},{"d":3,"wait":0},{"d":2,"wait":0},{"d":1,"wait":0}],"tiles":25,"beats":25,"waits":0,"used":1,"twice":0},{"terrain":[],"w":9,"h":11,"cells":[1,1,1,1,1,1,1,1,1,1,0,1,0,0,1,0,1,1,1,0,0,0,0,0,0,0,1,1,1,0,1,0,0,0,0,1,1,1,1,1,0,1,0,1,1,1,0,0,1,0,0,0,1,1,1,1,0,0,1,0,0,0,1,1,0,0,0,1,0,1,1,1,1,0,1,0,0,0,1,0,1,1,0,1,0,0,1,0,0,1,1,1,1,1,1,1,1,1,1],"start":46,"goal":25,"frag":[32],"hazards":[],"seed":769954,"path":[{"d":1,"wait":0},{"d":2,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":2,"wait":0},{"d":1,"wait":0}],"tiles":23,"beats":23,"waits":0,"used":0,"twice":0},{"terrain":[],"w":9,"h":11,"cells":[1,1,1,1,1,1,1,1,1,1,0,0,0,1,0,0,0,1,1,0,0,0,0,0,1,1,1,1,0,0,0,1,0,0,0,1,1,0,0,0,1,0,0,0,1,1,0,1,0,0,1,0,1,1,1,1,0,0,1,1,0,0,1,1,0,1,0,1,0,0,0,1,1,0,0,0,0,0,1,0,1,1,0,0,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1],"start":56,"goal":16,"frag":[68],"hazards":[],"seed":1056639,"path":[{"d":1,"wait":0},{"d":2,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0}],"tiles":20,"beats":20,"waits":0,"used":1,"twice":0},{"terrain":[],"w":11,"h":13,"cells":[1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,1,0,0,1,0,1,1,0,0,0,0,0,0,1,1,0,1,1,0,0,1,0,1,0,0,0,0,1,1,0,0,1,0,0,0,0,0,0,1,1,0,1,0,0,0,1,0,0,0,1,1,1,0,0,1,1,0,0,1,0,1,1,1,0,0,0,0,1,0,1,0,1,1,0,0,0,1,0,1,0,1,0,1,1,1,1,0,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1],"start":15,"goal":62,"frag":[31,74],"hazards":[],"seed":90101,"path":[{"d":2,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0}],"tiles":41,"beats":41,"waits":0,"used":2,"twice":0},{"terrain":[],"w":11,"h":13,"cells":[1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,0,1,1,0,0,1,0,0,1,0,0,1,1,1,1,0,0,1,0,1,1,0,0,1,1,0,1,1,0,1,0,0,0,0,1,1,1,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,1,1,1,1,0,1,1,0,0,0,1,0,0,0,0,0,1,1,0,0,0,1,0,0,0,1,0,1,1,0,0,1,0,0,0,0,1,0,1,1,1,0,0,1,0,0,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1],"start":81,"goal":13,"frag":[70,86],"hazards":[],"seed":311258,"path":[{"d":0,"wait":0},{"d":2,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0}],"tiles":20,"beats":20,"waits":0,"used":1,"twice":0},{"terrain":[],"w":11,"h":13,"cells":[1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,1,1,0,1,1,1,1,0,0,0,0,0,1,1,1,1,0,0,0,0,1,0,1,1,0,1,1,1,1,1,0,0,1,0,1,1,1,1,0,0,0,1,0,0,0,0,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,1,1,1,0,0,1,1,1,0,0,0,0,0,0,0,1,1,1,0,0,1,0,0,0,1,1,0,1,1,0,0,0,1,0,0,0,0,0,1,1,0,0,0,1,0,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1],"start":94,"goal":35,"frag":[101,71],"hazards":[],"seed":434123,"path":[{"d":3,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":2,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0}],"tiles":23,"beats":23,"waits":0,"used":1,"twice":0},{"terrain":[],"w":13,"h":15,"cells":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,1,1,1,0,0,1,0,0,0,0,0,0,0,1,1,1,1,0,0,0,1,0,1,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0,0,1,1,1,0,0,0,1,0,0,0,1,0,0,1,1,1,1,0,0,1,0,1,0,0,0,0,1,1,1,0,1,0,0,0,0,1,0,1,0,1,1,1,0,1,1,0,1,0,0,0,1,0,1,1,1,0,1,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"start":100,"goal":55,"frag":[17,163],"hazards":[],"seed":90101,"path":[{"d":3,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":3,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0}],"tiles":25,"beats":25,"waits":0,"used":1,"twice":0},{"terrain":[],"w":13,"h":15,"cells":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,1,0,0,0,0,0,0,0,1,1,0,0,0,1,1,1,1,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,1,0,1,1,0,1,0,1,0,0,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,1,0,0,0,0,1,1,1,0,1,0,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,0,0,1,0,1,0,1,1,1,0,0,0,1,0,1,1,1,0,1,1,1,0,0,0,1,0,0,0,0,0,0,1,1,1,1,0,0,0,1,0,0,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"start":42,"goal":141,"frag":[147,73],"hazards":[],"seed":352213,"path":[{"d":2,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0}],"tiles":23,"beats":23,"waits":0,"used":1,"twice":0},{"terrain":[],"w":13,"h":15,"cells":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,1,0,1,0,1,0,1,0,1,1,0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,1,1,1,0,0,1,0,0,1,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,1,0,1,1,0,0,0,0,0,0,0,1,0,1,1,1,1,0,1,1,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0,0,1,1,0,0,1,1,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,1,0,1,1,1,1,1,1,0,1,0,0,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"start":128,"goal":102,"frag":[41,34],"hazards":[],"seed":442314,"path":[{"d":3,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":2,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":2,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0}],"tiles":58,"beats":58,"waits":0,"used":1,"twice":0},{"terrain":[],"w":15,"h":17,"cells":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1,1,0,0,0,0,0,1,1,0,0,0,1,0,0,1,1,0,0,1,1,0,1,0,0,0,0,0,1,0,1,1,0,0,1,0,0,0,1,0,1,0,0,0,1,1,1,0,0,0,0,0,0,0,1,0,0,1,0,0,1,1,0,0,0,1,0,1,0,1,0,0,1,0,0,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,1,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,1,0,1,0,0,0,1,1,1,0,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,0,1,1,0,1,1,1,0,0,0,1,1,0,1,1,0,0,1,1,1,0,1,0,0,0,0,0,0,1,1,0,0,0,1,0,1,0,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"start":237,"goal":76,"frag":[108,82],"hazards":[],"seed":81910,"path":[{"d":0,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0}],"tiles":33,"beats":33,"waits":0,"used":1,"twice":0},{"terrain":[],"w":15,"h":17,"cells":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,1,0,0,0,1,0,0,0,1,0,0,1,0,1,1,1,0,0,1,0,0,0,1,0,0,0,0,0,1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,1,1,0,1,0,0,0,0,0,0,1,1,0,0,1,0,1,1,0,1,0,0,0,0,0,1,1,0,0,1,0,0,0,0,1,1,1,1,0,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,1,0,0,0,0,1,1,0,0,1,1,1,0,0,0,0,1,0,0,0,0,0,0,1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"start":71,"goal":157,"frag":[107,38,221],"hazards":[],"seed":98292,"path":[{"d":3,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":2,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0}],"tiles":34,"beats":34,"waits":0,"used":1,"twice":0},{"terrain":[],"w":15,"h":17,"cells":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,0,0,0,0,0,0,0,0,1,1,1,1,1,0,1,0,1,1,0,1,0,1,1,1,0,1,1,0,1,0,0,0,0,0,0,0,0,1,0,0,1,1,0,0,0,1,0,0,0,1,0,0,1,1,0,1,1,0,1,0,0,1,0,0,0,0,0,1,0,1,1,1,0,0,0,0,1,0,0,0,0,1,0,1,0,1,1,0,0,0,1,0,0,0,0,1,0,0,0,0,1,1,0,0,0,1,0,0,0,1,0,0,0,0,0,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,1,0,0,0,0,1,1,1,0,1,1,0,1,1,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,1,0,0,1,1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"start":129,"goal":34,"frag":[65,48,176],"hazards":[],"seed":155629,"path":[{"d":2,"wait":0},{"d":3,"wait":0},{"d":2,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":1,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0}],"tiles":49,"beats":49,"waits":0,"used":1,"twice":0},{"terrain":[],"w":17,"h":19,"cells":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,0,0,1,0,0,1,0,1,0,0,0,1,1,1,1,0,1,1,0,0,1,0,1,0,0,1,0,1,1,1,0,0,0,0,0,0,1,0,1,0,1,1,0,1,0,1,1,0,0,0,0,1,0,0,1,1,0,1,0,0,0,1,1,1,0,0,0,0,0,1,1,0,1,0,1,0,0,1,0,1,1,1,0,0,1,0,0,1,0,0,0,0,1,0,0,0,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,1,1,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,1,1,1,1,1,0,1,1,0,0,0,0,0,0,0,0,0,1,1,0,1,1,0,0,0,0,0,0,1,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,1,0,1,0,0,0,1,0,0,1,0,0,0,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,0,1,0,0,0,0,1,1,1,0,1,0,0,0,1,1,0,0,0,1,1,0,0,0,0,0,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"start":115,"goal":158,"frag":[276,244,75,37],"hazards":[],"seed":8191,"path":[{"d":2,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":2,"wait":0},{"d":1,"wait":0}],"tiles":57,"beats":57,"waits":0,"used":1,"twice":0},{"terrain":[],"w":17,"h":19,"cells":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,1,0,0,0,1,1,0,0,0,1,0,0,0,0,1,1,1,1,0,1,0,0,0,0,0,1,0,0,0,1,0,0,0,1,1,1,0,1,0,0,0,1,0,0,0,0,0,0,0,1,1,1,0,0,1,0,0,0,0,0,1,0,1,0,1,0,0,1,1,1,0,0,1,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,1,1,1,0,0,0,1,1,1,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,1,1,1,0,0,1,1,0,1,1,0,0,0,1,1,1,0,1,0,0,0,0,1,1,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,0,0,1,1,0,1,1,0,0,0,0,1,1,1,1,0,0,0,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,1,0,0,0,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"start":124,"goal":166,"frag":[78,280,123,284],"hazards":[],"seed":81910,"path":[{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":2,"wait":0}],"tiles":24,"beats":24,"waits":0,"used":0,"twice":0},{"terrain":[],"w":17,"h":19,"cells":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,1,0,1,0,1,0,0,0,0,0,1,1,0,0,0,0,1,1,1,1,0,0,1,0,1,0,0,0,0,0,0,1,1,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,1,0,1,0,0,0,1,0,0,1,1,0,0,1,1,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,1,0,1,0,1,0,1,0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,1,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,1,0,0,0,0,0,0,0,1,0,1,1,1,1,1,0,1,0,0,1,0,0,1,0,0,1,0,1,1,1,0,0,0,0,0,1,1,1,0,0,1,0,0,0,0,1,1,1,0,0,0,0,1,1,0,0,1,0,0,0,1,0,1,1,0,0,0,0,1,0,0,1,1,1,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,1,0,1,0,0,1,1,0,0,0,1,0,1,0,1,1,0,0,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"start":120,"goal":224,"frag":[64,146,93,121],"hazards":[],"seed":106483,"path":[{"d":1,"wait":0},{"d":2,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0}],"tiles":34,"beats":34,"waits":0,"used":1,"twice":0},{"terrain":[],"w":19,"h":21,"cells":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,0,1,1,0,0,1,1,1,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,0,1,1,0,0,1,0,0,1,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,1,1,1,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1,0,1,1,1,0,0,0,0,1,0,0,0,0,0,1,1,0,1,0,0,1,1,0,0,1,1,0,0,0,0,0,0,0,1,0,0,1,0,0,1,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,1,1,1,1,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,1,1,0,0,1,1,1,0,0,0,1,0,0,0,0,1,0,0,0,1,1,0,0,1,0,1,1,0,0,0,1,1,1,1,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,1,0,0,0,1,1,0,0,1,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"start":125,"goal":178,"frag":[205,336,136,110],"hazards":[],"seed":32764,"path":[{"d":3,"wait":0},{"d":2,"wait":0},{"d":1,"wait":0},{"d":3,"wait":0},{"d":2,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0}],"tiles":55,"beats":55,"waits":0,"used":2,"twice":0},{"terrain":[],"w":19,"h":21,"cells":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,0,0,1,0,1,0,0,1,0,0,0,0,1,1,0,0,0,0,1,0,0,1,1,1,0,0,0,1,0,1,0,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0,1,0,1,0,0,0,0,1,0,0,0,1,1,0,0,1,0,1,0,0,0,1,0,0,1,0,0,0,0,0,1,1,0,0,0,0,1,1,1,0,0,1,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1,0,1,1,1,0,0,1,0,1,1,0,1,1,0,1,0,0,0,1,0,0,0,1,0,1,0,0,1,1,0,0,0,0,0,1,0,0,1,1,0,1,0,1,1,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,1,0,1,0,0,0,1,1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,1,1,0,1,0,0,1,0,1,0,0,0,0,0,1,0,0,0,1,1,1,0,0,1,1,0,1,0,1,0,0,0,0,0,0,0,1,0,1,1,1,0,1,0,1,0,1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,1,1,0,0,1,0,1,0,0,0,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"start":254,"goal":332,"frag":[74,308,59,55],"hazards":[],"seed":40955,"path":[{"d":3,"wait":0},{"d":2,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":2,"wait":0}],"tiles":34,"beats":34,"waits":0,"used":0,"twice":0},{"terrain":[],"w":19,"h":21,"cells":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,0,0,1,0,1,1,0,0,0,1,0,1,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,0,1,1,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,1,0,1,1,1,1,1,0,0,0,0,1,1,1,0,1,1,0,0,1,0,1,1,1,0,0,1,0,0,0,0,0,0,1,0,0,1,0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,0,1,1,0,1,1,0,0,1,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,1,0,1,0,0,1,0,0,0,0,1,0,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,1,0,1,1,0,0,1,1,0,0,0,1,0,0,0,0,0,0,0,1,0,1,1,1,0,0,0,1,0,1,0,0,1,0,0,0,1,0,1,0,1,1,0,0,1,0,0,1,1,1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,1,1,0,0,0,0,0,0,0,1,0,1,1,0,1,1,1,0,1,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,1,1,1,1,0,0,0,1,1,0,0,0,0,1,0,1,0,1,1,1,0,1,0,0,0,0,1,0,1,0,1,0,0,0,1,0,0,1,1,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"start":263,"goal":210,"frag":[261,314,184,343],"hazards":[],"seed":73719,"path":[{"d":3,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":2,"wait":0}],"tiles":37,"beats":37,"waits":0,"used":2,"twice":0}];
 const MIXED_BANK=[{"w":11,"h":15,"cells":[1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,0,0,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,0,1,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,0,0,1,1,0,1,1,1,1,0,0,0,1,0,1,0,1,1,1,1,1,0,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,1,0,0,0,1,0,1,1,1,1,1,1,0,1,1,1,0,1,1,1,1,1,1,0,1,0,1,0,1,1,0,0,0,0,0,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1],"terrain":[{"p":36,"type":"ground"},{"p":37,"type":"ground"},{"p":38,"type":"ground"},{"p":40,"type":"ground"},{"p":47,"type":"ground"},{"p":48,"type":"ground"},{"p":49,"type":"ground"},{"p":50,"type":"ground"},{"p":51,"type":"ground"},{"p":58,"type":"ground"},{"p":59,"type":"ground"},{"p":60,"type":"ground"},{"p":61,"type":"ground"},{"p":62,"type":"ground"},{"p":69,"type":"ground"},{"p":70,"type":"ground"},{"p":71,"type":"ground"},{"p":72,"type":"ground"},{"p":80,"type":"ground"},{"p":81,"type":"ground"},{"p":82,"type":"ground"},{"p":84,"type":"ground"},{"p":92,"type":"ground"},{"p":93,"type":"ground"},{"p":94,"type":"ground"},{"p":95,"type":"ground"},{"p":102,"type":"ground"},{"p":103,"type":"ground"},{"p":104,"type":"ground"},{"p":105,"type":"ground"},{"p":106,"type":"ground"},{"p":113,"type":"ground"},{"p":115,"type":"ground"},{"p":116,"type":"ground"},{"p":117,"type":"ground"},{"p":25,"type":"ground"},{"p":26,"type":"ground"},{"p":27,"type":"ground"},{"p":28,"type":"ground"},{"p":29,"type":"ground"}],"boulders":[50,105,94,70,62,49,95,104,69,92,71,51],"start":144,"goal":139,"frag":[],"hazards":[],"monsters":[],"seed":801,"mixedRoom":true,"groundStage":true,"roomMoved":7,"path":[{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":1,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0}],"beats":47,"tiles":47,"waits":0,"used":0,"twice":0,"roomPushes":10},{"w":11,"h":15,"cells":[1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,0,0,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,1,0,0,0,1,0,1,1,1,1,1,0,0,0,0,1,0,1,1,1,1,0,1,0,0,1,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,1,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,1,0,0,0,1,0,1,1,1,1,1,1,0,1,1,1,0,1,1,1,1,1,1,0,1,0,1,0,1,1,0,0,0,0,0,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1],"terrain":[{"p":36,"type":"ground"},{"p":38,"type":"ground"},{"p":39,"type":"ground"},{"p":40,"type":"ground"},{"p":48,"type":"ground"},{"p":49,"type":"ground"},{"p":50,"type":"ground"},{"p":51,"type":"ground"},{"p":58,"type":"ground"},{"p":60,"type":"ground"},{"p":61,"type":"ground"},{"p":69,"type":"ground"},{"p":70,"type":"ground"},{"p":71,"type":"ground"},{"p":72,"type":"ground"},{"p":73,"type":"ground"},{"p":80,"type":"ground"},{"p":81,"type":"ground"},{"p":82,"type":"ground"},{"p":83,"type":"ground"},{"p":84,"type":"ground"},{"p":91,"type":"ground"},{"p":93,"type":"ground"},{"p":94,"type":"ground"},{"p":95,"type":"ground"},{"p":102,"type":"ground"},{"p":103,"type":"ground"},{"p":104,"type":"ground"},{"p":105,"type":"ground"},{"p":106,"type":"ground"},{"p":113,"type":"ground"},{"p":115,"type":"ground"},{"p":116,"type":"ground"},{"p":117,"type":"ground"},{"p":25,"type":"ground"},{"p":26,"type":"ground"},{"p":27,"type":"ground"},{"p":28,"type":"ground"},{"p":29,"type":"ground"}],"boulders":[72,102,104,105,81,95,94,61,49,69,103,84,58],"start":144,"goal":139,"frag":[],"hazards":[],"monsters":[],"seed":1167,"mixedRoom":true,"groundStage":true,"roomMoved":3,"path":[{"d":1,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0}],"beats":35,"tiles":35,"waits":0,"used":0,"twice":0,"roomPushes":7},{"w":11,"h":16,"cells":[1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,0,0,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,1,0,0,0,0,1,0,1,1,1,1,1,0,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,1,1,1,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,1,1,0,1,1,1,0,1,1,1,1,1,1,0,1,0,1,0,1,1,0,0,0,0,0,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1],"terrain":[{"p":36,"type":"ground"},{"p":37,"type":"ground"},{"p":38,"type":"ground"},{"p":39,"type":"ground"},{"p":40,"type":"ground"},{"p":47,"type":"ground"},{"p":48,"type":"ground"},{"p":49,"type":"ground"},{"p":50,"type":"ground"},{"p":51,"type":"ground"},{"p":59,"type":"ground"},{"p":60,"type":"ground"},{"p":61,"type":"ground"},{"p":62,"type":"ground"},{"p":70,"type":"ground"},{"p":71,"type":"ground"},{"p":72,"type":"ground"},{"p":73,"type":"ground"},{"p":80,"type":"ground"},{"p":81,"type":"ground"},{"p":82,"type":"ground"},{"p":83,"type":"ground"},{"p":84,"type":"ground"},{"p":91,"type":"ground"},{"p":92,"type":"ground"},{"p":93,"type":"ground"},{"p":94,"type":"ground"},{"p":95,"type":"ground"},{"p":102,"type":"ground"},{"p":103,"type":"ground"},{"p":113,"type":"ground"},{"p":114,"type":"ground"},{"p":115,"type":"ground"},{"p":116,"type":"ground"},{"p":117,"type":"ground"},{"p":124,"type":"ground"},{"p":125,"type":"ground"},{"p":126,"type":"ground"},{"p":127,"type":"ground"},{"p":128,"type":"ground"},{"p":25,"type":"ground"},{"p":26,"type":"ground"},{"p":27,"type":"ground"},{"p":28,"type":"ground"},{"p":29,"type":"ground"}],"boulders":[115,70,83,82,114,59,113,61,84,60,93,116,73],"start":155,"goal":150,"frag":[],"hazards":[],"monsters":[],"seed":1715,"mixedRoom":true,"groundStage":true,"roomMoved":5,"path":[{"d":1,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0}],"beats":43,"tiles":43,"waits":0,"used":0,"twice":0,"roomPushes":8},{"w":11,"h":16,"cells":[1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,0,0,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,1,1,0,0,0,1,0,1,1,1,1,0,1,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,0,0,1,1,0,1,1,1,1,1,0,0,0,0,1,0,1,1,1,1,1,0,0,0,0,1,0,1,1,1,1,0,0,0,0,1,1,0,1,1,1,1,0,0,0,0,1,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,1,1,0,1,1,1,0,1,1,1,1,1,1,0,1,0,1,0,1,1,0,0,0,0,0,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1],"terrain":[{"p":38,"type":"ground"},{"p":39,"type":"ground"},{"p":40,"type":"ground"},{"p":47,"type":"ground"},{"p":49,"type":"ground"},{"p":50,"type":"ground"},{"p":51,"type":"ground"},{"p":58,"type":"ground"},{"p":59,"type":"ground"},{"p":60,"type":"ground"},{"p":61,"type":"ground"},{"p":62,"type":"ground"},{"p":69,"type":"ground"},{"p":70,"type":"ground"},{"p":71,"type":"ground"},{"p":72,"type":"ground"},{"p":81,"type":"ground"},{"p":82,"type":"ground"},{"p":83,"type":"ground"},{"p":84,"type":"ground"},{"p":92,"type":"ground"},{"p":93,"type":"ground"},{"p":94,"type":"ground"},{"p":95,"type":"ground"},{"p":102,"type":"ground"},{"p":103,"type":"ground"},{"p":104,"type":"ground"},{"p":105,"type":"ground"},{"p":113,"type":"ground"},{"p":114,"type":"ground"},{"p":115,"type":"ground"},{"p":116,"type":"ground"},{"p":124,"type":"ground"},{"p":125,"type":"ground"},{"p":126,"type":"ground"},{"p":127,"type":"ground"},{"p":128,"type":"ground"},{"p":25,"type":"ground"},{"p":26,"type":"ground"},{"p":27,"type":"ground"},{"p":28,"type":"ground"},{"p":29,"type":"ground"}],"boulders":[82,58,72,93,114,115,105,92,113,70,95,103],"start":155,"goal":150,"frag":[],"hazards":[],"monsters":[],"seed":1991,"mixedRoom":true,"groundStage":true,"roomMoved":5,"path":[{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0}],"beats":43,"tiles":43,"waits":0,"used":0,"twice":0,"roomPushes":8},{"w":11,"h":15,"cells":[1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,0,0,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,1,0,0,1,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,1,0,0,0,1,0,1,1,1,1,1,1,0,0,0,1,0,1,1,1,1,0,0,0,0,1,1,0,1,1,1,1,1,0,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,1,1,0,1,1,1,0,1,1,1,1,1,1,0,1,0,1,0,1,1,0,0,0,0,0,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1],"terrain":[{"p":36,"type":"ground"},{"p":37,"type":"ground"},{"p":38,"type":"ground"},{"p":39,"type":"ground"},{"p":40,"type":"ground"},{"p":48,"type":"ground"},{"p":49,"type":"ground"},{"p":51,"type":"ground"},{"p":58,"type":"ground"},{"p":59,"type":"ground"},{"p":60,"type":"ground"},{"p":61,"type":"ground"},{"p":62,"type":"ground"},{"p":69,"type":"ground"},{"p":71,"type":"ground"},{"p":72,"type":"ground"},{"p":73,"type":"ground"},{"p":82,"type":"ground"},{"p":83,"type":"ground"},{"p":84,"type":"ground"},{"p":91,"type":"ground"},{"p":92,"type":"ground"},{"p":93,"type":"ground"},{"p":94,"type":"ground"},{"p":103,"type":"ground"},{"p":104,"type":"ground"},{"p":105,"type":"ground"},{"p":106,"type":"ground"},{"p":113,"type":"ground"},{"p":114,"type":"ground"},{"p":115,"type":"ground"},{"p":116,"type":"ground"},{"p":117,"type":"ground"},{"p":25,"type":"ground"},{"p":26,"type":"ground"},{"p":27,"type":"ground"},{"p":28,"type":"ground"},{"p":29,"type":"ground"}],"boulders":[105,104,106,84,103,49,72,83,69,51,91,93],"start":144,"goal":139,"frag":[],"hazards":[],"monsters":[],"seed":2137,"mixedRoom":true,"groundStage":true,"roomMoved":6,"path":[{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":1,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0}],"beats":45,"tiles":45,"waits":0,"used":0,"twice":0,"roomPushes":9},{"w":11,"h":15,"cells":[1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,0,0,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,1,0,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,1,1,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,1,0,0,1,0,1,1,1,1,0,1,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,1,1,0,1,1,1,0,1,1,1,1,1,1,0,1,0,1,0,1,1,0,0,0,0,0,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1],"terrain":[{"p":36,"type":"ground"},{"p":37,"type":"ground"},{"p":38,"type":"ground"},{"p":39,"type":"ground"},{"p":40,"type":"ground"},{"p":48,"type":"ground"},{"p":49,"type":"ground"},{"p":50,"type":"ground"},{"p":51,"type":"ground"},{"p":58,"type":"ground"},{"p":59,"type":"ground"},{"p":60,"type":"ground"},{"p":61,"type":"ground"},{"p":62,"type":"ground"},{"p":69,"type":"ground"},{"p":72,"type":"ground"},{"p":73,"type":"ground"},{"p":80,"type":"ground"},{"p":81,"type":"ground"},{"p":82,"type":"ground"},{"p":83,"type":"ground"},{"p":84,"type":"ground"},{"p":91,"type":"ground"},{"p":92,"type":"ground"},{"p":94,"type":"ground"},{"p":95,"type":"ground"},{"p":102,"type":"ground"},{"p":104,"type":"ground"},{"p":105,"type":"ground"},{"p":106,"type":"ground"},{"p":113,"type":"ground"},{"p":114,"type":"ground"},{"p":115,"type":"ground"},{"p":116,"type":"ground"},{"p":117,"type":"ground"},{"p":25,"type":"ground"},{"p":26,"type":"ground"},{"p":27,"type":"ground"},{"p":28,"type":"ground"},{"p":29,"type":"ground"}],"boulders":[92,80,62,102,94,91,49,48,105,83,106,61],"start":144,"goal":139,"frag":[],"hazards":[],"monsters":[],"seed":2360,"mixedRoom":true,"groundStage":true,"roomMoved":3,"path":[{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0}],"beats":37,"tiles":37,"waits":0,"used":0,"twice":0,"roomPushes":6},{"w":11,"h":16,"cells":[1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,0,0,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,0,1,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,1,0,1,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,1,1,0,0,0,1,0,1,1,1,1,0,0,0,1,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,1,1,0,1,1,1,0,1,1,1,1,1,1,0,1,0,1,0,1,1,0,0,0,0,0,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1],"terrain":[{"p":36,"type":"ground"},{"p":37,"type":"ground"},{"p":38,"type":"ground"},{"p":39,"type":"ground"},{"p":40,"type":"ground"},{"p":47,"type":"ground"},{"p":48,"type":"ground"},{"p":49,"type":"ground"},{"p":50,"type":"ground"},{"p":51,"type":"ground"},{"p":58,"type":"ground"},{"p":59,"type":"ground"},{"p":60,"type":"ground"},{"p":62,"type":"ground"},{"p":69,"type":"ground"},{"p":70,"type":"ground"},{"p":71,"type":"ground"},{"p":72,"type":"ground"},{"p":73,"type":"ground"},{"p":80,"type":"ground"},{"p":82,"type":"ground"},{"p":84,"type":"ground"},{"p":91,"type":"ground"},{"p":92,"type":"ground"},{"p":93,"type":"ground"},{"p":94,"type":"ground"},{"p":95,"type":"ground"},{"p":104,"type":"ground"},{"p":105,"type":"ground"},{"p":106,"type":"ground"},{"p":113,"type":"ground"},{"p":114,"type":"ground"},{"p":115,"type":"ground"},{"p":117,"type":"ground"},{"p":124,"type":"ground"},{"p":125,"type":"ground"},{"p":126,"type":"ground"},{"p":127,"type":"ground"},{"p":128,"type":"ground"},{"p":25,"type":"ground"},{"p":26,"type":"ground"},{"p":27,"type":"ground"},{"p":28,"type":"ground"},{"p":29,"type":"ground"}],"boulders":[51,59,105,93,92,115,48,72,114,49,106,69,94],"start":155,"goal":150,"frag":[],"hazards":[],"monsters":[],"seed":2625,"mixedRoom":true,"groundStage":true,"roomMoved":3,"path":[{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0}],"beats":41,"tiles":41,"waits":0,"used":0,"twice":0,"roomPushes":7},{"w":11,"h":16,"cells":[1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,0,0,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,1,0,0,0,1,1,0,1,1,1,1,0,0,1,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,1,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,1,1,0,1,1,1,0,1,1,1,1,1,1,0,1,0,1,0,1,1,0,0,0,0,0,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1],"terrain":[{"p":36,"type":"ground"},{"p":37,"type":"ground"},{"p":38,"type":"ground"},{"p":39,"type":"ground"},{"p":40,"type":"ground"},{"p":48,"type":"ground"},{"p":49,"type":"ground"},{"p":50,"type":"ground"},{"p":58,"type":"ground"},{"p":59,"type":"ground"},{"p":61,"type":"ground"},{"p":62,"type":"ground"},{"p":69,"type":"ground"},{"p":70,"type":"ground"},{"p":71,"type":"ground"},{"p":72,"type":"ground"},{"p":73,"type":"ground"},{"p":80,"type":"ground"},{"p":81,"type":"ground"},{"p":83,"type":"ground"},{"p":84,"type":"ground"},{"p":91,"type":"ground"},{"p":92,"type":"ground"},{"p":93,"type":"ground"},{"p":94,"type":"ground"},{"p":95,"type":"ground"},{"p":102,"type":"ground"},{"p":103,"type":"ground"},{"p":104,"type":"ground"},{"p":105,"type":"ground"},{"p":106,"type":"ground"},{"p":113,"type":"ground"},{"p":114,"type":"ground"},{"p":115,"type":"ground"},{"p":116,"type":"ground"},{"p":117,"type":"ground"},{"p":124,"type":"ground"},{"p":125,"type":"ground"},{"p":126,"type":"ground"},{"p":127,"type":"ground"},{"p":128,"type":"ground"},{"p":25,"type":"ground"},{"p":26,"type":"ground"},{"p":27,"type":"ground"},{"p":28,"type":"ground"},{"p":29,"type":"ground"}],"boulders":[70,81,84,103,49,102,61,93,92,104,59,105,95],"start":155,"goal":150,"frag":[],"hazards":[],"monsters":[],"seed":2809,"mixedRoom":true,"groundStage":true,"roomMoved":3,"path":[{"d":1,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0}],"beats":41,"tiles":41,"waits":0,"used":0,"twice":0,"roomPushes":8},{"w":11,"h":15,"cells":[1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,0,0,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,0,1,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,1,0,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,0,0,0,1,0,1,0,1,1,1,1,0,0,0,0,0,1,0,1,1,1,1,1,1,0,1,1,1,0,1,1,1,1,1,1,0,1,0,1,0,1,1,0,0,0,0,0,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1],"terrain":[{"p":36,"type":"ground"},{"p":37,"type":"ground"},{"p":38,"type":"ground"},{"p":39,"type":"ground"},{"p":40,"type":"ground"},{"p":47,"type":"ground"},{"p":48,"type":"ground"},{"p":49,"type":"ground"},{"p":51,"type":"ground"},{"p":58,"type":"ground"},{"p":59,"type":"ground"},{"p":60,"type":"ground"},{"p":61,"type":"ground"},{"p":62,"type":"ground"},{"p":69,"type":"ground"},{"p":70,"type":"ground"},{"p":71,"type":"ground"},{"p":72,"type":"ground"},{"p":73,"type":"ground"},{"p":80,"type":"ground"},{"p":81,"type":"ground"},{"p":83,"type":"ground"},{"p":84,"type":"ground"},{"p":91,"type":"ground"},{"p":92,"type":"ground"},{"p":93,"type":"ground"},{"p":94,"type":"ground"},{"p":95,"type":"ground"},{"p":102,"type":"ground"},{"p":103,"type":"ground"},{"p":104,"type":"ground"},{"p":106,"type":"ground"},{"p":113,"type":"ground"},{"p":114,"type":"ground"},{"p":115,"type":"ground"},{"p":116,"type":"ground"},{"p":117,"type":"ground"},{"p":25,"type":"ground"},{"p":26,"type":"ground"},{"p":27,"type":"ground"},{"p":28,"type":"ground"},{"p":29,"type":"ground"}],"boulders":[59,91,81,102,58,47,106,60,61,72,94,51,92,93],"start":144,"goal":139,"frag":[],"hazards":[],"monsters":[],"seed":4090,"mixedRoom":true,"groundStage":true,"roomMoved":3,"path":[{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":1,"wait":0},{"d":1,"wait":0},{"d":0,"wait":0},{"d":1,"wait":0},{"d":2,"wait":0},{"d":3,"wait":0},{"d":0,"wait":0}],"beats":41,"tiles":41,"waits":0,"used":0,"twice":0,"roomPushes":8}];
@@ -2045,7 +2465,7 @@ else {for(let k=0;k<6;k++){let an=k*Math.PI/3;line([[Math.cos(an)*r*.5,Math.sin(
 ctx.restore();}}finally{ctx=old;}if(fxAtlasCache.size>=16)fxAtlasCache.delete(fxAtlasCache.keys().next().value);fxAtlasCache.set(key,c);return c;}
 function drawAttackPulse(t){attackBursts=attackBursts.filter(e=>t-e.at<420);let cells=new Map();for(let burst of attackBursts){let age=t-burst.at;if(age<0)continue;for(let q of burst.tiles)cells.set(q,{burst,age});}ctx.save();ctx.imageSmoothingEnabled=false;for(let [q,{burst,age}] of cells){let x=q%board.w*24,y=(q/board.w|0)*24,fade=age<160?1:Math.max(0,(420-age)/260),c=burst.palette;ctx.globalAlpha=.17*fade;rect(x+1,y+1,22,22,c.body);ctx.globalAlpha=.9*fade;ctx.strokeStyle=c.outline;ctx.lineWidth=2;ctx.strokeRect(x+1.5,y+1.5,21,21);ctx.strokeStyle=c.body;ctx.lineWidth=1;ctx.strokeRect(x+2.5,y+2.5,19,19);for(let [dx,dy] of [[2,2],[17,2],[2,21],[17,21]])rect(x+dx,y+dy,5,1,c.core);if(age<300){let frame=Math.min(11,Math.floor(age/300*12));ctx.globalAlpha=.65;ctx.drawImage(effectAtlas(burst.effect,c),frame*32,0,32,32,x+4,y+4,16,16);}}ctx.restore();}
 
-function confirmMode(kind,go){const copy={timed:['メインモード','制限時間内にゴール。進むほど敵・仕掛けが増え、連続クリアで高得点。進むほどコイン獲得量も増える。'],relaxed:['時間無制限エンドレス','時間制限なし。メインと同じく、進むほど広くなり敵・仕掛けも増える終わりのない冒険。'],simple:['シンプル高難度','岩で穴を埋め、地面から氷へ踏み出す位置を選ぶ。薄氷と切替壁も使う最短32手以上の難問。時間無制限。生成は最大約60秒。'],watch:['模範解答','新しい迷宮を自動再生。速度変更・思考モード付き。'],editor:['ステージ工房','自作・JSONの読み込みと共有。']}[kind];modal('<div class="kicker">FROSTBOUND</div><h2>'+copy[0]+'</h2><p class="modeDescription">'+copy[1]+'</p><button id="modeGo" class="primary">進む</button><button id="modeBack" class="flat guideSkip">戻る</button>');$('modeGo').onclick=go;$('modeBack').onclick=showTitle;}
+function confirmMode(kind,go){const copy={timed:['メインモード','制限時間内にゴール。進むほど敵・仕掛けが増え、連続クリアで高得点。進むほどコイン獲得量も増える。'],relaxed:['時間無制限エンドレス','時間制限なし。メインと同じく、進むほど広くなり敵・仕掛けも増える終わりのない冒険。'],simple:['シンプル高難度','岩で穴を埋め、地面から氷へ踏み出す位置を選ぶ。薄氷と切替壁も使う最短32手以上の難問。時間無制限。生成は最大約60秒。'],watch:['模範解答','新しい迷宮を自動再生。速度変更・思考モード付き。'],editor:['ステージ工房','自作・JSONの読み込みと共有。']}[kind];modal('<div class="kicker">FROSTBOUND</div><h2>'+copy[0]+'</h2><p class="modeDescription">'+copy[1]+'</p><button id="modeGo" class="primary">進む</button><button id="modeBack" class="flat guideSkip">戻る</button>');$('modeGo').onclick=go;$('modeBack').onclick=()=>showTitle(kind==='editor'?'work':'play');}
 
 function enemyDescription(k){
  const descriptions={
@@ -3152,7 +3572,7 @@ function collectLife(c,auto){if(!auto&&earnAllowed()&&claimReward(claimKey('hear
 function upgradeCost(k){let l=meta.levels[k]||0;return Math.min(1e12,Math.ceil(UPGRADE[k][2]*(1+l*.35+l*l*.025)));}
 function buyUpgrade(k){let cost=upgradeCost(k);if(meta.coins<cost)return false;return commitMeta(m=>{m.coins-=cost;m.levels[k]=(m.levels[k]||0)+1;});}
 function buyGood(k){if(GEAR[k])return buyGear(k);let item=GOODS[k];if(!item||meta.coins<item[1]||(k==='life'?meta.lives>=99:(meta.inventory[k]||0)>=999))return false;return commitMeta(m=>{m.coins-=item[1];if(k==='life')m.lives++;else m.inventory[k]=(m.inventory[k]||0)+1;});}
-function showShop(back=showTitle,tab='upgrade'){updateWallet();let body='';if(tab==='upgrade')body='<p class="fine">繰り返し強化できます。効果は緩やかに上限へ近づきます。</p>'+Object.entries(UPGRADE).map(([k,v])=>{let l=meta.levels[k]||0,unit=k==='clock'?'秒':'%',val=k==='clock'?metaBonus(k):metaBonus(k)*100,max=k==='clock'?v[1]:v[1]*100;return '<div class="shopRow"><div><b>'+v[0]+' Lv.'+l+'</b><small>'+v[3]+' '+val.toFixed(2)+unit+' / 上限 '+max+unit+'</small></div><button id="up_'+k+'" '+(meta.coins<upgradeCost(k)?'disabled':'')+'>'+upgradeCost(k).toLocaleString()+' ◉</button></div>';}).join('');if(tab==='goods')body='<p class="fine">消耗品。ライフ以外は各種1面1回。</p>'+Object.entries(GOODS).filter(([k])=>k!=='pickaxe').map(([k,v])=>'<div class="shopRow"><div><b>'+v[0]+' ×'+(k==='life'?meta.lives:meta.inventory[k]||0)+'</b><small>'+v[2]+'</small></div><button id="buy_'+k+'" '+(meta.coins<v[1]?'disabled':'')+'>'+v[1].toLocaleString()+' ◉</button></div>').join('');if(tab==='terrain'||tab==='escort')body=gearRows(tab);if(tab==='collection')body='<p>討伐 '+meta.kills+' · クリア '+meta.clears+' · 最短 '+meta.perfect+'</p><p>武器演出 '+meta.effects.length+' / '+WEAPON_FX.length+'</p><div class="collection">'+WEAPON_FX.map((k,i)=>'<span class="'+(meta.effects.includes(k)?'found':'')+'">'+(meta.effects.includes(k)?FX_NAMES[i]:'？')+'</span>').join('')+'</div><p>討伐図鑑 '+meta.bestiary.length+' / '+Object.keys(enemyNames).length+'</p><div class="collection">'+Object.entries(enemyNames).map(([k,n])=>'<span class="'+(meta.bestiary.includes(k)?'found':'')+'">'+(meta.bestiary.includes(k)?n:'？')+'</span>').join('')+'</div>';modal('<h2>旅人の工房</h2><div class="shopBalance">◉ '+meta.coins.toLocaleString()+'　♥ '+meta.lives+'</div><canvas class="miniScene shopScene" data-mini="shop" width="320" height="64" aria-hidden="true"></canvas><div class="row shopTabs"><button id="shopUp">強化</button><button id="shopGoods">道具</button><button id="shopTerrain">地形</button><button id="shopEscort">同行</button><button id="shopCollection">図鑑</button></div>'+body+'<button id="shopBack" class="primary guideSkip">戻る</button><button id="backupSave" class="flat guideSkip">セーブを保存・復元</button>');for(let [id,key] of [['shopUp','upgrade'],['shopGoods','goods'],['shopTerrain','terrain'],['shopEscort','escort'],['shopCollection','collection']])$(id).onclick=()=>showShop(back,key);$('shopBack').onclick=back;$('backupSave').onclick=()=>showMetaBackup(()=>showShop(back,tab));if(tab==='upgrade')for(let k of Object.keys(UPGRADE))$('up_'+k).onclick=()=>{buyUpgrade(k);showShop(back,tab);};if(tab==='goods')for(let k of Object.keys(GOODS))if(k!=='pickaxe')$('buy_'+k).onclick=()=>{buyGood(k);showShop(back,tab);};if(tab==='terrain'||tab==='escort')for(let [k,g] of Object.entries(GEAR))if(g.family===tab)$('gear_'+k).onclick=()=>confirmGear(k,()=>showShop(back,tab));}
+function showShop(back=()=>showTitle('work'),tab='upgrade'){updateWallet();let body='';if(tab==='upgrade')body='<p class="fine">繰り返し強化できます。効果は緩やかに上限へ近づきます。</p>'+Object.entries(UPGRADE).map(([k,v])=>{let l=meta.levels[k]||0,unit=k==='clock'?'秒':'%',val=k==='clock'?metaBonus(k):metaBonus(k)*100,max=k==='clock'?v[1]:v[1]*100;return '<div class="shopRow"><div><b>'+v[0]+' Lv.'+l+'</b><small>'+v[3]+' '+val.toFixed(2)+unit+' / 上限 '+max+unit+'</small></div><button id="up_'+k+'" '+(meta.coins<upgradeCost(k)?'disabled':'')+'>'+upgradeCost(k).toLocaleString()+' ◉</button></div>';}).join('');if(tab==='goods')body='<p class="fine">消耗品。ライフ以外は各種1面1回。</p>'+Object.entries(GOODS).filter(([k])=>k!=='pickaxe').map(([k,v])=>'<div class="shopRow"><div><b>'+v[0]+' ×'+(k==='life'?meta.lives:meta.inventory[k]||0)+'</b><small>'+v[2]+'</small></div><button id="buy_'+k+'" '+(meta.coins<v[1]?'disabled':'')+'>'+v[1].toLocaleString()+' ◉</button></div>').join('');if(tab==='terrain'||tab==='escort')body=gearRows(tab);if(tab==='collection')body='<p>討伐 '+meta.kills+' · クリア '+meta.clears+' · 最短 '+meta.perfect+'</p><p>武器演出 '+meta.effects.length+' / '+WEAPON_FX.length+'</p><div class="collection">'+WEAPON_FX.map((k,i)=>'<span class="'+(meta.effects.includes(k)?'found':'')+'">'+(meta.effects.includes(k)?FX_NAMES[i]:'？')+'</span>').join('')+'</div><p>討伐図鑑 '+meta.bestiary.length+' / '+Object.keys(enemyNames).length+'</p><div class="collection">'+Object.entries(enemyNames).map(([k,n])=>'<span class="'+(meta.bestiary.includes(k)?'found':'')+'">'+(meta.bestiary.includes(k)?n:'？')+'</span>').join('')+'</div>';modal('<h2>旅人の工房</h2><div class="shopBalance">◉ '+meta.coins.toLocaleString()+'　♥ '+meta.lives+'</div><canvas class="miniScene shopScene" data-mini="shop" width="320" height="64" aria-hidden="true"></canvas><div class="row shopTabs"><button id="shopUp">強化</button><button id="shopGoods">道具</button><button id="shopTerrain">地形</button><button id="shopEscort">同行</button><button id="shopCollection">図鑑</button></div>'+body+'<button id="shopBack" class="primary guideSkip">戻る</button><button id="backupSave" class="flat guideSkip">セーブを保存・復元</button>');for(let [id,key] of [['shopUp','upgrade'],['shopGoods','goods'],['shopTerrain','terrain'],['shopEscort','escort'],['shopCollection','collection']])$(id).onclick=()=>showShop(back,key);$('shopBack').onclick=back;$('backupSave').onclick=()=>showMetaBackup(()=>showShop(back,tab));if(tab==='upgrade')for(let k of Object.keys(UPGRADE))$('up_'+k).onclick=()=>{buyUpgrade(k);showShop(back,tab);};if(tab==='goods')for(let k of Object.keys(GOODS))if(k!=='pickaxe')$('buy_'+k).onclick=()=>{buyGood(k);showShop(back,tab);};if(tab==='terrain'||tab==='escort')for(let [k,g] of Object.entries(GEAR))if(g.family===tab)$('gear_'+k).onclick=()=>confirmGear(k,()=>showShop(back,tab));}
 function showMetaBackup(back){modal('<h2>セーブの保管</h2><p class="fine">コイン・ライフ・強化・道具・装備・図鑑をJSONで保管できます。進行中の盤面は含みません。</p><button id="metaExport" class="primary">JSONを書き出す</button><textarea id="metaText" placeholder="復元するJSONを貼り付け"></textarea><button id="metaRead">復元内容を確認</button><button id="metaBack" class="flat guideSkip">戻る</button>');$('metaBack').onclick=back;$('metaExport').onclick=()=>{let text=JSON.stringify(meta,null,2);$('metaText').value=text;let url=URL.createObjectURL(new Blob([text],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download='frostbound-save.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};$('metaRead').onclick=()=>{try{let raw=$('metaText').value;if(raw.length>2000000)throw Error('データが大きすぎます');let next=validMeta(JSON.parse(raw));modal('<h2>セーブを置き換える？</h2><p>コイン '+meta.coins+' → '+next.coins+'<br>ライフ '+meta.lives+' → '+next.lives+'</p><p class="fine">現在の強化・道具・装備・図鑑も置き換わります。</p><button id="metaApply" class="primary">この内容で復元</button><button id="metaCancel" class="flat guideSkip">戻る</button>');$('metaApply').onclick=()=>{if(commitMeta(m=>Object.assign(m,next)))back();};$('metaCancel').onclick=()=>showMetaBackup(back);}catch(e){toast('読み込めません：'+e.message);}};}
 function toolAvailable(k){if(simpleMode)return false;if(k==='pickaxe')return false;if(k==='compass'&&noClock())return false;return !watchMode&&!practiceMode&&!customSession&&(meta.inventory[k]||0)>0&&!meta.claimed.includes(claimKey('tool:'+k));}
 function spendTool(k){if(!toolAvailable(k))return false;return commitMeta(m=>{m.inventory[k]--;m.claimed.push(claimKey('tool:'+k));});}
@@ -3177,7 +3597,7 @@ function certifyCustom(input){let b=prepare(validateCustom(input));let search=pr
 function playCustom(input,imported=false){simpleMode=false;closeModal();let b=input.path?prepare(clone(input)):certifyCustom(input);watchMode=false;clearReturn=null;practiceMode=true;unlimitedMode=true;stage=1;score=0;stageBest=0;let key=customKey(b),unlocked=!imported;try{unlocked=unlocked||localStorage.getItem('frostbound.clear.'+key)==='1';}catch(e){}customSession={key,unlocked,imported};board=b;stageTemplate=rawBoard(b);genToken++;setupStage();}
 function blankCustom(w=13,h=17){return {format:'frostbound',version:1,w,h,cells:Array.from({length:w*h},(_,q)=>q<w||q>=w*(h-1)||q%w===0||q%w===w-1?1:0),start:w+1,goal:w*(h-2)+w-2,frag:[],hazards:[],terrain:[],monsters:[],seed:12345};}
 function openEditor(source=null){if(customSession?.imported&&!customSession.unlocked){toast('読み込んだ面はクリア後に編集できます');return;}watchMode=false;mode='editor';genToken++;motion=null;if(source)editorDraft=stageJSON(source);else if(!editorDraft){try{editorDraft=validateCustom(JSON.parse(localStorage.getItem('frostbound.draft')));}catch(e){editorDraft=blankCustom();}}if(source&&!source.monsters){let saveBoard=board;board=prepare(clone(source));pos=board.start;mask=0;protectPath(pos,0,0,0,board.path);setupWorld();editorDraft.monsters=entities.map(e=>({type:e.type,p:e.p}));board=saveBoard;}renderEditor();}
-function renderEditor(){let b=editorDraft;modal('<h2>ステージ工房</h2><p class="fine">マスをタップして配置。仕掛けは選択方向へ伸びます。薄氷12枚・仕掛け30基・敵80体・特殊床128枚まで。開始宝箱の武器で敵を攻撃できる解答を検証。敵は主人公のマスへも侵入するため、敵と接触しない配置を確認してください。確認できない配置は遊ぶ・共有を保留します。</p><div class="row"><input id="editW" type="number" min="5" max="31" value="'+b.w+'"><input id="editH" type="number" min="5" max="31" value="'+b.h+'"><button id="resizeEdit">新規盤面</button></div><select id="brush"><option value="ice">氷／消しゴム</option><option value="wall">壁</option><option value="frag">薄氷</option><option value="boulder">押せる岩（16個まで）</option><option value="start">スタート</option><option value="goal">ゴール</option>'+['spike','pendulum','fire','rock'].map((t,i)=>'<option value="'+t+'">'+['棘','振り子5マス','火球発射口＋4マス','動く岩3マス'][i]+'</option>').join('')+Object.entries(EXTRA_HAZARDS).map(([t,n])=>'<option value="'+t+'">'+n[0]+'</option>').join('')+Object.entries(TERRAIN).map(([t,n])=>'<option value="'+t+'">'+n+'</option>').join('')+Object.entries(enemyNames).map(([t,n])=>'<option value="'+t+'">'+n+'</option>').join('')+'</select> <select id="editDir"><option value="1">右</option><option value="2">下</option><option value="3">左</option><option value="0">上</option></select> <select id="editPhase">'+Array.from({length:12},(_,i)=>'<option value="'+i+'">位相 '+i+'</option>').join('')+'</select><div id="editorGrid"></div><p id="editorMsg">編集後に「検証」してください。</p><div class="row"><button id="editCheck">検証</button><button id="editPlay">遊ぶ</button><button id="editDemo">模範解答</button></div><div class="row"><button id="editExport">JSON出力</button><button id="editImport">JSON読込</button></div><input id="jsonFile" type="file" accept=".json,application/json" style="display:none"><textarea id="jsonText" placeholder="JSONを貼り付けて読み込むこともできます"></textarea><button id="pasteImport">貼付JSONを読み込んで遊ぶ</button><button id="editHome">トップへ</button>');paintEditor();$('editPhase').onchange=paintEditor;$('resizeEdit').onclick=()=>{let w=Number($('editW').value),h=Number($('editH').value);if(!Number.isInteger(w)||!Number.isInteger(h)||w<5||w>31||h<5||h>31)return;editorDraft=blankCustom(w,h);renderEditor();};let check=action=>{try{let b=certifyCustom(editorDraft);$('editorMsg').textContent='射程内タップを含む安全解答：'+pathCost(b)+'手';if(action)action(b);}catch(e){$('editorMsg').textContent=e.message;}};$('editCheck').onclick=()=>check();$('editPlay').onclick=()=>check(b=>playCustom(b));$('editDemo').onclick=()=>check(b=>{playCustom(b);genToken++;$('countdown').style.display='none';closeModal();mode='playing';timeUp();stageBriefing(()=>{});});$('editExport').onclick=()=>check(b=>{let text=JSON.stringify(stageJSON(b),null,2);$('jsonText').value=text;let url=URL.createObjectURL(new Blob([text],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download='frostbound-stage.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),30000);});const load=text=>{try{if(text.length>100000)throw Error('JSONは100KB以下');let b=certifyCustom(JSON.parse(text));playCustom(b,true);}catch(e){$('editorMsg').textContent=e.message;}};$('editImport').onclick=()=>$('jsonFile').click();$('jsonFile').onchange=async e=>{let f=e.target.files[0];if(f){if(f.size>100000){$('editorMsg').textContent='JSONは100KB以下';return;}load(await f.text());}};$('pasteImport').onclick=()=>load($('jsonText').value);$('editHome').onclick=showTitle;}
+function renderEditor(){let b=editorDraft;modal('<h2>ステージ工房</h2><p class="fine">マスをタップして配置。仕掛けは選択方向へ伸びます。薄氷12枚・仕掛け30基・敵80体・特殊床128枚まで。開始宝箱の武器で敵を攻撃できる解答を検証。敵は主人公のマスへも侵入するため、敵と接触しない配置を確認してください。確認できない配置は遊ぶ・共有を保留します。</p><div class="row"><input id="editW" type="number" min="5" max="31" value="'+b.w+'"><input id="editH" type="number" min="5" max="31" value="'+b.h+'"><button id="resizeEdit">新規盤面</button></div><select id="brush"><option value="ice">氷／消しゴム</option><option value="wall">壁</option><option value="frag">薄氷</option><option value="boulder">押せる岩（16個まで）</option><option value="start">スタート</option><option value="goal">ゴール</option>'+['spike','pendulum','fire','rock'].map((t,i)=>'<option value="'+t+'">'+['棘','振り子5マス','火球発射口＋4マス','動く岩3マス'][i]+'</option>').join('')+Object.entries(EXTRA_HAZARDS).map(([t,n])=>'<option value="'+t+'">'+n[0]+'</option>').join('')+Object.entries(TERRAIN).map(([t,n])=>'<option value="'+t+'">'+n+'</option>').join('')+Object.entries(enemyNames).map(([t,n])=>'<option value="'+t+'">'+n+'</option>').join('')+'</select> <select id="editDir"><option value="1">右</option><option value="2">下</option><option value="3">左</option><option value="0">上</option></select> <select id="editPhase">'+Array.from({length:12},(_,i)=>'<option value="'+i+'">位相 '+i+'</option>').join('')+'</select><div id="editorGrid"></div><p id="editorMsg">編集後に「検証」してください。</p><div class="row"><button id="editCheck">検証</button><button id="editPlay">遊ぶ</button><button id="editDemo">模範解答</button></div><div class="row"><button id="editExport">JSON出力</button><button id="editImport">JSON読込</button></div><input id="jsonFile" type="file" accept=".json,application/json" style="display:none"><textarea id="jsonText" placeholder="JSONを貼り付けて読み込むこともできます"></textarea><button id="pasteImport">貼付JSONを読み込んで遊ぶ</button><button id="editHome">トップへ</button>');paintEditor();$('editPhase').onchange=paintEditor;$('resizeEdit').onclick=()=>{let w=Number($('editW').value),h=Number($('editH').value);if(!Number.isInteger(w)||!Number.isInteger(h)||w<5||w>31||h<5||h>31)return;editorDraft=blankCustom(w,h);renderEditor();};let check=action=>{try{let b=certifyCustom(editorDraft);$('editorMsg').textContent='射程内タップを含む安全解答：'+pathCost(b)+'手';if(action)action(b);}catch(e){$('editorMsg').textContent=e.message;}};$('editCheck').onclick=()=>check();$('editPlay').onclick=()=>check(b=>playCustom(b));$('editDemo').onclick=()=>check(b=>{playCustom(b);genToken++;$('countdown').style.display='none';closeModal();mode='playing';timeUp();stageBriefing(()=>{});});$('editExport').onclick=()=>check(b=>{let text=JSON.stringify(stageJSON(b),null,2);$('jsonText').value=text;let url=URL.createObjectURL(new Blob([text],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download='frostbound-stage.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),30000);});const load=text=>{try{if(text.length>100000)throw Error('JSONは100KB以下');let b=certifyCustom(JSON.parse(text));playCustom(b,true);}catch(e){$('editorMsg').textContent=e.message;}};$('editImport').onclick=()=>$('jsonFile').click();$('jsonFile').onchange=async e=>{let f=e.target.files[0];if(f){if(f.size>100000){$('editorMsg').textContent='JSONは100KB以下';return;}load(await f.text());}};$('pasteImport').onclick=()=>load($('jsonText').value);$('editHome').onclick=()=>showTitle('work');}
 function editorImage(){let saved={board,ctx,entities,shots,sparks,drawBroken,pos,mask};try{let c=document.createElement('canvas');c.width=editorDraft.w*24;c.height=editorDraft.h*24;ctx=c.getContext('2d');board=prepare(clone(editorDraft));pos=board.start;mask=0;drawBroken=0;entities=board.monsters.map((e,i)=>({...e,id:'preview'+i,from:e.p,at:-1000}));shots=[];sparks=[];for(let q=0;q<board.cells.length;q++)tile(q,0,pos,0);drawBoulder(0);drawHazards(Number($('editPhase').value||0)*2,0);drawWorld(0);character(pos%board.w*24,(pos/board.w|0)*24,0,false);return c.toDataURL();}finally{board=saved.board;ctx=saved.ctx;entities=saved.entities;shots=saved.shots;sparks=saved.sparks;drawBroken=saved.drawBroken;pos=saved.pos;mask=saved.mask;}}
 function paintEditor(){try{localStorage.setItem('frostbound.draft',JSON.stringify(editorDraft));}catch(e){}let b=editorDraft,g=$('editorGrid'),picture=editorImage();g.style.gridTemplateColumns='repeat('+b.w+',24px)';g.innerHTML='';for(let q=0;q<b.cells.length;q++){let btn=document.createElement('button'),haz=b.hazards.find(h=>hazardZone(h).includes(q)),enemy=b.monsters.find(e=>e.p===q);btn.textContent=q===b.start?'S':q===b.goal?'G':enemy?enemyNames[enemy.type]:haz?(EXTRA_HAZARDS[haz.type]?.[0]||{spike:'棘',pendulum:'振り子',fire:'火球',rock:'動く岩'}[haz.type]):TERRAIN[b.tm?.[q]]||TERRAIN[(b.terrain||[]).find(f=>f.p===q)?.type]||(b.frag.includes(q)?'薄氷':'');btn.setAttribute('aria-label',(q%b.w+1)+'列 '+((q/b.w|0)+1)+'行 '+(btn.textContent|| (b.cells[q]?'壁':'氷床')));btn.style.background=b.cells[q]?'#30303b':b.frag.includes(q)?'#cee8fa':'#86aebf';btn.style.backgroundImage='url('+picture+')';btn.style.backgroundPosition=(-q%b.w*24)+'px '+(-(q/b.w|0)*24)+'px';btn.style.width='24px';btn.style.height='24px';btn.style.color='transparent';btn.style.imageRendering='pixelated';btn.onclick=()=>{try{editCell(q);paintEditor();$('editorMsg').textContent='未検証：検証ボタンで確認';}catch(e){$('editorMsg').textContent=e.message;}};g.appendChild(btn);}}
 function editCell(q){let b=editorDraft,t=$('brush').value;if((q===b.start||q===b.goal)&&!['start','goal','ice'].includes(t))throw Error('先に開始・ゴールを移動してください');let backup=clone(b),wasGround=(b.terrain||[]).some(f=>f.p===q&&f.type==='ground');try{b.hazards=b.hazards.filter(h=>!hazardZone(h).includes(q));b.monsters=b.monsters.filter(e=>e.p!==q);b.frag=b.frag.filter(p=>p!==q);b.terrain=(b.terrain||[]).filter(f=>f.p!==q);b.boulders=rockStarts(b).filter(p=>p!==q);delete b.boulder;b.cells[q]=t==='wall'?1:0;if(t==='start'||t==='goal')b[t]=q;else if(t==='boulder'){if(b.boulders.length>=16)throw Error('押せる岩は16個まで');b.boulders.push(q);if(wasGround)b.terrain.push({p:q,type:'ground'});}else if(t==='frag')b.frag.push(q);else if(TERRAIN[t])b.terrain.push({type:t,p:q});else if(EXTRA_HAZARDS[t]){let h=makeExtra(t,q,Number($('editDir').value),b.w,b.h,Number($('editPhase').value));if(!h)throw Error('盤面の外には配置できません');b.hazards.push(h);}else if(Object.hasOwn(enemyNames,t))b.monsters.push({type:t,p:q});else if(['spike','pendulum','fire','rock'].includes(t)){let h={type:t,offset:Number($('editPhase').value)};if(t==='spike')h.p=q;else{let d=DIRS[Number($('editDir').value)],n=t==='pendulum'?5:t==='fire'?5:3;h.path=Array.from({length:n},(_,i)=>q+i*d[0]+i*d[1]*b.w);if(t==='fire'){h.wall=q;h.path.shift();}if(t==='pendulum')h.anchor=h.path[2];}b.hazards.push(h);}validateCustom(b);}catch(e){editorDraft=backup;throw e;}}
