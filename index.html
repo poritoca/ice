@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ja"><head>
-<meta name="frostbound-build" content="v90">
+<meta name="frostbound-build" content="v92">
 <!-- v87: restore FROSTFALL click delegation; avoid window.open() blank page. -->
 <meta name="theme-color" content="#282a34">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1718,11 +1718,11 @@ function fbBoardTorches(b){
  fbBoardTorchCache.set(b,points);return points;
 }
 function fbDrawBoardLighting(c,b,clock,px,py){
- let torches=fbBoardTorches(b);const lights=torches.map((p,i)=>({x:p.x,y:p.y,r:114,power:.97,torch:true}));
- lights.push({x:px,y:py,r:112,power:.87});
- fbLightMask(c,b.w*24,b.h*24,lights,clock,.29);
+ let torches=fbBoardTorches(b);const lights=torches.map((p,i)=>({x:p.x,y:p.y,r:100,power:.985,torch:true}));
+ lights.push({x:px,y:py,r:81,power:.79});
+ fbLightMask(c,b.w*24,b.h*24,lights,clock,.53);
  for(let p of torches)fbTorchSprite(c,p.x,p.y,clock,.72);
- fbEdgeShadow(c,0,0,b.w*24,b.h*24,.29);
+ fbEdgeShadow(c,0,0,b.w*24,b.h*24,.38);
 }
 
 function draw(t){let effectNow=t;if(mode==='dead')t=deathAt;if(!board)return;let p=pos,m=mask,phase=clockPhase;if(mode==='route'){let state=routeFrames[routeFrame];p=state.p;m=state.m;phase=state.phase;}drawBroken=broken;let x=p%board.w*24,y=(p/board.w|0)*24;if(mode==='route'&&routeMotion?.frame===routeFrame&&routeMotion.from!==routeMotion.to){let tr=routeMotion,f=Math.max(0,Math.min(1,(t-tr.at)/tr.duration));x=(tr.from%board.w+(tr.to%board.w-tr.from%board.w)*f)*24;y=((tr.from/board.w|0)+((tr.to/board.w|0)-(tr.from/board.w|0))*f)*24;}if(mode==='playing'&&motion){let next=motion.t.states[motion.index];if(next){let f=Math.max(0,Math.min(1,(t-tickAt)/BEAT));x=(p%board.w+(next.p%board.w-p%board.w)*f)*24;y=((p/board.w|0)+((next.p/board.w|0)-(p/board.w|0))*f)*24;}}
@@ -3995,7 +3995,7 @@ readSave();layoutMode='auto';refreshLayout();$('layoutToggle').onclick=toggleLay
 #floe{position:fixed;inset:0;z-index:99999;background:#101827;color:#e1f6ff;font:14px system-ui;display:flex;flex-direction:column;align-items:center;padding:max(8px,env(safe-area-inset-top)) 10px max(8px,env(safe-area-inset-bottom));box-sizing:border-box;overflow:hidden;touch-action:none}#floe *{box-sizing:border-box}#floe button{font:700 13px system-ui;min-height:44px;border:1px solid #52718b;border-radius:8px;background:#23374e;color:#e1f6ff;box-shadow:0 3px #080f1b;padding:9px 12px;cursor:pointer}#floe button:active{transform:translateY(2px);box-shadow:none}#floe .fgold{background:#ebc179;color:#172534;border-color:#ffe2ac}#floe .ftop{width:100%;max-width:850px;display:flex;align-items:center;justify-content:space-between;gap:8px;height:47px;flex-shrink:0}#floe .ftop b{letter-spacing:2px;font-size:14px}#floe .ftop small{display:block;color:#8eabc0;font-size:10px;letter-spacing:1px}#floe .fwrap{isolation:isolate;position:relative;flex:1;min-height:0;width:100%;max-width:850px;display:flex;justify-content:center;align-items:center}#floe canvas{position:relative;z-index:0;display:block;max-width:100%;max-height:100%;aspect-ratio:408/480;image-rendering:pixelated;touch-action:none}#floe .fhud{height:27px;flex-shrink:0;font-size:12px;text-align:center;color:#a6c8db}#floe .fctrl{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:530px;gap:14px;flex-shrink:0;margin-top:7px}#floe .fpad{display:grid;grid-template:repeat(2,48px)/repeat(3,49px);gap:4px}#floe .fpad button{font-size:22px;padding:0}#floe .fact{display:grid;grid-template-columns:1fr 1fr;gap:6px;flex:1;max-width:260px}#floe .fact small{display:block;font-size:10px;font-weight:400;margin-top:3px}#floe .fsheet{position:absolute;z-index:10;pointer-events:auto;inset:0;background:#101827e8;overflow:auto;display:flex;align-items:flex-start;justify-content:center;padding:12px;touch-action:pan-y;-webkit-overflow-scrolling:touch}#floe .fpanel{flex:none;margin-block:auto;width:100%;max-width:490px;padding:23px;background:#1a2a3e;border:1px solid #48677e;border-radius:14px;box-shadow:0 14px 60px #0007}#floe h2{font-size:29px;line-height:1.15;margin:12px 0;color:#fff0c8}#floe p{line-height:1.75;color:#b9cedb;margin:12px 0;font-size:13px}#floe .feyebrow{color:#73d8d6;font-size:10px;letter-spacing:3px}#floe .frow{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}#floe .frow button{flex:1}#floe .fcard{display:block;width:100%;text-align:left;margin-top:10px;padding:13px;background:#233b50}#floe .fcard small{display:block;font-weight:400;font-size:12px;line-height:1.6;color:#bdd3df;margin-top:5px}#floe .fstats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:18px 0}#floe .fstats div{background:#112033;border-radius:7px;padding:12px 3px;text-align:center;font-size:22px;color:#ffe0a0}#floe .fstats small{display:block;font-size:10px;color:#91afc2;margin-top:4px}#floe .fmuted{font-size:11px;color:#8aa7bc}#floe button:disabled{opacity:.4;cursor:default}@media(orientation:landscape) and (max-height:550px){#floe{padding:5px 165px 5px 12px}#floe .fctrl{position:absolute;right:8px;bottom:18px;width:149px;flex-direction:column;gap:12px}#floe .fact{width:100%}#floe .fpad{grid-template-columns:repeat(3,45px)}#floe .ftop{height:37px}#floe .fpanel{padding:15px}#floe h2{font-size:24px}}
 </style>
 <script>
-/* FROSTBOUND v82: combat-driven ranking, guardian legacy, offensive pilot and 105-second raids. */
+/* FROSTBOUND v92: 16-skill shared giant AI, raid beacon and aggressive raider pathfinding. */
 (()=>{'use strict';
 let N=25,COUNT=5,W=408,H=480,HEADER=72;const S=24,DURATION=90,RAID_DURATION=120;
 const colors=['#ffe090','#ff8e9b','#a5a0ff','#79e3bf','#eda3e5','#9bc9ff'],names=['YOU','キリサキ','コツコツ','ハヤテ','サキヨミ','ユキマル'];
@@ -4104,8 +4104,8 @@ function rebuildCupStats(){run.comboStats={};for(let [id,name,stats] of BUNDLES)
 function perkLimit(k){if(k==='gasSaver')return 3;if(k==='jumpKick'||k==='fracture')return 2;return BUNDLES.some(c=>c[0]===k)||EXTRA_PERKS.some(c=>c[0]===k)||['double','echo','magnet','bond','feather'].includes(k)?1:['phoenix','stomp'].includes(k)?2:3;}
 function availablePerks(){let a={id:0};return perks.filter(u=>{let id=u[0],bundle=BUNDLES.find(c=>c[0]===id);return (run.up[id]||0)<perkLimit(id)&&(bundle?Object.entries(bundle[2]).some(([k,v])=>!singlePerks.has(k)&&!(k in softCaps)||lv(a,k)<1):lv(a,id)<perkLimit(id));});}
 function makeDraft(rng=Math.random){let options=shuffled(availablePerks()).slice(0,3).map(u=>({id:u[0],gold:false})),unowned=GOLD_CARDS.filter(c=>!goldOwned.has(c[0])),chance=goldChance();if(goldSaveOK&&run.difficulty!=='practice'&&unowned.length&&rng()<chance){record.rankStreak=0;persist();let gold=pick(unowned),slot=Math.floor(Math.random()*options.length);options[slot]={id:gold[0],gold:true};}return {round:run.round,options,chance,claimed:false,error:''};}
-function chooseCard(draft,index){if(screen!=='panel'||run.draft!==draft||draft.round!==run.round||draft.claimed)return;let choice=draft.options[index];if(!choice)return;if(choice.gold){if(goldOwned.has(choice.id)){draft.error='この永続カードは取得済みです。ほかのカードを選んでください。';cards();return;}if(!saveGold(choice.id)){draft.error='保存できませんでした。金カードをもう一度押して再試行するか、別のカードを選べます。';cards();return;}}else run.up[choice.id]=(run.up[choice.id]||0)+1;draft.claimed=true;run.round++;if(choice.gold){let card=GOLD_CARDS.find(c=>c[0]===choice.id);panel('<div class="feyebrow">ETERNAL RELIC · SAVED</div><h2>永続強化を獲得！</h2><div class="flegacy flegacy-award"><span class="frelicsigil" aria-hidden="true">✦</span><b>'+card[1]+'</b><small>'+effectText(card[2])+'</small></div><p class="fmuted">保存済み · 次の戦いから有効。新しいカップ・次回起動にも引き継ぎます。<br>永続図鑑 '+goldOwned.size+' / 50</p><button class="fgold" id="fgcontinue">次の戦いへ</button>');pilotPage='award';let continued=false;bind('fgcontinue',()=>{if(continued)return;continued=true;newRound();});}else newRound();}
-function cards(){if(!run.draft||run.draft.round!==run.round)run.draft=makeDraft();let d=run.draft;if(d.options.some(o=>o.gold))stopPilot('gold');panel('<div class="feyebrow">'+perks.length+' CUP PERKS · 50 ETERNAL RELICS</div><h2>'+ (pilotGold?'金カード出現！ 自動停止':'戦い方が変わる強化。')+'</h2><p class="fmuted">通常はこのカップ中有効。金色は次回起動にも残る永続強化。<br>今回の金カード確率 '+chanceText(d.chance)+' · ３枚から１枚 · 永続 '+goldOwned.size+' / 50</p><div class="fbuildgrid">'+d.options.map((o,i)=>{let u=(o.gold?GOLD_CARDS:perks).find(c=>c[0]===o.id),owned=o.gold&&goldOwned.has(o.id);return '<button class="fcard '+(o.gold?'flegacy':'')+'" id="fc'+i+'" '+(owned?'disabled':'')+'>'+(o.gold?'<span class="frelicbadge">✦ 伝説 · 永続</span><span class="frelicsigil" aria-hidden="true">✦</span>':'')+u[1]+(o.gold?'':perkLimit(o.id)>1?' Lv.'+((run.up[o.id]||0)+1):'')+'<small>'+(o.gold?effectText(u[2]):u[2])+'</small>'+(o.gold?'<small class="frelicfooter">'+(owned?'取得済み':'一度だけの出会い · 選ぶと保存')+'</small>':'')+'</button>';}).join('')+'</div><p class="fmuted" role="status">'+(d.error||'同じ効果は加算。二段ジャンプなどの解放効果と自動回復は重複しません。')+'</p>');d.options.forEach((o,i)=>bind('fc'+i,()=>chooseCard(d,i)));pilotPage='cards';}
+function chooseCard(draft,index){if(screen!=='panel'||run.draft!==draft||draft.round!==run.round||draft.claimed)return;let choice=draft.options[index];if(!choice)return;if(choice.gold){if(goldOwned.has(choice.id)){draft.error='この永続カードは取得済みです。ほかのカードを選んでください。';cards();return;}if(!saveGold(choice.id)){draft.error='保存できませんでした。金カードをもう一度押して再試行するか、別のカードを選べます。';cards();return;}}else run.up[choice.id]=(run.up[choice.id]||0)+1;draft.claimed=true;run.round++;{const info=(choice.gold?GOLD_CARDS:perks).find(c=>c[0]===choice.id);pilotRecap(choice.gold?'gold':'pick','選択：'+(info?.[1]||choice.id),choice.gold?'永続強化を獲得':(info?.[2]||''),[],2.1);}if(choice.gold){let card=GOLD_CARDS.find(c=>c[0]===choice.id);panel('<div class="feyebrow">ETERNAL RELIC · SAVED</div><h2>永続強化を獲得！</h2><div class="flegacy flegacy-award"><span class="frelicsigil" aria-hidden="true">✦</span><b>'+card[1]+'</b><small>'+effectText(card[2])+'</small></div><p class="fmuted">保存済み · 次の戦いから有効。新しいカップ・次回起動にも引き継ぎます。<br>永続図鑑 '+goldOwned.size+' / 50</p><button class="fgold" id="fgcontinue">次の戦いへ</button>');pilotPage='award';let continued=false;bind('fgcontinue',()=>{if(continued)return;continued=true;newRound();});}else newRound();}
+function cards(){if(!run.draft||run.draft.round!==run.round)run.draft=makeDraft();let d=run.draft;if(d.options.some(o=>o.gold))stopPilot('gold');panel('<div class="feyebrow">'+perks.length+' CUP PERKS · 50 ETERNAL RELICS</div><h2>'+ (pilotGold?'金カード出現！ 自動停止':'戦い方が変わる強化。')+'</h2><p class="fmuted">通常はこのカップ中有効。金色は次回起動にも残る永続強化。<br>今回の金カード確率 '+chanceText(d.chance)+' · ３枚から１枚 · 永続 '+goldOwned.size+' / 50</p><div class="fbuildgrid">'+d.options.map((o,i)=>{let u=(o.gold?GOLD_CARDS:perks).find(c=>c[0]===o.id),owned=o.gold&&goldOwned.has(o.id);return '<button class="fcard '+(o.gold?'flegacy':'')+'" id="fc'+i+'" '+(owned?'disabled':'')+'>'+(o.gold?'<span class="frelicbadge">✦ 伝説 · 永続</span><span class="frelicsigil" aria-hidden="true">✦</span>':'')+u[1]+(o.gold?'':perkLimit(o.id)>1?' Lv.'+((run.up[o.id]||0)+1):'')+'<small>'+(o.gold?effectText(u[2]):u[2])+'</small>'+(o.gold?'<small class="frelicfooter">'+(owned?'取得済み':'一度だけの出会い · 選ぶと保存')+'</small>':'')+'</button>';}).join('')+'</div><p class="fmuted" role="status">'+(d.error||'同じ効果は加算。二段ジャンプなどの解放効果と自動回復は重複しません。')+'</p>');d.options.forEach((o,i)=>bind('fc'+i,()=>chooseCard(d,i)));pilotPage='cards';if(pilot)pilotRecap('cards','次の強化を選択中','CPUが3枚から判断します',d.options.map(o=>(o.gold?GOLD_CARDS:perks).find(u=>u[0]===o.id)?.[1]||o.id),2.8);}
 function goldBook(back=lobby,page=0,ownedOnly=false){let cards=ownedOnly?GOLD_CARDS.filter(c=>goldOwned.has(c[0])):GOLD_CARDS,pages=Math.max(1,Math.ceil(cards.length/4));page=clamp(page,0,pages-1);panel('<div class="feyebrow">ETERNAL COLLECTION · '+goldOwned.size+' / 50</div><h2>永続の星宝 <small>'+ (page+1)+' / '+pages+'</small></h2><p class="fmuted">強化画面１回につき基礎0.5%で金カード１枚。試合時間と１位連勝で小幅増加（最大1.3%）。金出現で連勝加算をリセット。未取得から等確率、練習では出現しません。取得した効果はすべて常時有効。</p><div class="fbookgrid fcollection">'+(cards.slice(page*4,page*4+4).map(([id,name,stats])=>{let has=goldOwned.has(id);return '<div class="'+(has?'flegacy':'freliclocked')+'"><b>'+(has?'✦ '+name:'◇ 未発見 '+id.slice(1))+'</b><small>'+(has?effectText(stats):'まだ見ぬ永続強化。金色の出会いを待とう。')+'</small></div>';}).join('')||'<p class="fmuted">まだ星宝を持っていません。</p>')+'</div><div class="frow"><button id="fgback">戻る</button><button id="fgfilter">'+(ownedOnly?'全50種':'取得済み')+'</button><button id="fgprev" '+(!page?'disabled':'')+'>前へ</button><button id="fgnext" '+(page===pages-1?'disabled':'')+'>次へ</button></div><small class="fmuted">同じブラウザ・同じサイトに保存。サイトデータ削除や別ブラウザには引き継がれません。'+(!goldSaveOK?' 現在、保存を利用できません。':'')+'</small>');bind('fgback',back);bind('fgfilter',()=>goldBook(back,0,!ownedOnly));bind('fgprev',()=>goldBook(back,page-1,ownedOnly));bind('fgnext',()=>goldBook(back,page+1,ownedOnly));}
 function conditionalPower(a){let extra=0;if(s.t<20)extra+=.4*lv(a,'earlyForce');if(a.air>0||activeGas(a))extra+=.25*lv(a,'jumpKick');if(s.t>=roundLength()-20)extra+=.45*lv(a,'lateForce');extra+=Math.min(5,a.falls||0)*.12*lv(a,'comeback');if(!(a.hitCount>0))extra+=.3*lv(a,'pristine');if(lv(a,'crowdForce')&&opponents(a).filter(b=>distanceTo(a,b)<=4).length>=2)extra+=.4*lv(a,'crowdForce');return extra;}
 function tickPerks(a,dt){if(!(a.id===0||a.controlled)||!a.alive)return;if(lv(a,'cleanse')&&(a.float||0)<=0){a.cleanClock=(a.cleanClock||0)+dt;if(a.cleanClock>=17){a.cleanClock%=17;if(a.hitCount>0){a.hitCount=Math.max(0,a.hitCount-1);say('静水の浄化 · 被弾蓄積−１');}}}if(lv(a,'shieldRegen')){a.shieldClock=(a.shieldClock||0)+dt;if(a.shieldClock>=20){a.shieldClock%=20;if((a.shield||0)<3){a.shield=(a.shield||0)+1;say('再結晶 · 防御を１回補充');}}}}
@@ -4113,6 +4113,16 @@ function cleanseOnHit(a,c){if(!c.summonId&&lv(a,'hitCleanse')&&a.hitCount>0&&s.t
 
 // One foreground state machine: no delayed click callbacks can survive a gold-card stop.
 let pilot=false,pilotPage='',pilotWait=0,pilotToken=null,pilotPriorAuto=false,pilotGold=false,pilotVector=[0,0];
+let pilotRecapUntil=0;
+function pilotRecap(kind,title,detail='',options=[],seconds=2){
+ if(!pilot||!root)return;
+ const el=$f('fpilotRecap');if(!el)return;
+ const escape=s=>String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+ el.className='fpilotRecap fshow '+(kind==='pick'?'frecapPick':kind==='gold'?'frecapGold':'');
+ el.innerHTML='<div class="frecapTag">'+escape(kind==='result'?'BATTLE RESULT':kind==='cards'?'ROGUELIKE CHOICE':'AUTO SELECTED')+'</div><div class="frecapTitle">'+escape(title)+'</div>'+(detail?'<div class="frecapText">'+escape(detail)+'</div>':'')+(options.length?'<div class="frecapOptions">'+options.map(v=>'<span>'+escape(v)+'</span>').join('')+'</div>':'');
+ pilotRecapUntil=performance.now()+seconds*1000;
+}
+function pilotRecapTick(){let el=$f('fpilotRecap');if(el?.classList.contains('fshow')&&(!pilot||performance.now()>pilotRecapUntil))el.classList.remove('fshow');}
 function pendingGold(){let d=run?.draft;return !!(d&&!d.claimed&&d.round===run.round&&d.options.some(o=>o.gold));}
 function syncPilotCinema(){
  if(!root)return;
@@ -4125,10 +4135,68 @@ function syncPilotCinema(){
  if(enabled!==wasEnabled){camera.ready=false;fitCanvas();}
 }
 function syncPilotButton(){if(!root)return;let b=$f('fpilot');if(!b)return;b.textContent=pilot?'✕ 自動解除':pilotGold?'金カードで停止':'CPUに任せる';b.setAttribute('aria-pressed',String(pilot));b.setAttribute('aria-label',pilot?'全自動進行を停止':pilotGold?'金カードを選んでから全自動進行を再開':'コンピュータに任せる。移動・戦闘・結果・通常カードを全自動');b.classList.toggle('fgold',pilot);b.classList.toggle('fpilotgold',pilotGold);syncPilotCinema();let attack=$f('fauto');if(attack){attack.innerHTML='自動攻撃 '+(auto?'ON':'OFF')+'<small>タップで切替</small>';attack.setAttribute('aria-pressed',String(auto));attack.classList.toggle('fgold',auto);}}
-function stopPilot(reason='manual'){if(pilot)auto=pilotPriorAuto;pilot=false;pilotWait=0;pilotToken=null;pilotVector=[0,0];pilotGold=reason==='gold';clearSteer();brake=false;if(controlled())controlled().queued=false;syncPilotButton();}
-function togglePilot(){if(pilot){stopPilot();return;}if(pendingGold()){stopPilot('gold');return;}pilotPriorAuto=auto;auto=true;pilot=true;pilotGold=false;pilotWait=0;pilotToken=null;clearSteer();brake=false;if(!s||!run)start('normal');else if(paused)togglePause();else if(screen==='review'){panel(resultHTML);bindResults();}syncPilotButton();}
-function tickPilot(dt){if(!pilot||paused||document.hidden)return;if(pendingGold()){stopPilot('gold');return;}if(screen!=='panel'){pilotWait=0;pilotToken=null;return;}if(!['results','cards','award'].includes(pilotPage))return;let token=pilotPage==='cards'?run.draft:s;if(pilotToken!==token){pilotToken=token;pilotWait=0;}pilotWait+=dt;let delay=pilotPage==='results'?2.2:1.1;if(pilotWait<delay)return;pilotWait=0;pilotToken=null;if(pilotPage==='results'){if(run.round<5)cards();else start(run.difficulty,run.forceRaid);}else if(pilotPage==='award')newRound();else{let d=run.draft;if(!d||d.claimed||d.round!==run.round)return;if(d.options.some(o=>o.gold)){stopPilot('gold');return;}let choices=d.options.map((o,i)=>({i,score:pilotCardScore(o.id)}));choices.sort((a,b)=>b.score-a.score);if(choices.length)chooseCard(d,choices[0].i);}}
+function stopPilot(reason='manual'){if(pilot)auto=pilotPriorAuto;pilot=false;pilotWait=0;pilotToken=null;pilotVector=[0,0];pilotGold=reason==='gold';pilotRecapUntil=0;$f('fpilotRecap')?.classList.remove('fshow');clearSteer();brake=false;if(controlled())controlled().queued=false;syncPilotButton();}
+function togglePilot(){if(pilot){stopPilot();return;}if(pendingGold()){stopPilot('gold');return;}pilotPriorAuto=auto;auto=true;pilot=true;pilotGold=false;pilotWait=0;pilotToken=null;pilotRecapUntil=0;clearSteer();brake=false;if(!s||!run)start('normal');else if(paused)togglePause();else if(screen==='review'){panel(resultHTML);bindResults();}syncPilotButton();}
+function tickPilot(dt){if(!pilot||paused||document.hidden)return;if(pendingGold()){stopPilot('gold');return;}if(screen!=='panel'){pilotWait=0;pilotToken=null;return;}if(!['results','cards','award'].includes(pilotPage))return;let token=pilotPage==='cards'?run.draft:s;if(pilotToken!==token){pilotToken=token;pilotWait=0;}pilotWait+=dt;let delay=pilotPage==='results'?3.3:pilotPage==='cards'?3.0:1.4;if(pilotWait<delay)return;pilotWait=0;pilotToken=null;if(pilotPage==='results'){if(run.round<5)cards();else start(run.difficulty,run.forceRaid);}else if(pilotPage==='award')newRound();else{let d=run.draft;if(!d||d.claimed||d.round!==run.round)return;if(d.options.some(o=>o.gold)){stopPilot('gold');return;}let choices=d.options.map((o,i)=>({i,score:pilotCardScore(o.id)}));choices.sort((a,b)=>b.score-a.score);if(choices.length)chooseCard(d,choices[0].i);}}
 function pilotCardScore(id){let bundle=BUNDLES.find(b=>b[0]===id),stats=bundle?bundle[2]:{[id]:1},weight={gasSaver:4.2,gasSeek:3.5,airRescue:4.6,jumpKick:4.8,fracture:4.3,cut:3.8,double:6,hop:2.8,phoenix:6,feather:5,anchor:4,hop:4,linger:4,shield:3,shieldRegen:5,spiritCall:4,spiritHp:3,bond:5,force:3,air:3,boost:1.8,cleanse:4,hitCleanse:4,spiritPower:3,bossArmor:2,bossMove:2};return Object.entries(stats).reduce((v,[k,n])=>v+(singlePerks.has(k)&&lv({id:0},k)>=1?0:(weight[k]||2)*n/(1+lv({id:0},k)*.5)),0)+Math.random()*.8;}
+/* v92: one fog-of-war model across both sides. The giant alone is a public
+   illuminated target for every challenger, independent of distance. */
+function cpuWorldLight(x,y){
+ if(!s||!inside(x,y))return 0;
+ let value=.09;
+ for(const p of fbFloeTorchPositions()){
+  if(!(s.layers[s.layer]?.[p.q]?.end>s.t))continue;
+  let dist=Math.hypot(x-p.x/S,y-p.y/S),r=4.25;
+  if(dist<r)value+=.93*Math.pow(1-dist/r,1.28);
+ }
+ if(s.raid&&s.boss?.alive){
+  const r=10.8+bossRadius(s.boss)*.32,dist=Math.hypot(x-s.boss.x,y-s.boss.y);
+  if(dist<r)value+=1.08*Math.pow(1-dist/r,1.12);
+ }
+ return Math.min(1,value);
+}
+function cpuCanSee(a,b){
+ if(!a||!b?.alive||b.spectator)return false;
+ let d=distanceTo(a,b);
+ // The giant is a luminous beacon: every raider knows its actual position on this map.
+ if(s?.raid&&b.boss&&b===s.boss&&!a.boss)return true;
+ // The giant hears nearby footsteps and combat near its glowing body, not through the whole map.
+ if(s?.raid&&a.boss&&Math.hypot(a.x-b.x,a.y-b.y)<bossRadius(a)+8.2)return true;
+ // Collision-range hearing: even in darkness, enemies at your feet are detectable.
+ if(d<=1.75+(a.boss?bossRadius(a)*.3:0))return true;
+ let light=cpuWorldLight(b.x,b.y);
+ return (light>.43&&d<=5.5+light*5.2)||(light>.27&&d<=3.7);
+}
+function cpuVisualContacts(a){return opponents(a).filter(b=>cpuCanSee(a,b));}
+function cpuSensedOpponents(a){
+ if(!a)return[];
+ const foes=opponents(a),memory=a.fogMemory??(a.fogMemory=new Map()),result=[],aliveIds=new Set();
+ for(const b of foes){const key=String(b.id);aliveIds.add(key);
+  if(cpuCanSee(a,b)){
+   memory.set(key,{x:b.x,y:b.y,vx:b.vx||0,vy:b.vy||0,seen:s.t,guard:!!b.guard,boss:!!b.boss,id:b.id});
+   result.push(b);continue;
+  }
+  const m=memory.get(key);if(!m)continue;
+  const age=Math.max(0,s.t-m.seen);
+  if(age>=5.2){memory.delete(key);continue;}
+  // Recent sightings are reliable; old reports turn into an uncertain search vicinity.
+  const drift=age<2.9?Math.min(age,.55):(.6+Math.min(1.4,(age-2.9)*.6));
+  const wobble=age<2.9?0:Math.min(1.45,(age-2.9)*.62);
+  const ghost={...m,x:clamp(m.x+m.vx*drift+Math.sin(Number(a.id)||.7+String(b.id).length*2.3)*wobble,1,N-1),y:clamp(m.y+m.vy*drift+Math.cos(String(b.id).length*.9+(Number(a.id)||.5))*wobble,1,N-1),alive:true,remembered:true,age,inv:0,float:0,hitCount:0};
+  result.push(ghost);
+ }
+ for(const key of memory.keys())if(!aliveIds.has(key))memory.delete(key);
+ return result;
+}
+function cpuScoutGoal(a){
+ if(!a.aiScout||a.aiScout.until<s.t||Math.hypot(a.x-a.aiScout.x,a.y-a.aiScout.y)<1.1){
+  let candidates=fbFloeTorchPositions().filter(p=>s.layers[s.layer]?.[p.q]?.end>s.t).map(p=>({x:p.x/S,y:p.y/S}));
+  for(let i=0;i<9;i++){let x=clamp(a.x+Math.cos(i*2.4+s.t*.7+a.id)*rnd(2,8),1,N-1),y=clamp(a.y+Math.sin(i*2.4+s.t*.7+a.id)*rnd(2,8),1,N-1);if(solid(x,y,s.t+3))candidates.push({x,y});}
+  candidates=candidates.filter(p=>solid(p.x,p.y,s.t+2)&&Math.hypot(p.x-a.x,p.y-a.y)>1.2);
+  a.aiScout=candidates.length?{...pick(candidates),until:s.t+3.8}:{x:N/2,y:N/2,until:s.t+2.2};
+ }
+ return a.aiScout;
+}
 function cpuWeaponBand(a){
  const id=a.weapon?.id||'bolt';let min,ideal,max;
  if(['iai','siphon','mine','aegis','rewind','echo','orbit','spiral'].includes(id))[min,ideal,max]=[1.4,2.35,3.45];
@@ -4150,21 +4218,27 @@ function cpuLootValue(a,b){
 }
 function cpuObjective(a){
  const band=cpuWeaponBand(a);
- let foes=opponents(a).filter(b=>b.alive&&!b.guard&&!b.spectator);
- if(!foes.length)foes=opponents(a).filter(b=>b.alive);
+ let foes=cpuSensedOpponents(a).filter(b=>b.alive&&!b.guard&&!b.spectator);
+ if(!foes.length)foes=cpuSensedOpponents(a).filter(b=>b.alive);
  foes.sort((b,c)=>{
   const value=q=>distanceTo(a,q)+((q.inv||0)>1?3:0)+((q.float||0)>0?4:0)+(q.boss?2:0)-(q.hitCount||0)*.35;
   return value(b)-value(c);
  });
- const enemy=foes[0]||null;
+ const enemy=foes[0]||null;const scout=!enemy?cpuScoutGoal(a):null;
  let loot=null,score=-Infinity;
- for(const box of s.loot){let v=cpuLootValue(a,box);if(box===a.aiPickup)v+=1.8;if(v>score){score=v;loot=box;}}
+ for(const box of s.loot){let v=cpuLootValue(a,box);if(box===a.aiPickup)v+=1.8;
+  if(s.raid&&s.boss?.alive&&!a.boss&&enemy?.boss){
+   const before=distanceTo(a,s.boss),after=Math.max(0,Math.hypot(box.x-s.boss.x,box.y-s.boss.y)-bossRadius(s.boss));
+   // Pick up useful supplies along an attack route, but avoid detours that abandon the giant.
+   v+=after<before+1.2?2.2:-Math.min(5,(after-before-1.2)*.85);
+  }
+  if(v>score){score=v;loot=box;}}
  const nearEnemy=enemy&&distanceTo(a,enemy)<=band.max+1.3;
  const canShoot=nearEnemy&&a.gun<=.5&&!!autoPlan(a);
  // When a shot is ready, finish the fight; otherwise take meaningful, attainable supplies.
  const grab=loot&&score>(!enemy?-1.5:canShoot?4.7:1.5);
  a.aiPickup=grab?loot:null;
- return {target:grab?loot:enemy,enemy,pickup:!!grab,band};
+ return {target:grab?loot:(enemy||scout),enemy,pickup:!!grab,band,scout:!enemy&&!grab};
 }
 function pilotChase(a){
  let objective=cpuObjective(a),want=objective.target;if(!want)return null;
@@ -4174,16 +4248,18 @@ function pilotChase(a){
  for(let i=0;i<queue.length&&i<limit;i++){
   let q=queue[i],x=q%N+.5,y=(q/N|0)+.5,d=steps[q],arrival=s.t+d/2.8;
   let life=(tile(x,y)?.end??0)-arrival;
-  let lead=!objective.pickup&&a.trait==='退路切断'?.65:0;let near=Math.hypot(want.x+(want.vx||0)*lead-x,want.y+(want.vy||0)*lead-y);
+  let lead=!objective.pickup&&a.trait==='退路切断'?.65:0;
+  let near=Math.hypot(want.x+(want.vx||0)*lead-x,want.y+(want.vy||0)*lead-y);
+  if(want.boss&&!objective.pickup)near=Math.max(0,near-bossRadius(want));
   let risk=life<1.75?12:life<3?3.5:life<5?.4:0;
   // Visual telegraphs are also navigational information for BOTH sides.
   for(const c of hostileCasts)for(const pulse of c.pulses){if(!pulse.done&&pulse.at>=arrival-.25&&pulse.at<=arrival+.8&&pulse.cells.has(q)){risk+=12;break;}}
   let exits=guardExits(x,y,arrival+.7);
   // Enemy positioning is a RANGE BAND, not a blind rush to the enemy center.
-  let bandCost=objective.pickup?near*1.35:Math.abs(near-range.ideal)*1.15+Math.max(0,range.min-near)*3.3;
+  let bandCost=objective.pickup||objective.scout?near*1.35:Math.abs(near-range.ideal)*1.15+Math.max(0,range.min-near)*3.3;
   let value=bandCost+d*.19+risk+Math.max(0,2-exits)*.75;
   if(value<bestValue){bestValue=value;best=q;}
-  if(objective.pickup&&near<.6&&life>3)break;
+  if((objective.pickup||objective.scout)&&near<.6&&life>3)break;
   for(let [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]]){
    let xx=x+dx,yy=y+dy;if(!inside(xx,yy))continue;
    let next=cell(xx,yy),nd=d+Math.hypot(dx,dy);
@@ -4229,7 +4305,79 @@ function pilotActor(a,dt){
  if(a.gun<=0&&a.float<=0&&s.t-(a.lastFire??-100)>=4.5){let plan=autoPlan(a);if(plan)fire(a,plan);}
 }
 
-function pilotBoss(b,dt){if(!pilot||!b.controlled)return;brake=false;if(b.leap){pilotVector=[b.leap.dx,b.leap.dy];return;}b.pilotThink=(b.pilotThink||0)-dt;if(b.pilotThink<=0){b.pilotThink=.25;let best=-Infinity,dir=[0,0],foes=opponents(b),target=foes.sort((a,c)=>distanceTo(b,a)-distanceTo(b,c))[0];for(let i=0;i<16;i++){let angle=i*Math.PI/8,dx=Math.cos(angle),dy=Math.sin(angle),x=b.x+dx*2.2,y=b.y+dy*2.2,edge=Math.min(x,y,N-x,N-y)-bossRadius(b),support=supportCount(b,s.t+1.4,x,y),score=support*3+Math.min(3,edge)+(target?-Math.abs(Math.hypot(target.x-x,target.y-y)-6)*.3:0);if(edge<.2)score-=35;if(score>best){best=score;dir=[dx,dy];}}pilotVector=dir;}if(s.t<(b.pilotSkillAt||0))return;b.pilotSkillAt=s.t+1.2;let foes=opponents(b);if(!foes.length)return;for(let i=0;i<BOSS_SKILLS.length;i++){let idx=((b.pilotSkillIndex||0)+i)%BOSS_SKILLS.length,id=BOSS_SKILLS[idx][0];if((b.skillCD?.[id]||0)>0)continue;if(id==='leap'||id==='rush'){let [dx,dy]=bossAim(b),distance=id==='leap'?9.5:bossSpeed(b)*2.4,x=b.x+dx*distance,y=b.y+dy*distance,r=bossRadius(b)+.5;if(x<r||y<r||x>N-r||y>N-r||supportCount(b,s.t+3,x,y)<Math.min(4,bossArea(b)))continue;if(id==='rush'&&[.25,.5,.75].some(u=>supportCount(b,s.t+1,b.x+dx*distance*u,b.y+dy*distance*u)<2))continue;}if(useBossSkill(id)){b.pilotSkillIndex=(idx+1)%BOSS_SKILLS.length;break;}}}
+function bossSkillWeight(b,id,foes,target){
+ const d=target?Math.max(0,Math.hypot(target.x-b.x,target.y-b.y)-bossRadius(b)):99;
+ const near=foes.filter(a=>Math.hypot(a.x-b.x,a.y-b.y)<bossRadius(b)+6).length;
+ const threatened=(b.hitCount||0)>0||Math.hypot(b.kx||0,b.ky||0)>1.2;
+ const stability=supportCount(b,s.t+2.5),area=bossArea(b);
+ const spec={leap:4.2,missile:5.2,rush:4.4,beam:5.3,trident:5.2,fan:5.2,meteor:5.7,ring:4.2,cyclone:4.7,vortex:4.7,mines:3.9,reflect:4.3,chain:5.5,fort:2.8,ward:2.6,roar:4.8};
+ let score=spec[id]??4;
+ if(['missile','beam','trident','fan','meteor','reflect','chain'].includes(id))score+=d>5?2:0;
+ if(['ring','roar','mines','vortex','cyclone'].includes(id))score+=near?2.3:0;
+ if(id==='leap')score+=(d>7?2:0)+(stability<area*.74?2.3:0);
+ if(id==='rush')score+=d>=4&&d<=10?2:0;
+ if(id==='fort')score+=stability<area*.82?5:0;
+ if(id==='ward')score+=threatened?5:0;
+ if(id==='roar'&&s.casts.some(c=>!c.bossId&&c.pulses.some(p=>!p.done&&Math.hypot(p.cx-b.x,p.cy-b.y)<6)))score+=3;
+ if(id==='missile'&&(s.bossMissiles?.length||0)>4)return -1e5;
+ if(['missile','chain'].includes(id)&&!foes.length)return -1e5;
+ if(!target&&!['fort','ward','mines'].includes(id))score-=6;
+ // Repetition penalty keeps the 16 techniques diverse, without making the boss random.
+ score-=Math.min(5,(b.skillUsage?.[id]||0)*1.45);
+ if(id===b.lastAIAbility)score-=4;
+ return score+Math.random()*.9;
+}
+function bossAIMove(b,target){
+ let best=-Infinity,dir=[0,0],area=bossArea(b),radius=bossRadius(b);
+ const preferred=radius+2.0;
+ for(let i=0;i<24;i++){
+  let angle=i*Math.PI/12,dx=Math.cos(angle),dy=Math.sin(angle),x=b.x+dx*2,y=b.y+dy*2;
+  let edge=Math.min(x-radius,y-radius,N-radius-x,N-radius-y),support=supportCount(b,s.t+1.6,x,y),score=5*Math.min(1,support/Math.max(1,area)) + Math.min(2,edge)*.45;
+  if(target){let gap=Math.hypot(target.x-x,target.y-y),before=Math.hypot(target.x-b.x,target.y-b.y);
+   score-=Math.abs(gap-preferred)*1.2;
+   if(before>preferred+1.3&&gap<before)score+=2;
+   if(before<preferred-1&&gap<before)score-=2;
+  }else score+=Math.hypot(x-N/2,y-N/2)<Math.hypot(b.x-N/2,b.y-N/2)?1:0;
+  if(edge<.35)score-=35;if(support<area*.52)score-=22;
+  if(score>best){best=score;dir=[dx,dy];}
+ }
+ return dir;
+}
+function pilotBoss(b,dt){
+ // One decision loop for the rival giant and the player's AI-controlled giant.
+ if(!b?.alive||!s?.raid||!(pilot&&b.controlled||!b.controlled))return;
+ if(b.controlled)brake=false;
+ if(b.leap){if(b.controlled)pilotVector=[b.leap.dx,b.leap.dy];return;}
+ b.pilotThink=(b.pilotThink||0)-dt;
+ if(b.pilotThink<=0){
+  b.pilotThink=.28;
+  const foes=cpuSensedOpponents(b).filter(a=>a.alive&&!a.spectator);
+  foes.sort((a,c)=>Number(a.guard)-Number(c.guard)||distanceTo(b,a)-distanceTo(b,c));
+  // A last-seen silhouette is actionable for navigation, but direct-target skills
+  // still require a currently visible opponent.
+  const target=foes[0]||null;b.aiTarget=target;
+  const dir=bossAIMove(b,target);
+  b.aiVector=dir;
+  if(b.controlled)pilotVector=dir;else {b.dx=dir[0];b.dy=dir[1];}
+  if(target){let ax=target.x-b.x,ay=target.y-b.y,n=Math.hypot(ax,ay)||1;b.aimX=ax/n;b.aimY=ay/n;}
+ }
+ if(s.t<(b.pilotSkillAt||0)||s.t<(b.skillLock||0))return;
+ const visible=cpuVisualContacts(b).filter(a=>a.alive&&!a.spectator&&a.float<=0&&a.inv<=0);
+ const target=visible.sort((a,c)=>Number(a.guard)-Number(c.guard)||distanceTo(b,a)-distanceTo(b,c))[0]||null;
+ const order=BOSS_SKILLS.map(([id])=>({id,score:bossSkillWeight(b,id,visible,target)})).sort((a,c)=>c.score-a.score);
+ for(const {id,score} of order){
+  if(score<0||(b.skillCD?.[id]||0)>0)continue;
+  if((id==='leap'||id==='rush')){
+   let [dx,dy]=bossAim(b),distance=id==='leap'?9.5:bossSpeed(b)*2.4,x=b.x+dx*distance,y=b.y+dy*distance,r=bossRadius(b)+.5;
+   if(x<r||y<r||x>N-r||y>N-r||supportCount(b,s.t+3,x,y)<Math.min(4,bossArea(b)))continue;
+   if(id==='rush'&&[.25,.5,.75].some(u=>supportCount(b,s.t+1,b.x+dx*distance*u,b.y+dy*distance*u)<2))continue;
+  }
+  if(useBossSkill(id,true)){
+   b.pilotSkillAt=s.t+(b.controlled?2.35:3.1+Math.random()*.6);
+   break;
+  }
+ }
+}
 
 let movePointer=null,moveSurface=null;let forceWide=false,rotated=false,portraitRotated=false,zoomMode=1,camera={x:0,y:0,scale:1,ready:false},resizeObs=null,pauseTimer=null;
 let root,cv,g,s,run,raf,last=0,keys={},brake=false,stick=null,screen='lobby',paused=false,resultHTML='',auto=false;
@@ -4284,7 +4432,7 @@ function spendWeaponCharge(a){
  if(!a.weaponCharges){let previous=a.weapon.name;a.weapon={...(a.reserveWeapon||makeWeapon())};a.reserveWeapon=null;a.weaponCharges=null;if(a.id===0)say(previous+'を使い切った · '+a.weapon.name+'に戻る');}
  if(a.id===0){run.loadout={...a.weapon};run.loadoutCharges=a.weaponCharges;run.reserveWeapon=a.reserveWeapon?{...a.reserveWeapon}:null;}
 }
-function open(){if(root)return;zoomMode=1;forceWide=useLandscapeLayout();auto=false;closeModal();mode='floe';heldKey=null;heldPointer=null;root=document.createElement('section');root.id='floe';root.innerHTML='<div class="ftop"><div><b>FROSTFALL</b><small>氷界争奪戦 · 群島サバイバル</small></div><button id="fpilot" title="コンピュータに任せる：金カードが出たら停止">CPUに任せる</button><button id="frotate">横画面</button><button id="fzoom">追従</button><button id="fpause" title="短い長押しで一時停止">停止 · 長押し</button><button id="fexit">戻る</button></div><div class="fhud" id="fhud">４〜６人 · 落下回数で競う · 全５戦</div><div class="fwrap"><canvas id="fcanvas" width="408" height="480" aria-label="群島サバイバルの氷床"></canvas><div class="fsheet" id="fsheet"></div></div><div id="fweapon" style="font-size:11px;min-height:29px;text-align:center;flex:none;max-width:100%;line-height:1.4"></div><div class="fctrl"><div id="fjoy" role="application" aria-label="全方向ジョイスティック。中央を2回タップで向いている方向にジャンプ"><span class="fjoycross">＋</span><i id="fknob"></i><small>全方向</small></div><div class="fact"><button id="fhop">ジャンプ<small>Space / 空中でもう一度</small></button><button id="ffire" class="fmanual" aria-label="手動攻撃。タップして発動、冷却中は攻撃予約">⚔ 手動攻撃<small>タップ / F</small></button><button id="fbrake">減速<small>長押し / Shift</small></button><button id="fgas" title="ガスボンベ：ジャンプ後の飛行をON/OFF">ガスなし<small>飛行 ON / OFF</small></button><button id="fauto">自動攻撃 OFF<small>タップで切替</small></button><div id="fbosspad"></div></div></div>';document.body.appendChild(root);cv=$f('fcanvas');g=cv.getContext('2d');g.imageSmoothingEnabled=false;
+function open(){if(root)return;zoomMode=1;forceWide=useLandscapeLayout();auto=false;closeModal();mode='floe';heldKey=null;heldPointer=null;root=document.createElement('section');root.id='floe';root.innerHTML='<div class="ftop"><div><b>FROSTFALL</b><small>氷界争奪戦 · 群島サバイバル</small></div><button id="fpilot" title="コンピュータに任せる：金カードが出たら停止">CPUに任せる</button><button id="frotate">横画面</button><button id="fzoom">追従</button><button id="fpause" title="短い長押しで一時停止">停止 · 長押し</button><button id="fexit">戻る</button></div><div class="fhud" id="fhud">４〜６人 · 落下回数で競う · 全５戦</div><div class="fwrap"><canvas id="fcanvas" width="408" height="480" aria-label="群島サバイバルの氷床"></canvas><div class="fsheet" id="fsheet"></div></div><div class="fpilotRecap" id="fpilotRecap" aria-live="polite" aria-atomic="true"></div><div id="fweapon" style="font-size:11px;min-height:29px;text-align:center;flex:none;max-width:100%;line-height:1.4"></div><div class="fctrl"><div id="fjoy" role="application" aria-label="全方向ジョイスティック。中央を2回タップで向いている方向にジャンプ"><span class="fjoycross">＋</span><i id="fknob"></i><small>全方向</small></div><div class="fact"><button id="fhop">ジャンプ<small>Space / 空中でもう一度</small></button><button id="ffire" class="fmanual" aria-label="手動攻撃。タップして発動、冷却中は攻撃予約">⚔ 手動攻撃<small>タップ / F</small></button><button id="fbrake">減速<small>長押し / Shift</small></button><button id="fgas" title="ガスボンベ：ジャンプ後の飛行をON/OFF">ガスなし<small>飛行 ON / OFF</small></button><button id="fauto">自動攻撃 OFF<small>タップで切替</small></button><div id="fbosspad"></div></div></div>';document.body.appendChild(root);cv=$f('fcanvas');g=cv.getContext('2d');g.imageSmoothingEnabled=false;
 root.querySelectorAll('[data-fdir]').forEach(b=>{let k=b.dataset.fdir;b.onpointerdown=e=>{e.preventDefault();b.setPointerCapture(e.pointerId);keys[k]=true;};b.onpointerup=b.onpointercancel=b.onlostpointercapture=()=>keys[k]=false;});
 let joy=$f('fjoy');joy.onpointerdown=e=>beginSteer(e,'joy');joy.onpointermove=e=>updateSteer(e,'joy');joy.onpointerup=joy.onpointercancel=joy.onlostpointercapture=endSteer;
 let bb=$f('fbrake');bb.onpointerdown=e=>{if(pilot)stopPilot();e.preventDefault();bb.setPointerCapture(e.pointerId);brake=true;};bb.onpointerup=bb.onpointercancel=bb.onlostpointercapture=()=>brake=false;
@@ -4356,7 +4504,7 @@ function guardRange(v){let id=v.weapon?.id;if(!id)return {ideal:1.6,max:2.3};if(
 function weaponOffsets(id,d=3){let parallel=Math.asin(Math.min(.99,1.2/Math.max(1.2,d)));return id==='mirror'?[parallel,-parallel]: id==='rear'?[Math.PI,Math.PI+.15,Math.PI-.15,Math.PI+.3,Math.PI-.3,Math.PI+.5,Math.PI-.5]:id==='sides'?[Math.PI/2,-Math.PI/2]:id==='knight'?[0,.46365,-.46365,.7854,-.7854]:[0];}
 function aimedGeometry(a,target){let id=a.weapon.id,best=null;for(let offset of weaponOffsets(id,Math.hypot(target.x-a.x,target.y-a.y))){let geo=geometry(a,id,target,offset);if(!best)best=geo;if(geo.pulses.some(p=>pulseHits(p,target)))return {geo,target};}return null;}
 function assistThreat(a,b){return b.guard&&s.summons.some(v=>v.alive&&v.owner===a.id&&distanceTo(v,b)<4.2);}
-function autoPlan(a){let foes=opponents(a).filter(b=>(b.inv||0)<=0&&(b.float||0)<=0&&distanceTo(a,b)<=12),rank=b=>distanceTo(a,b)-(assistThreat(a,b)?3.4:0);foes.sort((b,c)=>rank(b)-rank(c));for(let b of foes.slice(0,6)){let plan=aimedGeometry(a,b);if(plan)return plan;}return null;}
+function autoPlan(a){let foes=cpuVisualContacts(a).filter(b=>(b.inv||0)<=0&&(b.float||0)<=0&&distanceTo(a,b)<=12),rank=b=>distanceTo(a,b)-(assistThreat(a,b)?3.4:0);foes.sort((b,c)=>rank(b)-rank(c));for(let b of foes.slice(0,6)){let plan=aimedGeometry(a,b);if(plan)return plan;}return null;}
 function drawTargetLock(){let a=s.actors[0],target=entity(a.lockId);if(!auto||!target?.alive||a.lockUntil<s.t||s.playerBoss)return;let x=target.x*S,y=target.y*S,r=target.boss?bossRadius(target)*S+4:18;g.save();g.strokeStyle='#fff3ad';g.lineWidth=2;for(let k=0;k<4;k++){let angle=k*Math.PI/2+s.t*.3;g.beginPath();g.arc(x,y,r,angle,angle+.45);g.stroke();}g.fillStyle='#fff3ad';g.font='bold 10px sans-serif';g.textAlign='center';g.fillText(target.guard?'援護ターゲット':'AUTO TARGET',x,y-r-6);g.restore();}
 function spiritAttack(v,target){if(v.gun>0||s.casts.length>=14||s.casts.filter(c=>c.summonId).length>=8)return false;if(s.t<(v.attackAt||0))return false;v.attackAt=s.t+.18;let plan=aimedGeometry(v,target);if(!plan)return false;let geo=plan.geo;if(crowded(geo))return false;
 // Keep target-hitting pulses/cells when limiting a companion's visual footprint.
@@ -4442,8 +4590,8 @@ spiritDecor(v,pal);drawSpiritWeapon(v,pal);
 g.restore();if(!preview){let w=20*size,topY=y-31*size-hover;rect(x-w/2,topY,w,3,'#152436');rect(x-w/2,topY,w*Math.max(0,v.hp)/(v.maxHp||3),3,ownerColor);g.fillStyle=ownerColor;g.font='bold 9px sans-serif';g.textAlign='center';g.fillText((v.owner===0?'味方 ':'')+spiritMode(v)+(v.combatStyle==='rapid'?'・速射':v.combatStyle==='heavy'?'・重撃':'・武装'),x,topY-3);if(v.movement==='fly'&&!solid(v.x,v.y)){rect(x-8,y+13,16,2,'#243b50');rect(x-8,y+13,16*Math.max(0,v.wingTime)/v.wingMax,2,'#aee9ff');}}}
 function drawSummons(){for(let v of s.summons)drawSpirit(v,v.x*S,v.y*S);}
 function makeRaidLand(){let cells=Array.from({length:N*N},()=>({end:0,start:0,owner:-1,group:-1})),groups=[];let pits=[[7.5,N/2],[N-7.5,N/2]];for(let y=2;y<N-2;y++)for(let x=2;x<N-2;x++){if(pits.some(p=>Math.abs(x+.5-p[0])<2.51&&Math.abs(y+.5-p[1])<2.51))continue;if((x<4||x>N-5)&&(y<4||y>N-5))continue;let id=groups.length,q=cell(x,y);groups.push({id,cells:[q],kind:'tile',hold:0,end:Infinity,start:0,owner:-1});cells[q]={end:Infinity,start:0,owner:-1,group:id};}return {cells,groups,centers:[[5.5,5.5],[N-5.5,5.5],[5.5,N-5.5],[N-5.5,N-5.5],[N/2,5.5],[N/2,N-5.5],[9.5,9.5],[N-9.5,N-9.5]],pits,shape:'巨獣共闘',total:groups.length};}
-function createBoss(){let roll=Math.random(),size=roll<.5?3:roll<.85?4:5,form=bossForm(size),skin=pick([{h:205,s:52},{h:285,s:45},{h:8,s:65},{h:155,s:43},{h:40,s:65},{h:330,s:45}]);return {id:'boss',boss:true,size,...form,design:Math.floor(Math.random()*4),hue:(skin.h+rnd(-12,12)+360)%360,saturation:skin.s,crest:Math.floor(Math.random()*3),x:N/2,y:N/2,vx:0,vy:0,kx:0,ky:0,dx:0,dy:1,alive:true,inv:0,float:0,hitCount:0,gun:3,think:0,windup:0,lastHit:null,kos:0,score:0,slow:0,mark:0,shield:0};}
-// Sixteen independent giant techniques. Only player-controlled giants use the arsenal.
+function createBoss(){let roll=Math.random(),size=roll<.5?3:roll<.85?4:5,form=bossForm(size),skin=pick([{h:205,s:52},{h:285,s:45},{h:8,s:65},{h:155,s:43},{h:40,s:65},{h:330,s:45}]);return {id:'boss',boss:true,size,...form,design:Math.floor(Math.random()*4),hue:(skin.h+rnd(-12,12)+360)%360,saturation:skin.s,crest:Math.floor(Math.random()*3),x:N/2,y:N/2,vx:0,vy:0,kx:0,ky:0,dx:0,dy:1,alive:true,inv:0,float:0,hitCount:0,gun:3,think:0,windup:0,skillCD:{},skillUsage:{},pilotThink:0,pilotSkillAt:1.5,lastHit:null,kos:0,score:0,slow:0,mark:0,shield:0};}
+// Sixteen giant techniques available to manual play and to BOTH giant CPU controllers.
 const BOSS_SKILLS=[
 ['leap','大跳躍',11,'Space','2.5秒の大跳躍。方向入力で空中旋回し、着地時に半径９マスへ地震。穴への着地は転落。'],
 ['missile','執念弾',14,'1','２発の追尾弾が最大12秒追跡。小回りでかわし、守護霊を盾にできる。'],
@@ -4462,13 +4610,21 @@ const BOSS_SKILLS=[
 ['ward','王の結界',20,'T','５秒間、受ける押し出しを65%軽減。'],
 ['roar','威嚇咆哮',14,'Y','周囲６マスの衝撃。近くの敵の攻撃予告も最大２個打ち消す。']
 ];
-function bossAim(b){let d=readStick(),target=auto?opponents(b).filter(a=>(a.float||0)<=0).sort((a,c)=>Number(a.guard)-Number(c.guard)||distanceTo(b,a)-distanceTo(b,c))[0]:null;if(d[0]||d[1]){b.aimX=d[0];b.aimY=d[1];}let x=target?target.x-b.x:b.aimX??0,y=target?target.y-b.y:b.aimY??1,len=Math.hypot(x,y)||1;return [x/len,y/len];}
+function bossAim(b){
+ const human=!!b.controlled&&!pilot;
+ if(human){let d=readStick();if(d[0]||d[1]){b.aimX=d[0];b.aimY=d[1];}}
+ const enemies=cpuVisualContacts(b).filter(a=>(a.float||0)<=0&&!a.spectator);
+ const preferred=b.aiTarget&&enemies.find(a=>a.id===b.aiTarget.id);
+ const target=human?(auto?enemies.sort((a,c)=>Number(a.guard)-Number(c.guard)||distanceTo(b,a)-distanceTo(b,c))[0]:null):preferred||enemies.sort((a,c)=>Number(a.guard)-Number(c.guard)||distanceTo(b,a)-distanceTo(b,c))[0];
+ const x=target?target.x-b.x:b.aimX??0,y=target?target.y-b.y:b.aimY??1,len=Math.hypot(x,y)||1;
+ return [x/len,y/len];
+}
 function bossDisk(x,y,r,inner=0,gaps=0,phase=0){let cells=new Set();for(let yy=Math.floor(y-r);yy<=y+r;yy++)for(let xx=Math.floor(x-r);xx<=x+r;xx++){let d=Math.hypot(xx+.5-x,yy+.5-y);if(!inside(xx,yy)||d>r||d<inner)continue;if(gaps){let angle=Math.atan2(yy+.5-y,xx+.5-x)-phase,sector=Math.PI*2/gaps,near=Math.abs(((angle%sector)+sector+sector/2)%sector-sector/2);if(d*Math.sin(near)<.65)continue;}cells.add(cell(xx,yy));}return cells;}
 function bossRay(x,y,dx,dy,len,width=.5,start=0){let cells=new Set();for(let u=start;u<=len;u+=.23)for(let v=-width;v<=width;v+=.23){let px=x+dx*u-dy*v,py=y+dy*u+dx*v;if(inside(px,py))cells.add(cell(px,py));}return cells;}
 function bossPulse(cells,delay,cx,cy,extra={}){return {cells,at:s.t+delay,mult:1,cx,cy,done:false,...extra};}
 function bossCast(b,id,pulses,force=18,priority=false){pulses=pulses.filter(p=>p.cells.size);if(!pulses.length)return false;if(s.casts.length>=16){if(!priority)return false;let index=s.casts.findIndex(c=>c.bossId);if(index<0)index=0;s.casts.splice(index,1);}let [dx,dy]=bossAim(b),name=BOSS_SKILLS.find(c=>c[0]===id)?.[1]||'大地震',weapon={leap:'nova',rush:'iai',beam:'laser',trident:'prism',fan:'fan',meteor:'meteor',ring:'ring',cyclone:'spiral',vortex:'vortex',mines:'mine',reflect:'ricochet',chain:'chain',roar:'nova'}[id]||'nova';s.casts.push({id:++s.seq,owner:b.id,bossId:b.id,skill:id,w:{id:weapon,name},pulses,dx,dy,power:force*bossPower(b),hits:{},created:s.t,originX:b.x,originY:b.y,x:b.x,y:b.y});return true;}
 function quake(b){let pulses=[];for(let i=0;i<3;i++)pulses.push(bossPulse(bossDisk(b.x,b.y,3.6+i*2.7,i?2.6+i*2.7:0,6,.12),.3+i*.35,b.x,b.y));bossCast(b,'leap',pulses,21,true);s.fx.push({x:b.x,y:b.y,at:s.t,victim:b.id,dx:0,dy:-1,until:s.t+.65,color:'#ffe099',label:'QUAKE!'});say('大地震！ ３段の衝撃波');}
-function useBossSkill(id){let b=s?.boss,info=BOSS_SKILLS.find(k=>k[0]===id);if(!info||!s?.playerBoss||!b?.alive||screen!=='play'||paused||s.count>0)return false;b.skillCD??={};if((b.skillCD[id]||0)>0){say(info[1]+' あと'+b.skillCD[id].toFixed(1)+'秒');return false;}if(s.t<(b.skillLock||0))return false;if(id==='leap'&&b.leap||id==='rush'&&b.leap){say('着地してから発動できます');return false;}let [dx,dy]=bossAim(b),angle=Math.atan2(dy,dx),foes=opponents(b).filter(a=>(a.float||0)<=0&&(a.inv||0)<=0).sort((a,c)=>Number(a.guard)-Number(c.guard)||distanceTo(b,a)-distanceTo(b,c)),pulses=[],force=18;
+function useBossSkill(id,byAI=false){let b=s?.boss,info=BOSS_SKILLS.find(k=>k[0]===id);if(!info||!s?.raid||!b?.alive||screen!=='play'||paused||s.count>0||(!b.controlled&&!byAI))return false;b.skillCD??={};if((b.skillCD[id]||0)>0){say(info[1]+' あと'+b.skillCD[id].toFixed(1)+'秒');return false;}if(s.t<(b.skillLock||0))return false;if(id==='leap'&&b.leap||id==='rush'&&b.leap){say('着地してから発動できます');return false;}let [dx,dy]=bossAim(b),angle=Math.atan2(dy,dx),foes=(byAI||pilot||auto?cpuVisualContacts(b):opponents(b)).filter(a=>(a.float||0)<=0&&(a.inv||0)<=0).sort((a,c)=>Number(a.guard)-Number(c.guard)||distanceTo(b,a)-distanceTo(b,c)),pulses=[],force=18;
 if(id==='leap'){b.leap={left:2.5,total:2.5,dx,dy};b.vx=dx*3.8;b.vy=dy*3.8;b.windup=0;b.stride=0;}
 else if(id==='missile'){if(!foes.length){say('追尾できる敵がまだいません');return false;}s.bossMissiles??=[];if(s.bossMissiles.length>4){say('追尾弾は最大６発まで');return false;}for(let i=0;i<2;i++){let sign=i?1:-1,x=b.x-dy*sign*(bossRadius(b)+.35),y=b.y+dx*sign*(bossRadius(b)+.35);s.bossMissiles.push({id:++s.seq,x,y,angle:angle+sign*.55,target:foes[i%foes.length].id,left:12,age:0,trail:[],owner:b.id});}}
 else if(id==='fort'){reserve([b.x,b.y],s.t+6);b.fortUntil=s.t+6;}
@@ -4487,7 +4643,7 @@ else if(id==='chain'){if(!foes.length){say('雷を落とせる敵がまだいま
 else if(id==='roar')pulses.push(bossPulse(bossDisk(b.x,b.y,6,0,6,0),.55,b.x,b.y));
 if(pulses.length&&!bossCast(b,id,pulses,force)){say('攻撃が重なっています。少し待って再発動');return false;}
 if(id==='rush'){b.stride=1.05;b.rushDir=[dx,dy];}if(id==='roar'){let cleared=0;for(let c of s.casts)if(!c.bossId&&c.pulses.some(p=>!p.done&&Math.hypot(p.cx-b.x,p.cy-b.y)<6)&&cleared++<2)for(let p of c.pulses)p.done=true;}
-b.skillCD[id]=info[2];b.skillLock=s.t+.22;if(id==='leap')b.cool=info[2];say(info[1]+'！ '+(id==='leap'?'空中で方向調整 → 着地で大地震':id==='missile'?'12秒追跡':'発動'));bossHud();return true;}
+b.skillCD[id]=info[2];b.skillLock=s.t+.22;if(id==='leap')b.cool=info[2];b.skillUsage??={};b.skillUsage[id]=(b.skillUsage[id]||0)+1;b.lastAIAbility=id;say((byAI?'巨獣：':'')+info[1]+'！ '+(id==='leap'?'空中で方向調整 → 着地で大地震':id==='missile'?'12秒追跡':'発動'));if(b.controlled)bossHud();return true;}
 function tickBossMissiles(dt){let b=s.boss;if(!b?.alive){s.bossMissiles=[];return;}for(let m of s.bossMissiles||[]){m.left-=dt;m.age+=dt;let foes=opponents(b).filter(a=>(a.float||0)<=0&&(a.inv||0)<=0),target=foes.find(a=>a.id===m.target);if(!target){target=foes.sort((a,c)=>Math.hypot(m.x-a.x,m.y-a.y)-Math.hypot(m.x-c.x,m.y-c.y))[0];if(target)m.target=target.id;}if(target){let wanted=Math.atan2(target.y-m.y,target.x-m.x),diff=Math.atan2(Math.sin(wanted-m.angle),Math.cos(wanted-m.angle));m.angle+=clamp(diff,-2.8*dt,2.8*dt);}let steps=Math.max(1,Math.ceil(3.5*dt/.12)),hit=null;for(let i=0;i<steps&&!hit;i++){m.x+=Math.cos(m.angle)*3.5*dt/steps;m.y+=Math.sin(m.angle)*3.5*dt/steps;if(m.age>.4)hit=foes.find(a=>Math.hypot(a.x-m.x,a.y-m.y)<.6+(a.guard?.15:0));}m.trail.push([m.x,m.y]);if(m.trail.length>18)m.trail.shift();if(hit){let c={id:m.id,owner:b.id,bossId:b.id,w:{id:'seeker',name:'執念弾'},power:16*bossPower(b),dx:Math.cos(m.angle),dy:Math.sin(m.angle),hits:{},originX:b.x,originY:b.y},p=bossPulse(bossDisk(m.x,m.y,1.15),0,m.x-Math.cos(m.angle),m.y-Math.sin(m.angle));for(let foe of foes)if(pulseHits(p,foe))push(b,foe,c,p);emitShot(c,p);m.left=0;}if(!inside(m.x,m.y))m.left=0;}s.bossMissiles=(s.bossMissiles||[]).filter(m=>m.left>0);}
 function bossLift(b){return b.leap?Math.sin(Math.PI*(1-b.leap.left/b.leap.total))*70:0;}
 function drawBossSkills(){let b=s.boss;if(!b?.alive)return;g.save();if(b.leap){let x=clamp(b.x+b.vx*b.leap.left,1,N-1)*S,y=clamp(b.y+b.vy*b.leap.left,1,N-1)*S;g.setLineDash([8,6]);g.lineDashOffset=-s.t*18;g.strokeStyle='#ffe6ab';g.lineWidth=2;g.beginPath();g.arc(x,y,9*S,0,Math.PI*2);g.stroke();g.setLineDash([]);g.beginPath();g.moveTo(x-14,y);g.lineTo(x+14,y);g.moveTo(x,y-14);g.lineTo(x,y+14);g.stroke();g.font='bold 12px sans-serif';g.fillStyle='#ffe9b0';g.textAlign='center';g.fillText('QUAKE '+b.leap.left.toFixed(1)+'s',x,y-22);}if(b.wardUntil>s.t||b.fortUntil>s.t){g.strokeStyle=b.wardUntil>s.t?'#cbacff':'#a9ffdf';g.lineWidth=3;g.beginPath();g.arc(b.x*S,b.y*S-bossLift(b),(bossRadius(b)+.6)*S,0,Math.PI*2);g.stroke();}
@@ -4496,11 +4652,33 @@ function setupBossControls(){root.classList.toggle('fbossmode',!!s?.playerBoss);
 function bossBook(page=0){let entries=BOSS_SKILLS.slice(page*4,page*4+4);panel('<div class="feyebrow">GIANT ARSENAL · 16 TECHNIQUES</div><h2>巨獣の技 '+(page+1)+' / 4</h2><div class="fbookgrid">'+entries.map(c=>'<div><b>'+c[1]+' · '+c[3]+'</b><small>'+c[4]+'<br>再使用 '+c[2]+'秒</small></div>').join('')+'</div><div class="frow"><button id="fbbookprev" '+(!page?'disabled':'')+'>前へ</button><button id="fbbooknext" '+(page===3?'disabled':'')+'>次へ</button><button id="fbbookclose" class="fgold">戦闘へ戻る</button></div>');bind('fbbookprev',()=>bossBook(Math.max(0,page-1)));bind('fbbooknext',()=>bossBook(Math.min(3,page+1)));bind('fbbookclose',togglePause);}
 function updateBossButtons(){let b=s.boss;for(let [id,name,cd,key] of BOSS_SKILLS.slice(1)){let btn=$f('fbskill_'+id);if(!btn)continue;let left=b.skillCD?.[id]||0;btn.innerHTML=name+'<small>'+(left>0?left.toFixed(1)+'秒':key+' · READY')+'</small>';btn.classList.toggle('fcharging',left>0);btn.setAttribute('aria-disabled',String(left>0));}}
 
-function bossAttack(b){if(!b.alive||b.gun>0||s.casts.length>=16)return false;let target=opponents(b).filter(a=>a.float<=0).sort((a,c)=>distanceTo(b,a)-distanceTo(b,c))[0];if(!target&&!b.controlled)return false;let angle=b.controlled&&(!auto||!target)?Math.atan2(b.aimY??1,b.aimX??0):Math.atan2(target.y-b.y,target.x-b.x),dx=Math.cos(angle),dy=Math.sin(angle),side=[-dy,dx],cells=new Set(),start=bossRadius(b)-.3;for(let u=start;u<=start+4.5;u+=.25)for(let v=-1.05-(u-start)*.2;v<=1.05+(u-start)*.2;v+=.25){let x=b.x+dx*u+side[0]*v,y=b.y+dy*u+side[1]*v;if(inside(x,y))cells.add(cell(x,y));}let stomp=new Set();for(let p of footprint(b))for(let [ox,oy] of [[0,0],[1,0],[-1,0],[0,1],[0,-1]])if(inside(p.x+ox,p.y+oy))stomp.add(cell(p.x+ox,p.y+oy));let windup=1.25+b.size*.1;b.windup=windup;b.gun=7+b.size*.2;s.casts.push({id:++s.seq,owner:'boss',bossId:'boss',w:{id:'shears',name:'巨獣の重撃 ×'+bossPower(b)},pulses:[{cells,at:s.t+windup,mult:1,cx:b.x,cy:b.y,done:false},{cells:stomp,at:s.t+windup,mult:1,cx:b.x,cy:b.y,done:false,onlyGuards:true}],dx,dy,power:32*bossPower(b),hits:{},created:s.t,originX:b.x,originY:b.y,x:b.x,y:b.y});say(b.controlled?'重撃！ 予告した方向へ振り下ろす':'巨獣の重撃！ 赤い予告の外へ');return true;}
-function tickBoss(dt){let b=s.boss;if(!b?.alive)return;tickPerks(b,dt);pilotBoss(b,dt);for(let key of Object.keys(b.skillCD||{}))b.skillCD[key]=Math.max(0,b.skillCD[key]-dt);if(!b.leap&&supportCount(b)===0){b.alive=false;endRound('clear');return;}b.gun-=dt;b.think-=dt;b.windup=Math.max(0,b.windup-dt);let candidates=opponents(b).filter(a=>a.float<=0),target=candidates.sort((a,c)=>distanceTo(b,a)-distanceTo(b,c))[0];if(!b.controlled&&b.think<=0){b.think=.35;let desired=target?Math.atan2(target.y-b.y,target.x-b.x):s.t*.3,best=-Infinity;for(let i=0;i<16;i++){let ang=desired+i*Math.PI/8,dx=Math.cos(ang),dy=Math.sin(ang),x=b.x+dx*1.1,y=b.y+dy*1.1,stable=supportCount(b,s.t+1.3,x,y),edge=Math.min(x-bossRadius(b),y-bossRadius(b),N-bossRadius(b)-x,N-bossRadius(b)-y),value=stable*1.1+(target?-Math.abs(Math.hypot(x-target.x,y-target.y)-(bossRadius(b)+2))*.6:0)+Math.min(2,edge)*.5;if(edge<0)value-=20;if(value>best){best=value;b.dx=dx;b.dy=dy;}}}
-if(b.controlled){let d=readStick();b.dx=d[0];b.dy=d[1];if(b.dx||b.dy){b.aimX=b.dx;b.aimY=b.dy;}b.cool=Math.max(0,(b.cool||0)-dt);b.stride=Math.max(0,(b.stride||0)-dt);if(b.stride>0&&b.rushDir){b.dx=b.rushDir[0];b.dy=b.rushDir[1];}if((b.queued||auto&&target)&&b.gun<=0&&s.count<=0){if(bossAttack(b))b.queued=false;}}
-let speed=bossSpeed(b)*(b.stride>0?2.4:1)*(b.controlled&&brake?.45:1)*(b.windup>0?.45:1);if(b.leap){let d=readStick(),leap=b.leap;if(d[0]||d[1]){leap.dx+=(d[0]-leap.dx)*Math.min(1,dt*2);leap.dy+=(d[1]-leap.dy)*Math.min(1,dt*2);}let n=Math.hypot(leap.dx,leap.dy)||1;b.dx=leap.dx/n;b.dy=leap.dy/n;speed=3.8*(1+.12*lv(b,'bossMove'));}b.vx+=(b.dx*speed-b.vx)*Math.min(1,dt*7);b.vy+=(b.dy*speed-b.vy)*Math.min(1,dt*7);b.x+=(b.vx+b.kx)*dt;b.y+=(b.vy+b.ky)*dt;b.kx*=Math.exp(-2.2*dt);b.ky*=Math.exp(-2.2*dt);
-if(b.leap){b.leap.left-=dt;if(b.leap.left>0)return;b.leap=null;if(supportCount(b)===0){b.alive=false;endRound('clear');return;}quake(b);}if(supportCount(b)===0){b.alive=false;endRound('clear');return;}let feet=footprint(b).sort((p,q)=>Math.abs(p.y+.5-b.y)-Math.abs(q.y+.5-b.y)),contacts=[feet[0],feet[Math.min(1,feet.length-1)]];for(let p of contacts)if(p.q>=0&&s.layers[0][p.q].end>s.t)trigger(s.layers[0][p.q],b);if(!b.controlled&&target&&distanceTo(b,target)<bossRadius(b)+5&&b.gun<=0&&s.casts.length<16)bossAttack(b);}
+function bossAttack(b){if(!b.alive||b.gun>0||s.casts.length>=16)return false;let target=cpuVisualContacts(b).filter(a=>a.float<=0).sort((a,c)=>distanceTo(b,a)-distanceTo(b,c))[0];if(!target&&!b.controlled)return false;let angle=b.controlled&&!pilot&&(!auto||!target)||!target?Math.atan2(b.aimY??1,b.aimX??0):Math.atan2(target.y-b.y,target.x-b.x),dx=Math.cos(angle),dy=Math.sin(angle),side=[-dy,dx],cells=new Set(),start=bossRadius(b)-.3;for(let u=start;u<=start+4.5;u+=.25)for(let v=-1.05-(u-start)*.2;v<=1.05+(u-start)*.2;v+=.25){let x=b.x+dx*u+side[0]*v,y=b.y+dy*u+side[1]*v;if(inside(x,y))cells.add(cell(x,y));}let stomp=new Set();for(let p of footprint(b))for(let [ox,oy] of [[0,0],[1,0],[-1,0],[0,1],[0,-1]])if(inside(p.x+ox,p.y+oy))stomp.add(cell(p.x+ox,p.y+oy));let windup=1.25+b.size*.1;b.windup=windup;b.gun=7+b.size*.2;s.casts.push({id:++s.seq,owner:'boss',bossId:'boss',w:{id:'shears',name:'巨獣の重撃 ×'+bossPower(b)},pulses:[{cells,at:s.t+windup,mult:1,cx:b.x,cy:b.y,done:false},{cells:stomp,at:s.t+windup,mult:1,cx:b.x,cy:b.y,done:false,onlyGuards:true}],dx,dy,power:32*bossPower(b),hits:{},created:s.t,originX:b.x,originY:b.y,x:b.x,y:b.y});say(b.controlled?'重撃！ 予告した方向へ振り下ろす':'巨獣の重撃！ 赤い予告の外へ');return true;}
+function tickBoss(dt){let b=s.boss;if(!b?.alive)return;tickPerks(b,dt);pilotBoss(b,dt);
+ for(let key of Object.keys(b.skillCD||{}))b.skillCD[key]=Math.max(0,b.skillCD[key]-dt);
+ if(!b.leap&&supportCount(b)===0){b.alive=false;endRound('clear');return;}
+ b.gun-=dt;b.windup=Math.max(0,b.windup-dt);
+ const candidates=cpuSensedOpponents(b).filter(a=>a.float<=0),target=candidates.sort((a,c)=>Number(a.guard)-Number(c.guard)||distanceTo(b,a)-distanceTo(b,c))[0];
+ if(b.controlled){
+  const d=readStick();b.dx=d[0];b.dy=d[1];
+  if(!pilot&&(b.dx||b.dy)){b.aimX=b.dx;b.aimY=b.dy;}
+  b.cool=Math.max(0,(b.cool||0)-dt);
+ }
+ b.stride=Math.max(0,(b.stride||0)-dt);
+ if(b.stride>0&&b.rushDir){b.dx=b.rushDir[0];b.dy=b.rushDir[1];}
+ if(b.controlled&&(b.queued||((auto||pilot)&&target))&&b.gun<=0&&s.count<=0){if(bossAttack(b))b.queued=false;}
+ let speed=bossSpeed(b)*(b.stride>0?2.4:1)*(b.controlled&&!pilot&&brake?.45:1)*(b.windup>0?.45:1);
+ if(b.leap){let d=b.controlled?readStick():(b.aiVector||[0,0]),leap=b.leap;
+  if(d[0]||d[1]){leap.dx+=(d[0]-leap.dx)*Math.min(1,dt*2);leap.dy+=(d[1]-leap.dy)*Math.min(1,dt*2);}
+  let n=Math.hypot(leap.dx,leap.dy)||1;b.dx=leap.dx/n;b.dy=leap.dy/n;speed=3.8*(1+.12*lv(b,'bossMove'));
+ }
+ b.vx+=(b.dx*speed-b.vx)*Math.min(1,dt*7);b.vy+=(b.dy*speed-b.vy)*Math.min(1,dt*7);
+ b.x+=(b.vx+b.kx)*dt;b.y+=(b.vy+b.ky)*dt;b.kx*=Math.exp(-2.2*dt);b.ky*=Math.exp(-2.2*dt);
+ if(b.leap){b.leap.left-=dt;if(b.leap.left>0)return;b.leap=null;if(supportCount(b)===0){b.alive=false;endRound('clear');return;}quake(b);}
+ if(supportCount(b)===0){b.alive=false;endRound('clear');return;}
+ let feet=footprint(b).sort((p,q)=>Math.abs(p.y+.5-b.y)-Math.abs(q.y+.5-b.y)),contacts=[feet[0],feet[Math.min(1,feet.length-1)]];
+ for(let p of contacts)if(p.q>=0&&s.layers[0][p.q].end>s.t)trigger(s.layers[0][p.q],b);
+ if(!b.controlled&&target&&distanceTo(b,target)<bossRadius(b)+5&&b.gun<=0&&s.casts.length<16)bossAttack(b);
+}
 
 function drawBoss(){let b=s.boss;if(!b?.alive)return;let cells=footprint(b),w=(b.width||b.size)*S,h=(b.height||b.size)*S,sx=Math.floor(b.x-(b.width||b.size)/2)*S,sy=Math.floor(b.y-(b.height||b.size)/2)*S,cx=sx+w/2,cy=sy+h/2,hue=b.hue??205,sat=b.saturation??55,body='hsl('+hue+','+sat+'%,42%)',light='hsl('+hue+','+sat+'%,68%)',dark='hsl('+hue+',40%,21%)',gold=b.design===2?'#adffec':'#ffcf82',flash=s.t-(b.hitAt??-100)<.13,occupied=new Set(cells.map(p=>p.x+','+p.y));
 g.save();g.globalAlpha=.23;for(let p of cells)rect(p.x*S+3,p.y*S+8,S,S,'#030b16');g.globalAlpha=1;g.translate(0,-bossLift(b));
@@ -4518,7 +4696,7 @@ if(b.crest===1){rect(-4,17,8,7,gold);rect(-2,19,4,3,'#fffbe4');}if(b.crest===2){
 if(b.windup>0){g.globalAlpha=.8;rect(-27,-19-pulse,4,36,gold);rect(23,-19-pulse,4,36,gold);g.globalAlpha=1;}g.restore();
 g.save();g.strokeStyle='#ffd793';g.lineWidth=1.5;g.setLineDash([5,4]);g.beginPath();for(let p of cells)for(let [dx,dy,e] of [[0,-1,[0,0,24,0]],[0,1,[0,24,24,24]],[-1,0,[0,0,0,24]],[1,0,[24,0,24,24]]])if(!occupied.has((p.x+dx)+','+(p.y+dy))){g.moveTo(p.x*S+e[0],p.y*S+e[1]);g.lineTo(p.x*S+e[2],p.y*S+e[3]);}g.stroke();g.restore();g.font='bold 12px sans-serif';g.fillStyle='#ffe5ac';g.textAlign='center';g.fillText((b.controlled?'YOU · ':'')+['覇王の鎧','獄角の魔獣','結晶の巨神','深淵の王'][b.design||0]+' · '+bossLabel(b)+' '+bossArea(b)+'マス',cx,sy-30-bossLift(b));}
 function drawRaidHud(){if(!s.raid||!s.boss)return;let b=s.boss,w=Math.min(W-20,420),y=H-HEADER-54;rect((W-w)/2,y,w,23,'#422e43e8');g.font='bold 10px sans-serif';g.textAlign='center';g.fillStyle='#ffe5b1';g.fillText((s.playerBoss?'巨獣操作 · '+roundLength()+'秒耐えろ！ 足場 ':'協力戦 · 光る大穴へ！ 足場 ')+supportCount(b)+'/'+bossArea(b)+' · 重撃 '+bossPower(b)+'倍',W/2,y+15);}
-function finishRaid(){guardianRoundComplete();s.finish=true;let won=s.playerBoss?s.outcome==='timeout':s.outcome==='clear',points=run.difficulty==='practice'?0:won?100:25;run.points+=points;run.history.push(s.playerBoss?(won?'巨獣生存':'巨獣転落'):(won?'討伐':'未討伐'));if(run.difficulty!=='practice'){if(won)record.crowns++;if(run.round===5){record.runs++;record.best=Math.max(record.best,run.points);}persist();}let title=s.playerBoss?(won?'巨獣として生き残った！':'巨獣、討伐された。'):(won?'巨獣撃破！':'巨獣は残った。'),desc=s.playerBoss?(won?'包囲をしのいで'+roundLength()+'秒生存。あなたの勝利！':'全身分の足場を失い転落。大穴と集中攻撃に注意。'):(won?'全員で巨体を落としました。':'自分の武器で足元を割り、大穴へ押し出そう。守護霊は床を割りません。');panel('<div class="fresultgrid"><div><div class="feyebrow">'+(s.playerBoss?'YOU ARE THE GIANT':'COOPERATIVE GIANT RAID')+'</div><h2>'+title+'</h2><p>'+desc+'</p><div class="fstats"><div>'+bossArea(s.boss)+'<small>全身のマス数</small></div><div>'+points+'<small>'+(s.playerBoss?'獲得点':'全員の獲得点')+'</small></div><div>'+run.points+'<small>カップ / 500</small></div></div><div class="frow"><button class="fgold" id="fnext">'+(run.round<5?'強化を選ぶ':'新しいカップ')+'</button><button id="flobby">ロビー</button><button id="fview">盤面</button></div></div><div class="franking"><p class="fmuted">'+(s.playerBoss?'あなたを討伐する挑戦者':'今回の仲間 · 勝敗は全員共通')+'</p>'+s.actors.filter(a=>!a.spectator).map(a=>'<div class="frankrow"><b>'+names[a.id]+'</b><span>'+a.falls+'落下</span><span>'+Math.floor(a.score)+'点</span></div>').join('')+'</div></div>');$f('fsheet').classList.add('fresult');resultHTML=$f('fsheet').querySelector('.fpanel').innerHTML;bindResults();requestAnimationFrame(fitPanel);}
+function finishRaid(){guardianRoundComplete();s.finish=true;let won=s.playerBoss?s.outcome==='timeout':s.outcome==='clear',points=run.difficulty==='practice'?0:won?100:25;run.points+=points;run.history.push(s.playerBoss?(won?'巨獣生存':'巨獣転落'):(won?'討伐':'未討伐'));if(run.difficulty!=='practice'){if(won)record.crowns++;if(run.round===5){record.runs++;record.best=Math.max(record.best,run.points);}persist();}let title=s.playerBoss?(won?'巨獣として生き残った！':'巨獣、討伐された。'):(won?'巨獣撃破！':'巨獣は残った。'),desc=s.playerBoss?(won?'包囲をしのいで'+roundLength()+'秒生存。あなたの勝利！':'全身分の足場を失い転落。大穴と集中攻撃に注意。'):(won?'全員で巨体を落としました。':'自分の武器で足元を割り、大穴へ押し出そう。守護霊は床を割りません。');panel('<div class="fresultgrid"><div><div class="feyebrow">'+(s.playerBoss?'YOU ARE THE GIANT':'COOPERATIVE GIANT RAID')+'</div><h2>'+title+'</h2><p>'+desc+'</p><div class="fstats"><div>'+bossArea(s.boss)+'<small>全身のマス数</small></div><div>'+points+'<small>'+(s.playerBoss?'獲得点':'全員の獲得点')+'</small></div><div>'+run.points+'<small>カップ / 500</small></div></div><div class="frow"><button class="fgold" id="fnext">'+(run.round<5?'強化を選ぶ':'新しいカップ')+'</button><button id="flobby">ロビー</button><button id="fview">盤面</button></div></div><div class="franking"><p class="fmuted">'+(s.playerBoss?'あなたを討伐する挑戦者':'今回の仲間 · 勝敗は全員共通')+'</p>'+s.actors.filter(a=>!a.spectator).map(a=>'<div class="frankrow"><b>'+names[a.id]+'</b><span>'+a.falls+'落下</span><span>'+Math.floor(a.score)+'点</span></div>').join('')+'</div></div>');$f('fsheet').classList.add('fresult');resultHTML=$f('fsheet').querySelector('.fpanel').innerHTML;bindResults();pilotRecap('result',title,(s.playerBoss?'巨獣としての戦い': '巨獣討伐戦')+' · '+points+'点 · 累計'+run.points+'点',[],3.1);requestAnimationFrame(fitPanel);}
 function raidPushPoint(b){let pit=s.raidGoal||s.lands[0].pits?.[0]||[3,N/2],dx=pit[0]-b.x,dy=pit[1]-b.y,d=Math.hypot(dx,dy)||1;return [b.x-dx/d*(bossRadius(b)+2),b.y-dy/d*(bossRadius(b)+2)];}
 function crackBossFloor(b,a){let qs=footprint(b).filter(p=>p.q>=0&&s.layers[0][p.q].end>s.t+.7&&s.layers[0][p.q].group>=0).sort((p,q)=>Math.hypot(p.x+.5-a.x,p.y+.5-a.y)-Math.hypot(q.x+.5-a.x,q.y+.5-a.y)),left=b.size-2;for(let p of qs){let gr=s.lands[0].groups[s.layers[0][p.q].group];if(gr.hold>s.t)continue;gr.start=s.t;gr.end=s.t+.7;gr.owner=a.id;for(let q of gr.cells)Object.assign(s.layers[0][q],{start:s.t,end:gr.end,owner:a.id});if(--left<=0)break;}}
 function drawRaidGoal(){if(!s.raidGoal)return;let [x,y]=s.raidGoal;g.save();g.strokeStyle='#ffe09d';g.lineWidth=2;g.setLineDash([8,7]);g.strokeRect((x-2.5)*S,(y-2.5)*S,5*S,5*S);g.setLineDash([]);g.textAlign='center';g.fillStyle='#ffe7ad';g.font='bold 13px sans-serif';g.fillText('ここへ落とせ！',x*S,y*S);g.restore();}
@@ -4534,7 +4712,7 @@ function bossHud(){let b=s.boss;$f('fhud').textContent='第'+run.round+'/5戦 ·
 function drawBossPlayerHeader(x,w){let b=s.boss;rect(x+1,2,w-2,HEADER-7,'#412f3c');rect(x+3,5,4,HEADER-18,'#ffe090');g.textAlign='left';g.fillStyle='#ffe090';g.font='bold 10px sans-serif';g.fillText('YOU 巨獣',x+10,15);g.font='9px sans-serif';g.fillText(bossLabel(b)+' · ×'+multiplierText(b),x+10,29);if(HEADER>40){g.fillText('重撃 '+bossPower(b)+'倍',x+10,44);g.fillText('105秒耐えろ',x+10,58);}}
 
 function close(){stopPilot();root?.classList.remove('fcinema');resizeObs?.disconnect();resizeObs=null;clearSteer();cancelAnimationFrame(raf);root.remove();root=null;s=null;keys={};showTitle();}
-function lobby(){stopPilot();s=null;setupBossControls();paused=false;$f('fpause').textContent='停止 · 長押し';$f('fweapon').textContent='';panel('<div class="feyebrow">FROSTFALL · ARCHIPELAGO</div><h2>落ちずに、島を渡れ。</h2><p>毎戦４〜６人。広さ・島の形・開始位置が変化。<b>撃破数と落下回数を同じ重みで評価</b>（撃破＋1、落下−1）。攻めて勝利をつかもう。</p><div class="fbrief"><span>① 被弾で次の吹き飛び ×2・4・8</span><span>② 守護霊は１人３体まで</span><span>③ 巨獣討伐、ときには自分が巨獣</span></div><p class="fmuted">復帰後３秒は浮遊保護。武器の攻撃範囲の約半分が時間差でひび割れ、床を封鎖できます。割れた床への追撃は崩落を早めます（自分の足元は保護）。床は時間とともに早く崩れます。守護霊は床を割らず、近くで護衛。生存すると回復・成長し次戦に継承。通常戦の死亡で永久消滅（巨獣戦は例外）。32種の姿×色×装飾。全員武器持ちで、速射・標準・重撃型。</p><div class="frow"><button class="fgold" id="fnormal">標準で開幕</button><button id="fgcollection">✦ 永続図鑑 '+goldOwned.size+' / 50</button></div><div class="frow"><button id="fpractice">練習</button><button id="fmatchSettings">試合時間</button><button id="fraid">巨獣討伐</button><button id="fbeast">巨獣になる</button><button id="fcatalog">遊び方・武器50種</button></div><p class="fmuted">端寄りからのジャンプで２マスの穴を越えます。横画面・全体／追従ズームを上部で切替。自動攻撃は敵の守護霊も狙い、味方を援護。右下で切替。<br>方向２度押し、またはスティック中央２度タップで向いている方向へジャンプ。方向２度押し後の押し続けでガス飛行。ボンベ（GAS）は燃料制、青い二段ブーツは追加ジャンプ２回分。ジャンプ中は専用のガスボタンで噴射を切り替えられます。<br>上部「CPUに任せる」で移動・戦闘・通常カード・次のカップまで自動。金カードで停止。<br>最高 '+record.best+'点 · 勝利 '+record.crowns+'回<br>継承中の守護霊 '+guardianRoster.length+'/3 · '+guardianStatus()+'</p>');$f('fsheet').classList.add('fready');bind('fnormal',()=>start('normal'));bind('fpractice',()=>start('practice'));bind('fraid',()=>start('practice',true));bind('fbeast',()=>start('practice','boss'));bind('fcatalog',()=>book(lobby));bind('fgcollection',()=>goldBook(lobby));bind('fmatchSettings',()=>showFloeSettings(lobby));}
+function lobby(){stopPilot();s=null;setupBossControls();paused=false;$f('fpause').textContent='停止 · 長押し';$f('fweapon').textContent='';panel('<div class="feyebrow">FROSTFALL · ARCHIPELAGO</div><h2>落ちずに、島を渡れ。</h2><p>毎戦４〜６人。広さ・島の形・開始位置が変化。<b>撃破数と落下回数を同じ重みで評価</b>（撃破＋1、落下−1）。攻めて勝利をつかもう。</p><div class="fbrief"><span>① 被弾で次の吹き飛び ×2・4・8</span><span>② 守護霊は１人３体まで</span><span>③ 光を放つ巨獣を全員が追跡 · 巨獣は全16技で反撃</span></div><p class="fmuted">復帰後３秒は浮遊保護。武器の攻撃範囲の約半分が時間差でひび割れ、床を封鎖できます。割れた床への追撃は崩落を早めます（自分の足元は保護）。床は時間とともに早く崩れます。守護霊は床を割らず、近くで護衛。生存すると回復・成長し次戦に継承。通常戦の死亡で永久消滅（巨獣戦は例外）。32種の姿×色×装飾。全員武器持ちで、速射・標準・重撃型。</p><div class="frow"><button class="fgold" id="fnormal">標準で開幕</button><button id="fgcollection">✦ 永続図鑑 '+goldOwned.size+' / 50</button></div><div class="frow"><button id="fpractice">練習</button><button id="fmatchSettings">試合時間</button><button id="fraid">巨獣討伐</button><button id="fbeast">巨獣になる</button><button id="fcatalog">遊び方・武器50種</button></div><p class="fmuted">端寄りからのジャンプで２マスの穴を越えます。横画面・全体／追従ズームを上部で切替。自動攻撃は敵の守護霊も狙い、味方を援護。右下で切替。<br>方向２度押し、またはスティック中央２度タップで向いている方向へジャンプ。方向２度押し後の押し続けでガス飛行。ボンベ（GAS）は燃料制、青い二段ブーツは追加ジャンプ２回分。ジャンプ中は専用のガスボタンで噴射を切り替えられます。<br>上部「CPUに任せる」で移動・戦闘・通常カード・次のカップまで自動。金カードで停止。<br>最高 '+record.best+'点 · 勝利 '+record.crowns+'回<br>継承中の守護霊 '+guardianRoster.length+'/3 · '+guardianStatus()+'</p>');$f('fsheet').classList.add('fready');bind('fnormal',()=>start('normal'));bind('fpractice',()=>start('practice'));bind('fraid',()=>start('practice',true));bind('fbeast',()=>start('practice','boss'));bind('fcatalog',()=>book(lobby));bind('fgcollection',()=>goldBook(lobby));bind('fmatchSettings',()=>showFloeSettings(lobby));}
 
 function book(back,page=0){let pages=Math.ceil(catalog.length/4),body=page===0?'<div class="fbookgrid"><div><b>移動・ジャンプ</b><small>スティック／WASDで移動。方向２度押し、またはスティック中央２度タップで向いている方向へジャンプ。方向２度押し後の押し続けでガス飛行。Space／ジャンプボタンで通常・２段。ガスボタンで飛行ON/OFF。</small></div><div><b>落下寸前</b><small>汗マークが出たら逆方向へ入力。足場が近ければ踏みとどまれます。ジャンプでも脱出。</small></div><div><b>攻撃・召喚</b><small>攻撃 / F。自動攻撃も切替可能。紫の魂で味方を追加（最大３体）。敵の守護霊を優先。飛行は穴上3.2秒、穴泳ぎは穴だけ。全員ランダム武器持ち。拾った武器は12〜19発で元の武器に戻ります。試し撃ち中は無制限で連射できます。耐久３〜５、床は割りません。</small></div><div><b>通常・巨獣とも設定で90〜300秒 ×５戦</b><small>被弾で次の吹き飛び×2→4→8、落下でリセット。床は徐々に脆くなります。巨獣は４形状・４系統の姿。守護霊に強いので武器で対抗。操作側は設定した試合時間の生存で勝利。</small></div></div>':'<div class="fbookgrid">'+catalog.slice((page-1)*4,page*4).map(w=>'<div><b>'+w.name+'</b><small>'+details[w.id]+'<br>'+weaponProfile(w.id).label+'<br>威力 '+w.power+' · 間隔 '+w.wait.toFixed(1)+'秒</small></div>').join('')+'</div>';panel('<div class="feyebrow">GUIDE / 50 WEAPONS</div><h2>'+ (page===0?'遊び方':'武器図鑑')+' <small>'+ (page+1)+' / '+(pages+1)+'</small></h2>'+body+'<div class="frow"><button id="fbookback">戻る</button><button id="fbookprev" '+(page===0?'disabled':'')+'>前へ</button><button id="fbooknext" '+(page===pages?'disabled':'')+'>次へ</button></div>');bind('fbookback',back);bind('fbookprev',()=>book(back,Math.max(0,page-1)));bind('fbooknext',()=>book(back,Math.min(pages,page+1)));}
 function start(difficulty,forceRaid=false){run={round:1,points:0,up:{},difficulty,history:[],loadout:makeWeapon(),loadoutCharges:null,reserveWeapon:null,forceRaid,raidSeen:false,raidCount:0};newRound();}
@@ -4620,12 +4798,12 @@ function jump(a){if(!s||screen!=='play'||s.count>0||!a?.alive)return false;let a
 function useGasInAir(a,dt){if(a.air<=0&&a.toss<=0){a.gasToggle=false;return;}if(!activeGas(a))return;const efficiency=Math.max(.4,1-.2*lv(a,'gasSaver')),steer=lv(a,'gasSeek')?10:7;a.gasFuel=Math.max(0,a.gasFuel-dt*efficiency);a.air=Math.max(a.air,.14);a.airTotal=Math.max(a.airTotal,.86);a.toss=0;let [x,y]=a.id===0&&pilot?[a.dx,a.dy]:[a.dx,a.dy];let n=Math.hypot(x,y);if(n>.12){a.airDx+=(x/n-a.airDx)*Math.min(1,dt*steer);a.airDy+=(y/n-a.airDy)*Math.min(1,dt*steer);let nn=Math.hypot(a.airDx,a.airDy)||1;a.airDx/=nn;a.airDy/=nn;a.dx=a.airDx;a.dy=a.airDy;}if(a.gasFuel<=0){a.gasToggle=false;a.gasHold=false;if(a.id===0)say('燃料が尽きた！ 安全な床へ着地！');}}
 function directionTap(dir,source='key'){if(!s||screen!=='play'||s.playerBoss||paused||s.count>0)return;let a=s.actors[0];if(!a?.alive)return;const now=performance.now(),last=directionTap.last;if(last&&last.dir===dir&&last.source===source&&now-last.at<340&&now-last.at>50){let v={up:[0,-1],down:[0,1],left:[-1,0],right:[1,0]}[dir];if(v){a.dx=v[0];a.dy=v[1];a.aimX=v[0];a.aimY=v[1];if(jump(a)){directionTap.hold={dir,source,at:now};}else if(a.cool<.32&&!a.air){a.jumpBuffer=.35+.2*lv(a,'airRescue');}updateHud();}directionTap.last=null;}else directionTap.last={dir,source,at:now};}
 function gasHoldTick(a,dt){let h=directionTap.hold;if(!h||!a)return;let held=h.source==='key'?!!keys[h.dir]:movePointer!==null&&moveSurface==='joy';if(!held){a.gasHold=false;directionTap.hold=null;return;}if(performance.now()-h.at>=160&&a.air>0&&(a.gasFuel||0)>0)a.gasHold=true;}
-function emergencyLeap(a){if(!a?.alive||s.count>0)return false;const inAir=(a.air>0||a.toss>0),possible=inAir?canDouble(a):(a.cool||0)<=.03;if(!possible)return false;let urgent=!!a.teeter;let aheadX=a.x+(a.vx+a.kx)*.52,aheadY=a.y+(a.vy+a.ky)*.52;if(inAir){urgent=urgent||a.air<.46&&!solid(a.x+a.dx*a.air*3.15,a.y+a.dy*a.air*3.15,s.t+a.air+.2);}else urgent=urgent||!solid(aheadX,aheadY,s.t+.6)||!solid(a.x,a.y,s.t+.8);if(!urgent)return false;let best=-Infinity,dir=null,target=nearest(a);for(let i=0;i<24;i++){let th=i*Math.PI/12,dx=Math.cos(th),dy=Math.sin(th),duration=inAir?.7:.86,tx=a.x+dx*3.15*duration+Math.max(-.45,Math.min(.45,a.kx*.09)),ty=a.y+dy*3.15*duration+Math.max(-.45,Math.min(.45,a.ky*.09));if(!inside(tx,ty)||!solid(tx,ty,s.t+duration+.5))continue;let supports=0;for(let ox of [-.6,0,.6])for(let oy of [-.6,0,.6])if(solid(tx+ox,ty+oy,s.t+duration+.7))supports++;let val=supports*2+Math.cos(th-Math.atan2(a.dy,a.dx))*1.8+(target?Math.max(-3,3-Math.hypot(tx-target.x,ty-target.y))*.28:0);if(val>best){best=val;dir=[dx,dy];}}if(!dir){if((a.gasFuel||0)>.6&&inAir){a.gasToggle=true;return true;}return false;}a.dx=dir[0];a.dy=dir[1];a.aimX=a.dx;a.aimY=a.dy;return jump(a);}
+function emergencyLeap(a){if(!a?.alive||s.count>0)return false;const inAir=(a.air>0||a.toss>0),possible=inAir?canDouble(a):(a.cool||0)<=.03;if(!possible)return false;let urgent=!!a.teeter;let aheadX=a.x+(a.vx+a.kx)*.52,aheadY=a.y+(a.vy+a.ky)*.52;if(inAir){urgent=urgent||a.air<.46&&!solid(a.x+a.dx*a.air*3.15,a.y+a.dy*a.air*3.15,s.t+a.air+.2);}else urgent=urgent||!solid(aheadX,aheadY,s.t+.6)||!solid(a.x,a.y,s.t+.8);if(!urgent)return false;let best=-Infinity,dir=null,target=cpuSensedOpponents(a).sort((u,v)=>distanceTo(a,u)-distanceTo(a,v))[0];for(let i=0;i<24;i++){let th=i*Math.PI/12,dx=Math.cos(th),dy=Math.sin(th),duration=inAir?.7:.86,tx=a.x+dx*3.15*duration+Math.max(-.45,Math.min(.45,a.kx*.09)),ty=a.y+dy*3.15*duration+Math.max(-.45,Math.min(.45,a.ky*.09));if(!inside(tx,ty)||!solid(tx,ty,s.t+duration+.5))continue;let supports=0;for(let ox of [-.6,0,.6])for(let oy of [-.6,0,.6])if(solid(tx+ox,ty+oy,s.t+duration+.7))supports++;let val=supports*2+Math.cos(th-Math.atan2(a.dy,a.dx))*1.8+(target?Math.max(-3,3-Math.hypot(tx-target.x,ty-target.y))*.28:0);if(val>best){best=val;dir=[dx,dy];}}if(!dir){if((a.gasFuel||0)>.6&&inAir){a.gasToggle=true;return true;}return false;}a.dx=dir[0];a.dy=dir[1];a.aimX=a.dx;a.aimY=a.dy;return jump(a);}
 
 function fall(a){if(!a.alive||a.float>0)return;if(lv(a,'phoenix')&&(a.saves||0)<lv(a,'phoenix')&&inside(a.x,a.y)){a.saves=(a.saves||0)+1;a.float=1.8;a.inv=1.8;a.toss=a.air=0;a.kx=a.ky=0;say('不死鳥の羽！ 1.8秒以内に床へ');return;}let hit=a.lastHit&&s.t-a.lastHit.at<3?entity(a.lastHit.id):null,t=tile(a.x,a.y),owner=t?.owner,scorer=hit||s.actors.find(b=>b.id===owner&&b.id!==a.id);a.score-=5;a.falls++;a.hitCount=0;a.alive=false;a.respawn=Math.max(1,1.8-.6*lv(a,'recovery'));a.air=0;a.toss=0;a.jumps=0;a.teeter=null;a.jumpBuffer=0;a.gasToggle=false;a.gasHold=false;a.kx=a.ky=0;a.queued=false;a.spawnPlan=safeSpot(a.id);reserve(a.spawnPlan,s.t+a.respawn+4);
 if(scorer){if(hit){scorer.kos++;scorer.score+=12;}else{scorer.cuts++;scorer.score+=8+12*lv(scorer,'cut');}}if(a.id===0)say('復帰先を予告中 · 復帰後３秒は穴に落ちません');}
 
-function respawn(a){let [x,y]=a.spawnPlan||safeSpot(a.id);reserve([x,y],s.t+3.8+lv(a,'recovery'));Object.assign(a,{x,y,vx:0,vy:0,kx:0,ky:0,alive:true,air:0,toss:0,jumps:0,gasToggle:false,gasHold:false,inv:trialReturn?0:3+lv(a,'recovery'),float:trialReturn?0:3+lv(a,'recovery'),lastHit:null,trail:[],mark:0,slow:0,spawnPlan:null,queued:false,hitCount:0,teeter:null,edgeLock:s.t+1,jumpBuffer:0});inward(a);a.gun=Math.max(1,a.gun-3*lv(a,'rescue'),4.5-(s.t-(a.lastFire??-100)));if(lv(a,'spiritCall'))summon(a,true);}
+function respawn(a){let [x,y]=a.spawnPlan||safeSpot(a.id);reserve([x,y],s.t+3.8+lv(a,'recovery'));Object.assign(a,{x,y,vx:0,vy:0,kx:0,ky:0,alive:true,air:0,toss:0,jumps:0,gasToggle:false,gasHold:false,inv:trialReturn?0:3+lv(a,'recovery'),float:trialReturn?0:3+lv(a,'recovery'),lastHit:null,trail:[],mark:0,slow:0,spawnPlan:null,queued:false,hitCount:0,teeter:null,edgeLock:s.t+1,jumpBuffer:0,fogMemory:new Map(),aiScout:null});inward(a);a.gun=Math.max(1,a.gun-3*lv(a,'rescue'),4.5-(s.t-(a.lastFire??-100)));if(lv(a,'spiritCall'))summon(a,true);}
 
 
 function evaluate(a,angle){let dx=Math.cos(angle),dy=Math.sin(angle),speed=2.6,val=0,horizon=.55+a.level*.13;for(let k=1;k<=7;k++){let t=k*horizon/7,x=a.x+(a.vx*.25+dx*speed*.75)*t,y=a.y+(a.vy*.25+dy*speed*.75)*t;val+=solid(x,y,s.t+t)?2:-12;if(!inside(x,y))val-=20;}
@@ -4732,7 +4910,7 @@ function supportCount(b,when=s.t,x=b.x,y=b.y){return footprint(b,x,y).filter(p=>
 function pulseHits(p,b){return b.boss?footprint(b).some(q=>q.q>=0&&p.cells.has(q.q)):p.cells.has(cell(b.x,b.y));}
 function castTargets(c,a){return opponents(a).filter(b=>!c.onlyGuards||b.guard);}
 function endRound(outcome){if(screen!=='play')return;s.outcome=outcome;screen='ending';s.endAge=0;clearSteer();brake=false;s.actors.forEach(a=>a.queued=false);$f('fhud').textContent=s.raid?(outcome==='clear'?'COOP CLEAR · 巨獣を落とした！':'TIME UP · 巨獣は残った'):'TIME UP · 得点を確定しました';}
-function guardTargets(v){let foes=opponents(v),guards=foes.filter(b=>b.guard&&distanceTo(v,b)<12);return guards.length?guards:foes.filter(b=>!b.guard&&b.float<=0);}
+function guardTargets(v){let foes=cpuVisualContacts(v),guards=foes.filter(b=>b.guard&&distanceTo(v,b)<12);return guards.length?guards:foes.filter(b=>!b.guard&&b.float<=0);}
 function defeatGuard(v){if(!v.alive)return;v.alive=false;guardianDies(v);s.fx.push({x:v.x,y:v.y,victim:v.id,at:s.t,dx:0,dy:-1,until:s.t+.65,color:unitColor(v.owner),label:'消滅'});}
 function push(a,b,c,p){if(p.onlyGuards&&!b.guard)return;if(!b.alive||friendly(a,b))return;if(b.inv>0){p.blocked??={};if(!p.blocked[b.id]){p.blocked[b.id]=true;s.fx.push({x:b.x,y:b.y,victim:b.id,at:s.t,dx:0,dy:-1,until:s.t+.65,color:'#baf8ed',label:'GUARD'});if(a.id===0)s.hitNotice={text:'接触 · 相手は保護中',until:s.t+.75,guard:true};}return;}if(c.hits[b.id]>=2||b.hitGrace>s.t)return;
 let dx=b.x-p.cx,dy=b.y-p.cy,len=Math.hypot(dx,dy);if(len<.2){dx=c.dx;dy=c.dy;len=Math.hypot(dx,dy)||1;}if(p.pull){dx=-dx;dy=-dy;}let mult=p.mult*(1+(b.mark>0?.35:0));if(p.tax!==undefined){let target=entity(p.tax);if(target)mult*=1+Math.min(.6,Math.hypot(target.x-p.tx,target.y-p.ty)*.16);}if(b.lastHit?.id===a.id&&s.t-b.lastHit.at<8)mult*=1+.6*lv(a,'combo');let reduction=Math.max(.3,1-.3*lv(b,'anchor'));if(b.land>0)reduction*=.5;if(b.id===0&&brake&&lv(b,'grip'))reduction*=.75;if(c.summonId)reduction*=1-.35*lv(b,'guardArmor');if(b.boss){reduction*=1-.25*lv(b,'bossArmor');if(b.wardUntil>s.t)reduction*=.35;}if((b.id===0||b.controlled)&&brake)reduction*=1-.35*lv(b,'knockBrake');if(b.shield>0){reduction*=.15;b.shield--;}
@@ -4776,7 +4954,7 @@ if(a.id===0&&a.queued&&a.float<=0)fire(a);else if(a.id===0&&auto&&a.gun<=0&&a.fl
 tickSummons(dt);tickBoss(dt);if(screen==='ending')return;tickBossMissiles(dt);tickCombat(dt);s.loot=s.loot.filter(b=>b.until>s.t&&solid(b.x,b.y));if(!trialReturn&&s.t>s.nextLoot){s.nextLoot=s.t+2.4;spawnLoot();}if(s.t>s.hudAt){s.hudAt=s.t+.1;updateHud();}}
 function persist(){try{localStorage.setItem('frostbound.floe.v5',JSON.stringify(record));}catch(e){saveOK=false;}}
 function battleScore(a){return (a.kos||0)+(a.cuts||0)-(a.falls||0);}
-function finish(){if(s.finish)return;if(s.raid){finishRaid();return;}guardianRoundComplete();s.finish=true;let ranked=[...s.actors].sort((a,b)=>battleScore(b)-battleScore(a)||((b.kos+b.cuts)-(a.kos+a.cuts))||a.falls-b.falls||b.score-a.score||a.id-b.id),rank=ranked.findIndex(a=>a.id===0)+1,points=run.difficulty==='practice'?0:[0,100,65,45,30,20,10][rank];run.points+=points;run.history.push(rank);if(run.difficulty!=='practice'){if(rank===1){record.crowns++;record.rankStreak=Math.min(15,(record.rankStreak||0)+1);}else record.rankStreak=0;if(run.round===5){record.runs++;record.best=Math.max(record.best,run.points);}persist();}let a=s.actors[0];panel('<div class="fresultgrid"><div><div class="feyebrow">ROUND '+run.round+' / 5 COMPLETE</div><h2>'+rank+'位 · '+(rank===1?'乱戦を制した。':'次の群島へ。')+'</h2><div class="fstats"><div>'+a.falls+'<small>落下回数</small></div><div>'+a.kos+'<small>武器で落とした数</small></div><div>'+run.points+'<small>カップ / 500</small></div></div><p class="fmuted">順位 '+run.history.join(' → ')+' · 足場で落とした数 '+a.cuts+'<br>撃破＋1・落下−1を同じ重みで採点。同点なら撃破が多い方、さらに同じなら落下の少ない方。</p><div class="frow"><button class="fgold" id="fnext">'+(run.round<5?'強化を選ぶ':'新しいカップ')+'</button><button id="flobby">ロビー</button><button id="fview">盤面</button></div></div><div class="franking"><div class="frankrow fmuted"><span>順位 / 名前</span><span>撃破</span><span>評価</span></div>'+ranked.map((b,i)=>'<div class="frankrow '+(b.id===0?'fyou':'')+'"><b>'+(i+1)+' '+names[b.id]+'</b><span>'+(b.kos+b.cuts)+'</span><span>'+battleScore(b)+'</span></div>').join('')+'</div></div>'+(!saveOK?'<small>この環境では記録を保存できません。</small>':''));$f('fsheet').classList.add('fresult');resultHTML=$f('fsheet').querySelector('.fpanel').innerHTML;bindResults();requestAnimationFrame(fitPanel);}
+function finish(){if(s.finish)return;if(s.raid){finishRaid();return;}guardianRoundComplete();s.finish=true;let ranked=[...s.actors].sort((a,b)=>battleScore(b)-battleScore(a)||((b.kos+b.cuts)-(a.kos+a.cuts))||a.falls-b.falls||b.score-a.score||a.id-b.id),rank=ranked.findIndex(a=>a.id===0)+1,points=run.difficulty==='practice'?0:[0,100,65,45,30,20,10][rank];run.points+=points;run.history.push(rank);if(run.difficulty!=='practice'){if(rank===1){record.crowns++;record.rankStreak=Math.min(15,(record.rankStreak||0)+1);}else record.rankStreak=0;if(run.round===5){record.runs++;record.best=Math.max(record.best,run.points);}persist();}let a=s.actors[0];panel('<div class="fresultgrid"><div><div class="feyebrow">ROUND '+run.round+' / 5 COMPLETE</div><h2>'+rank+'位 · '+(rank===1?'乱戦を制した。':'次の群島へ。')+'</h2><div class="fstats"><div>'+a.falls+'<small>落下回数</small></div><div>'+a.kos+'<small>武器で落とした数</small></div><div>'+run.points+'<small>カップ / 500</small></div></div><p class="fmuted">順位 '+run.history.join(' → ')+' · 足場で落とした数 '+a.cuts+'<br>撃破＋1・落下−1を同じ重みで採点。同点なら撃破が多い方、さらに同じなら落下の少ない方。</p><div class="frow"><button class="fgold" id="fnext">'+(run.round<5?'強化を選ぶ':'新しいカップ')+'</button><button id="flobby">ロビー</button><button id="fview">盤面</button></div></div><div class="franking"><div class="frankrow fmuted"><span>順位 / 名前</span><span>撃破</span><span>評価</span></div>'+ranked.map((b,i)=>'<div class="frankrow '+(b.id===0?'fyou':'')+'"><b>'+(i+1)+' '+names[b.id]+'</b><span>'+(b.kos+b.cuts)+'</span><span>'+battleScore(b)+'</span></div>').join('')+'</div></div>'+(!saveOK?'<small>この環境では記録を保存できません。</small>':''));$f('fsheet').classList.add('fresult');resultHTML=$f('fsheet').querySelector('.fpanel').innerHTML;bindResults();pilotRecap('result',rank+'位 / '+COUNT+'人','撃破 '+(a.kos+a.cuts)+' · 落下 '+a.falls+' · 累計 '+run.points+'pt',[],3.1);requestAnimationFrame(fitPanel);}
 function bindResults(){pilotPage='results';bind('fnext',()=>run.round<5?cards():start(run.difficulty));bind('flobby',lobby);bind('fview',()=>{if(pilot)stopPilot();screen='review';root.classList.remove('fmenu');$f('fsheet').style.display='none';$f('fpause').textContent='結果へ';});}
 let trialReturn=null;
 function startTrial(){
@@ -4804,7 +4982,7 @@ function fbFloeTorchPositions(){
  const groups=s?.lands?.[s.layer]?.groups;
  if(!groups)return[];
  if(fbFloeTorchMemo?.owner===s&&fbFloeTorchMemo.groups===groups)return fbFloeTorchMemo.points;
- const points=[],max=8;
+ const points=[],max=7;
  // Grid-spaced decorations anchored to real tiles; vanish if their island falls.
  for(let y=2;y<N-2;y+=4)for(let x=2;x<N-2;x+=4){
   let pick=null;
@@ -4819,11 +4997,20 @@ function fbFloeTorchPositions(){
  fbFloeTorchMemo={owner:s,groups,points};return points;
 }
 function fbDrawFloeLighting(){
- let points=fbFloeTorchPositions().filter(p=>s.layers[s.layer]?.[p.q]?.end>s.t),lights=points.map(p=>({x:p.x,y:p.y,r:113,torch:true,power:.97}));
- // Cool, readable pools around each active fighter: light never changes visibility to AI.
- for(let a of s.actors){if(a.alive&&!a.spectator)lights.push({x:a.x*S,y:a.y*S,r:a.id===0?120:92,power:a.id===0?.95:.70});}
- if(s.boss?.alive)lights.push({x:s.boss.x*S,y:s.boss.y*S,r:145,power:.83});
- fbLightMask(g,N*S,N*S,lights,s.t*1000,.30);
+ let points=fbFloeTorchPositions().filter(p=>s.layers[s.layer]?.[p.q]?.end>s.t),lights=points.map(p=>({x:p.x,y:p.y,r:102,torch:true,power:.99}));
+ // Fighters have faint silhouette light. Torches provide the real visibility boundary for BOTH CPU teams.
+ for(let a of s.actors){if(a.alive&&!a.spectator)lights.push({x:a.x*S,y:a.y*S,r:a.id===0?65:43,power:a.id===0?.62:.39});}
+ if(s.boss?.alive)lights.push({x:s.boss.x*S,y:s.boss.y*S,r:(10.8+bossRadius(s.boss)*.32)*S,power:.99});
+ fbLightMask(g,N*S,N*S,lights,s.t*1000,.57);
+ if(s.raid&&s.boss?.alive){
+  // Cold-gold aura makes the moving beacon clearly distinguishable from ordinary torches.
+  let b=s.boss,x=b.x*S,y=b.y*S,r=(bossRadius(b)+5.5)*S;
+  g.save();g.globalCompositeOperation='screen';
+  let glow=g.createRadialGradient(x,y,8,x,y,r);
+  glow.addColorStop(0,'rgba(255,224,151,.25)');glow.addColorStop(.35,'rgba(205,213,255,.12)');glow.addColorStop(1,'rgba(137,193,255,0)');
+  g.fillStyle=glow;g.beginPath();g.arc(x,y,r,0,Math.PI*2);g.fill();g.restore();
+ }
+
  for(let p of points)fbTorchSprite(g,p.x,p.y,s.t*1000,.82);
 }
 
@@ -4842,10 +5029,10 @@ for(let box of s.loot){let x=box.x*S,y=box.y*S;if(box.kind==='summon'){drawTotem
 for(let c of s.casts)for(let p of c.pulses){if(p.done&&!(p.flash>s.t))continue;g.strokeStyle=unitColor(c.owner);g.lineWidth=p.done?3:1.5;g.globalAlpha=p.done?.95:.55;for(let q of p.cells){g.strokeRect(q%N*S+4,(q/N|0)*S+4,16,16);if(p.done)rect(q%N*S+9,(q/N|0)*S+9,6,6,unitColor(c.owner));}g.globalAlpha=1;if(p.trap&&p.placed&&!p.done){rect(p.cx*S-6,p.cy*S-6,12,12,'#e8d39a');rect(p.cx*S-2,p.cy*S-9,4,18,unitColor(c.owner));}}
 drawRaidGoal();drawShots();drawOwnLinks();drawTargetLock();drawSummons();drawBossSkills();drawBoss();for(let a of s.actors){if(!a.alive||a.spectator)continue;let x=a.x*S,y=a.y*S,h=a.air>0?Math.sin(Math.min(1,a.air/(a.airTotal||.86))*Math.PI)*16:0;if(a.toss>0)h=Math.max(h,Math.sin(a.toss/(a.tossTotal||.3)*Math.PI)*22);if(a.float>0)h=5+Math.sin(s.t*5)*2;if(a.teeter){x+=Math.sin(s.t*32)*3;h=2;}g.globalAlpha=.28;rect(x-7,y+3,14,5,'#071321');g.globalAlpha=1;if(a.float>0){g.strokeStyle='#b7f7e7';g.lineWidth=2.5;g.beginPath();g.ellipse(x,y+5,15,6,0,0,Math.PI*2);g.stroke();}rect(x-7,y-10-h,14,16,'#182336');rect(x-5,y-9-h,10,12,s.t-(a.hitAt??-100)<.4&&Math.floor((s.t-a.hitAt)*24)%2===0?'#fff9df':colors[a.id]);rect(x-6,y-14-h,12,6,colors[a.id]);rect(x-4,y-7-h,9,5,'#fff0d4');rect(x+2,y-6-h,2,2,'#192a3c');rect(x-6,y+5-h,5,2,'#e1f7ff');rect(x+2,y+5-h,6,2,'#e1f7ff');rect(x+7,y-4-h,5,3,a.weapon.color);if(a.inv>0||a.shield||a.holeWard>0||a.powerBuff>0){g.strokeStyle=a.holeWard>0?'#90f7e5':a.powerBuff>0?'#ffa8df':a.inv>0?'#d5f6ff':'#b7a8ff';g.lineWidth=1.5;g.strokeRect(x-10,y-17-h,20,27);}g.font=a.id?'12px sans-serif':'bold 13px monospace';g.textAlign='center';g.fillStyle=a.id?'#ffffff':'#fff2b0';g.fillText((a.id?'Lv'+a.level:'YOU')+' ×'+multiplierText(a),x,y-21-h);if(a.teeter||a.sweatUntil>s.t)drawSweat(x,y-h,a.teeter);}
 for(let f of s.fx){let u=clamp((s.t-f.at)/.65,0,1),x=f.x*S,y=f.y*S,r=9+u*25;g.save();g.globalAlpha=1-u;g.strokeStyle=f.color;g.lineWidth=3;for(let k=0;k<8;k++){let angle=k*Math.PI/4;g.beginPath();g.moveTo(x+Math.cos(angle)*r*.6,y+Math.sin(angle)*r*.6);g.lineTo(x+Math.cos(angle)*r,y+Math.sin(angle)*r);g.stroke();}g.strokeStyle='#fff8d5';g.lineWidth=2;g.beginPath();g.arc(x,y,5+u*13,0,Math.PI*2);g.stroke();let victim=entity(f.victim);if(victim?.alive){g.strokeStyle=f.color;g.setLineDash([5,5]);g.beginPath();g.moveTo(x,y);g.lineTo(victim.x*S,victim.y*S);g.stroke();g.setLineDash([]);}g.fillStyle='#fff6d4';g.font='bold 16px monospace';g.textAlign='center';g.font='bold '+(f.label?14:22)+'px monospace';g.fillText(f.label||'HIT!',x,y-21-u*10);g.restore();}fbDrawFloeLighting();g.restore();
-fbEdgeShadow(g,0,HEADER,W,H-HEADER,.30);if(HEADER>0)drawMiniMap();g.save();g.translate(0,HEADER);if(HEADER>0){drawRoundClock();drawRaidHud();drawHitNotice();}if(HEADER>0&&s.msgUntil>s.t){rect(10,H-HEADER-27,W-20,21,'#152539ee');g.textAlign='center';g.font='11px sans-serif';g.fillStyle='#ffe2a3';g.fillText(s.message,W/2,H-HEADER-12);}if(s.count>0){let cy=(H-HEADER)/2;g.save();g.translate(W/2-204,cy-195);rect(48,137,312,116,'#142438ed');g.textAlign='center';g.fillStyle='#fff0c7';g.font='bold 32px monospace';g.fillText(Math.ceil(s.count),204,176);g.font='13px sans-serif';g.fillText(s.raid?bossLabel(s.boss)+' '+bossArea(s.boss)+'マス · 重撃'+bossPower(s.boss)+'倍':COUNT+'人 · '+N+'×'+N+' · '+s.lands[s.layer].shape,204,203);g.font='11px sans-serif';g.fillText(s.playerBoss?'あなたが巨獣！ 大跳躍＋16技 / 技の説明ボタン':s.raid?'武器で足場を割れ！ 巨獣は守護霊に強い':'被弾で ×2 → ×4 → ×8 · 落下でリセット',204,230);g.restore();}if(screen==='ending')drawTimeUp();g.restore();}
+fbEdgeShadow(g,0,HEADER,W,H-HEADER,.40);if(HEADER>0)drawMiniMap();g.save();g.translate(0,HEADER);if(HEADER>0){drawRoundClock();drawRaidHud();drawHitNotice();}if(HEADER>0&&s.msgUntil>s.t){rect(10,H-HEADER-27,W-20,21,'#152539ee');g.textAlign='center';g.font='11px sans-serif';g.fillStyle='#ffe2a3';g.fillText(s.message,W/2,H-HEADER-12);}if(s.count>0){let cy=(H-HEADER)/2;g.save();g.translate(W/2-204,cy-195);rect(48,137,312,116,'#142438ed');g.textAlign='center';g.fillStyle='#fff0c7';g.font='bold 32px monospace';g.fillText(Math.ceil(s.count),204,176);g.font='13px sans-serif';g.fillText(s.raid?bossLabel(s.boss)+' '+bossArea(s.boss)+'マス · 重撃'+bossPower(s.boss)+'倍':COUNT+'人 · '+N+'×'+N+' · '+s.lands[s.layer].shape,204,203);g.font='11px sans-serif';g.fillText(s.playerBoss?'あなたが光る巨獣！ 大跳躍＋全16技で挑戦者を攻めろ':s.raid?'光る巨獣を追え！ アイテムを集めて全16技を回避せよ':'被弾で ×2 → ×4 → ×8 · 落下でリセット',204,230);g.restore();}if(screen==='ending')drawTimeUp();g.restore();}
 function drawRoundClock(){let left=roundLength()-s.t;if(s.count>0||left>10||screen==='ending')return;let n=Math.ceil(left),pulse=1-(left%1),last=n<=5;g.save();g.fillStyle=last?'#f8c475':'#8bc9d4';g.fillRect(0,0,W*Math.max(0,left)/10,4);g.fillStyle='#102238e8';g.fillRect(W-115,9,106,last?69:43);g.fillStyle=last?'#ffe4ad':'#d5eff6';g.textAlign='center';g.font='10px sans-serif';g.fillText('終了まで',W-62,24);g.font='bold '+(last?30+Math.round(pulse*5):20)+'px monospace';g.fillText(n+'',W-62,last?61:45);g.restore();}
 function drawTimeUp(){let u=clamp(s.endAge/1.4,0,1);g.save();g.fillStyle='rgba(8,18,32,'+(.35+u*.4)+')';g.fillRect(0,0,W,H-HEADER);g.translate(0,(H-HEADER)/2-195);let x=-W+(W*2)*Math.min(1,u*3);g.fillStyle='#f1cd83';g.fillRect(x,144,W,4);g.fillRect(W-x-W,241,W,4);g.fillStyle='#12263eea';g.fillRect(30,155,W-60,77);g.fillStyle='#fff0c5';g.textAlign='center';g.font='bold '+(s.outcome==='clear'?27:34)+'px monospace';g.fillText(s.playerBoss?(s.outcome==='timeout'?'GIANT WIN':'GIANT DOWN'):s.outcome==='clear'?'COOP CLEAR':'TIME UP',W/2,191);g.font='13px sans-serif';g.fillText(s.playerBoss?(s.outcome==='timeout'?'耐え切った！ 巨獣の勝利':'大穴へ転落 · 討伐された'):s.outcome==='clear'?'巨獣撃破！ 全員勝利':s.raid?roundLength()+'秒終了 · 巨獣は残った':roundLength()+'秒終了 · 結果へ',W/2,216);g.restore();}
-function frame(t){if(!root)return;let dt=Math.min(.06,(t-last)/1000);last=t;while(dt>0){let h=Math.min(dt,1/90);step(h);dt-=h;}draw();raf=requestAnimationFrame(frame);}
+function frame(t){if(!root)return;let dt=Math.min(.06,(t-last)/1000);last=t;while(dt>0){let h=Math.min(dt,1/90);step(h);dt-=h;}pilotRecapTick();draw();raf=requestAnimationFrame(frame);}
 const keymap={ArrowUp:'up',w:'up',W:'up',ArrowDown:'down',s:'down',S:'down',ArrowLeft:'left',a:'left',A:'left',ArrowRight:'right',d:'right',D:'right'};
 window.addEventListener('keydown',e=>{if(!root||['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName))return;let skill=s?.playerBoss?BOSS_SKILLS.find(k=>k[3].toLowerCase()===e.key.toLowerCase()&&k[0]!=='leap'):null;if(pilot&&(skill||keymap[e.key]||[' ','Shift','f','F'].includes(e.key)))stopPilot();if(skill&&!e.repeat)useBossSkill(skill[0]);if(skill||keymap[e.key]||[' ','Shift','Escape','f','F','g','G'].includes(e.key)){e.preventDefault();e.stopImmediatePropagation();}if(keymap[e.key]){keys[keymap[e.key]]=true;if(!e.repeat)directionTap(keymap[e.key],'key');}if(e.key==='Shift')brake=true;if(!e.repeat){if(e.key===' ')requestJump();if(e.key==='f'||e.key==='F')requestFire();if(e.key==='Escape')togglePause();if(e.key==='g'||e.key==='G')toggleGas();}},true);
 window.addEventListener('keyup',e=>{if(!root||['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName))return;if(keymap[e.key]){keys[keymap[e.key]]=false;if(directionTap.hold?.source==='key'&&directionTap.hold.dir===keymap[e.key]){if(s?.actors?.[0])s.actors[0].gasHold=false;directionTap.hold=null;}}if(e.key==='Shift')brake=false;e.stopImmediatePropagation();},true);
@@ -4952,6 +5139,20 @@ function blur(){if(pilot)stopPilot();clearSteer();brake=false;if(root&&screen===
 #floe .fact #ffire:active{background:#d57752!important}
 #floe.fwide:not(.fbossmode) .fact #ffire{min-height:45px;font-size:12px}
 #floe #fjoy i::after{content:'跳×2';position:absolute;inset:0;display:grid;place-items:center;font-size:11px;line-height:1;color:#f4fbff;font-weight:800;text-shadow:0 1px #254b61;pointer-events:none}
+
+
+/* v91: slim, non-interactive notices over the uninterrupted CPU cinema. */
+#floe .fpilotRecap{position:absolute;z-index:24;left:50%;bottom:clamp(20px,8%,78px);transform:translate(-50%,8px);width:min(86%,450px);padding:11px 15px 12px;pointer-events:none;opacity:0;visibility:hidden;border-radius:16px;border:1px solid rgba(193,228,250,.48);background:linear-gradient(155deg,rgba(12,30,49,.94),rgba(22,42,60,.86));box-shadow:0 14px 34px #020915b8,inset 0 1px 0 #e9f8ff2b;backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);text-align:center;color:#eff9ff;transition:opacity .24s,transform .24s,visibility .24s}
+#floe.fcinema .fpilotRecap.fshow{visibility:visible;opacity:1;transform:translate(-50%,0)}
+#floe .fpilotRecap .frecapTag{font:800 9px/1.3 sans-serif;letter-spacing:2px;color:#9fd5e6;margin-bottom:4px}
+#floe .fpilotRecap .frecapTitle{font:900 clamp(14px,3.4vw,20px)/1.35 sans-serif;color:#fff6df}
+#floe .fpilotRecap .frecapText{font:600 clamp(10px,2.5vw,12px)/1.55 sans-serif;color:#d9e8f2;margin-top:3px}
+#floe .fpilotRecap .frecapOptions{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin-top:7px}
+#floe .fpilotRecap .frecapOptions span{border:1px solid #8db8d24a;background:#c2e7ff13;border-radius:7px;padding:4px 7px;font:700 10px/1.3 sans-serif;max-width:100%}
+#floe .fpilotRecap.frecapPick{border-color:#b5e4bb99;background:linear-gradient(155deg,rgba(19,53,51,.95),rgba(12,36,49,.90))}
+#floe .fpilotRecap.frecapGold{border-color:#ffe1a8}
+@media(max-height:400px){#floe .fpilotRecap{bottom:12px;padding:6px 10px;width:min(64%,450px)}#floe .fpilotRecap .frecapOptions{margin-top:3px}}
+@media(prefers-reduced-motion:reduce){#floe .fpilotRecap{transition:none}}
 
 /* v88 - cinema mode while the CPU plays. Controls stay inside the game viewport
    (including CSS-rotated landscape); ordinary UI is restored on pilot stop. */
