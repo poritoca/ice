@@ -4290,8 +4290,8 @@ const HOMING_WEAPON_DATA={
 let catalog=[...Object.entries(basic),...Object.entries(V51_INFO),...Object.entries(V54_INFO),...Object.entries(V55_INFO)].map(([id,info],i)=>({id,name:Array.isArray(info)?info[0]:info,power:22+(i*17)%34,wait:5.8+(i%5)*.55,color:colors[1+i%5]}));
 catalog.push(...Object.entries(HOMING_WEAPON_DATA).map(([id,info])=>({id,...info})));
 const details={bolt:'直進する光矢',fan:'前方へ広がる扇',spear:'細く長い槍',sides:'左右同時斬り',rear:'後方を薙ぐ',knight:'L字の飛び込み範囲',checker:'市松模様の衝撃',ring:'自分の周囲の輪',scatter:'周囲のランダムな小衝撃',cross:'縦横の十字波',diamond:'菱形の広域波',square:'前方の方陣',line:'四方向へ伸びる線',grenade:'前方に遅延爆発',laser:'長い直線ビーム',iai:'前方へ短く滑って斬る',ricochet:'外周で反射する射線',chain:'近くの敵３体をつなぐ雷',orbit:'自分に追従する周回刃',boomerang:'行き帰りの二段刃',seeker:'予告後も緩く追う光矢',nova:'中心から広がる三重波',spiral:'回転する二本の刃',meteor:'敵の現在地に時間差の流星',mine:'足元に置く接近反応罠',prism:'途中で三方向へ分岐',echo:'現在地と過去の位置の二段斬り',vortex:'前方の渦から外へ押す二段波',rail:'長い予告後の強い貫通衝撃',constellation:'敵と敵を結ぶ星の糸',crescent:'前へ広がる三日月波',tether:'鎖が当たると短く減速',harpoon:'細い銛で強く押す',clock:'近くを減速させる時の輪',aegis:'一度の押し出しを軽減する盾と反撃波',mirror:'左右から平行光線',drill:'奥ほど強くなる穿孔波',roulette:'六種類の範囲から抽選',siphon:'前方斬り。命中で再使用が少し早まる',portal:'左右の門から交差する光線',lure:'囮を置き、後から周囲へ影波',shatter:'命中した相手を短時間押し出しやすくする',rewind:'近くの攻撃を一つ打ち消し反撃',needle:'残る床をたどって進む蛇針',lifegrid:'隣接数で変化する魔法格子',shadowtax:'狙った敵が動くほど強い影の衝撃',film:'記録した敵の位置を逆順に攻撃',shears:'左右の刃が閉じる三段攻撃',origami:'前方の折り目に対称の二つの波',glyph:'×・？・！の文字の形で攻撃',glacier:'とても遅いが長時間執拗に追尾し、広く爆発する重追尾弾',dartmiss:'かなり速いが追尾は弱め。小さく鋭く爆発する軽ミサイル',reaver:'認識した敵へ向かい、着弾周辺の足場をまとめて崩しやすい地形破壊弾',swarmiss:'３発の小型弾が別角度から追い回す群体ミサイル',arcmiss:'弧を描いて曲がり込み、横移動を狩りやすい追尾弾',siege:'重く遅いが粘り強く曲がり、広い爆風で押し返す包囲弾',snapper:'敵に向かって素早く直進し、最後だけ少し曲がる瞬足弾',minechaser:'いったん外へ回ってから強く追い込み、長く粘着する旋回弾',crater:'着弾点を中心に数ブロックの足場を脆くするクレーター弾',cometail:'中速高旋回。長い尾を引きつつ、爆発範囲も十分な万能追尾弾',veilmiss:'左右へ揺らいで照準を惑わす長距離追尾弾',swapmiss:'途中で瞬間転移し、遠方の標的へ詰め寄る',orbitstorm:'大回りして側面へ回り込み爆発する',echoburst:'着弾後に遅れて二度目の爆風が広がる',gravitywell:'命中地点へ吸い寄せる吸引爆風',frostlock:'命中した相手を減速させる凍結弾',splitflare:'着弾後に周囲へ広がる二次炸裂弾',delayrush:'初速は遅く、終盤に急加速する時差弾',breakline:'飛行経路の一部にひび割れを作る',rebound:'いったん外れた先で反転して追い打ち'};
-const perks=[['edge','スケート研磨','旋回力＋65%。素早く切り返せる。'],['grip','ブレーキ職人','減速速度を大きく低下。被弾中に減速すると押し出しも25%軽減。'],['hop','軽量ブーツ','ジャンプ待ち−0.5秒。最短0.8秒（通常は約2.2秒）。'],['linger','霜の足跡','自分が踏む床の寿命＋1.5秒。'],['air','風乗り','空中時間＋0.18秒。さらに遠い島へ渡れる。'],['boost','切り込み隊長','滑走速度＋25%。ジャンプ速度も＋12%。'],['force','衝撃増幅','武器の押し出し力＋60%。速度上限あり。'],['anchor','踏ん張り','受ける押し出しを30%軽減。最大70%。'],['reach','長柄の工夫','攻撃範囲を進行方向へ２マス延長。回避の隙間は維持。'],['reload','丁寧な装填','攻撃間隔−1.5秒。最低4.5秒は維持。'],['landing','着地の護符','ジャンプ着地後の押し出し半減時間＋1.8秒。'],['shield','氷結の盾','各戦に防御２回分を追加。押し出しを85%軽減。'],['braced','制動射撃','減速しながら撃つと威力＋70%。'],['airshot','跳躍射撃','ジャンプ中に撃つと威力＋70%。'],['collector','武器の目利き','拾った武器の威力＋45%。'],['recovery','立て直し','復帰待ち−0.6秒（最低１秒）、浮遊保護＋１秒。'],['rescue','復帰装填','復帰時に攻撃待ちを３秒短縮。最短発射間隔は維持。'],['combo','追撃の心得','８秒以内に再び当てた相手へ威力＋60%。'],['cut','足場の支配','自分が削った床による転落の得点＋12。落下と撃破を同じ重みで順位に反映。'],['keeper','愛用の一挺','武器の威力＋40%。交換した武器にも有効。']];
-perks.push(['double','二段ジャンプ','着地前に一度だけ再跳躍。拾った二段ジャンプの残数を消費しない。'],['stomp','流星着地','着地すると周囲に強い衝撃波。敵を押し返す。'],['echo','残響の一撃','攻撃の一部が1.15秒後にもう一度発動。威力65%。'],['magnet','引き寄せの星','武器・召喚魂の取得半径が約３倍に。'],['bond','精霊の絆','各戦、味方２体で開始。自分の守護霊の耐久＋１。'],['phoenix','不死鳥の羽','各戦の落下救済＋１回。1.8秒浮遊する間に床へ戻れ！'],['feather','羽ばたきの浄化','ジャンプで着地するたび被弾蓄積を１段階回復。']);
+const perks=[['edge','スケート研磨','旋回力＋65%。素早く切り返せる。'],['grip','ブレーキ職人','ブレーキの制動力を強化。減速中の吹き飛びも25％軽減。'],['hop','軽量ブーツ','ジャンプ待ち−0.5秒。最短0.8秒（通常は約2.2秒）。'],['linger','霜の足跡','自分が踏む床の寿命＋1.5秒。'],['air','風乗り','空中時間＋0.18秒。さらに遠い島へ渡れる。'],['boost','切り込み隊長','滑走速度＋25%。ジャンプ速度も＋12%。'],['force','衝撃増幅','武器の押し出し力＋60%。速度上限あり。'],['anchor','踏ん張り','受ける押し出しを30%軽減。最大70%。'],['reach','長柄の工夫','攻撃範囲を進行方向へ２マス延長。回避の隙間は維持。'],['reload','丁寧な装填','攻撃間隔−1.5秒。最低4.5秒は維持。'],['landing','着地の護符','ジャンプ着地後の押し出し半減時間＋1.8秒。'],['shield','氷結の盾','各戦に防御２回分を追加。押し出しを85%軽減。'],['braced','制動射撃','減速しながら撃つと威力＋70%。'],['airshot','跳躍射撃','ジャンプ中に撃つと威力＋70%。'],['collector','武器の目利き','拾った武器の威力＋45%。'],['recovery','立て直し','復帰待ち−0.6秒（最低１秒）、浮遊保護＋１秒。'],['rescue','復帰装填','復帰時に攻撃待ちを３秒短縮。最短発射間隔は維持。'],['combo','追撃の心得','８秒以内に再び当てた相手へ威力＋60%。'],['cut','足場の支配','床崩落で敵を落とした際の順位評価＋12％／段階（最大36％）。追加得点も獲得。'],['keeper','愛用の一挺','武器の威力＋40%。交換した武器にも有効。']];
+perks.push(['double','空中の達人','２段ジャンプを即解放。追加ジャンプの滞空時間＋0.14秒。'],['stomp','流星着地','着地すると周囲に強い衝撃波。敵を押し返す。'],['echo','残響の一撃','攻撃の一部が1.15秒後にもう一度発動。威力65%。'],['magnet','引き寄せの星','武器・召喚魂の取得半径が約３倍に。'],['bond','精霊の絆','各戦、味方２体で開始。自分の守護霊の耐久＋１。'],['phoenix','不死鳥の羽','各戦の落下救済＋１回。1.8秒浮遊する間に床へ戻れ！'],['feather','羽ばたきの浄化','ジャンプで着地するたび被弾蓄積を１段階回復。']);
 // v79: 80 cup perks, 50 unique permanent relics. Keep permanent storage separate from scores.
 const EXTRA_PERKS=[
 ['guardForce','霊狩りの刃','自分の攻撃が守護霊に与える押し出し＋70%。上限も上昇。'],
@@ -4307,7 +4307,7 @@ const EXTRA_PERKS=[
 ['spiritHp','霊獣の鎧','自分が召喚する守護霊の耐久＋２撃。'],
 ['spiritPower','霊獣の闘志','味方守護霊の武器威力＋40%。'],
 ['spiritTempo','霊獣の鼓動','味方守護霊の攻撃間隔を20%短縮。最低1.3秒。'],
-['spiritWing','天空の契約','自分が召喚する飛行型守護霊の連続飛行＋1.6秒。'],
+['spiritWing','天空の契約','飛行型守護霊の連続飛行＋1.6秒。ミニ巨獣の移動速度も少し上昇。'],
 ['spiritCall','帰還の盟友','復帰時、空き枠があれば守護霊を１体召喚。安全な出現場所が必要。'],
 ['shieldRegen','再結晶の盾','生存中20秒ごとに防御１回分を生成。３回分まで補充。'],
 ['spring','弾む装填','ジャンプで床に着地すると攻撃待ち−1.2秒。発射間隔4.5秒は維持。'],
@@ -4368,16 +4368,63 @@ const GOLD_CARDS=[
 ['g49','巨王の戦旗',{bossMove:.5,bossArmor:1}],['g50','星海の王座',{force:.5,spiritPower:.5,shield:.5}]
 ];
 const GOLD_KEY='frostbound.floe.legacy.v1',GOLD_RATE=.005;
-const effectLabels={edge:v=>'旋回力＋'+pct(65*v),grip:v=>'減速を強化・制動中の被弾25%軽減',hop:v=>'ジャンプ待ち−'+num(.5*v)+'秒（下限0.8秒）',linger:v=>'踏む床の寿命＋'+num(1.5*v)+'秒',air:v=>'空中時間＋'+num(.18*v)+'秒',boost:v=>'滑走＋'+pct(25*v)+'・跳躍速度＋'+pct(12*v),force:v=>'武器威力＋'+pct(60*v),anchor:v=>'被弾軽減＋'+pct(30*v)+'（最大70%）',reach:v=>'攻撃を前方へ＋'+num(2*v)+'マス',reload:v=>'攻撃待ち−'+num(1.5*v)+'秒（序盤下限4.5秒・終盤さらに短縮）',landing:v=>'着地後の被弾半減＋'+num(1.8*v)+'秒',shield:v=>'各戦の防御＋'+num(2*v)+'回',braced:v=>'制動射撃の威力＋'+pct(70*v),airshot:v=>'空中射撃の威力＋'+pct(70*v),collector:v=>'武器取得後の威力＋'+pct(45*v),recovery:v=>'復帰待ち−'+num(.6*v)+'秒・浮遊＋'+num(v)+'秒',rescue:v=>'復帰時の攻撃待ち−'+num(3*v)+'秒',combo:v=>'８秒以内の追撃威力＋'+pct(60*v),cut:v=>'床による撃墜得点＋'+num(12*v),keeper:v=>'武器威力＋'+pct(40*v),double:()=> '二段ジャンプ解放',stomp:()=> '着地に衝撃波（重複で範囲拡大）',echo:()=> '1.15秒後に一部攻撃を65%で再発動',magnet:()=> 'アイテム取得範囲拡大',bond:()=> '各戦２体の味方・守護霊耐久＋１',phoenix:v=>'落下救済＋'+num(v)+'回／戦',feather:()=> '跳躍着地で被弾蓄積−１',guardForce:v=>'対守護霊の押し出し＋'+pct(70*v),titanForce:v=>'対巨獣の押し出し＋'+pct(70*v),guardArmor:v=>'守護霊からの押し出しを'+pct(35*Math.min(1,v))+'軽減',lateForce:v=>'残り20秒の武器威力＋'+pct(45*v),earlyForce:v=>'開始20秒の武器威力＋'+pct(40*v),comeback:v=>'落下ごとに武器威力＋'+pct(12*v)+'（最大＋'+pct(60*v)+'）',pristine:v=>'被弾蓄積０で武器威力＋'+pct(30*v),crowdForce:v=>'近くに敵２体以上で威力＋'+pct(40*v),cleanse:()=> '生存17秒ごとに被弾蓄積−１',hitCleanse:()=> '命中で被弾蓄積−１（間隔８秒）',spiritHp:v=>'守護霊耐久＋'+num(2*v)+'撃',spiritPower:v=>'守護霊の武器威力＋'+pct(40*v),spiritTempo:v=>'守護霊の攻撃間隔−'+pct(20*v)+'（下限1.3秒）',spiritWing:v=>'飛行型守護霊の飛行＋'+num(1.6*v)+'秒',spiritCall:()=> '復帰時に空き枠へ守護霊１体',shieldRegen:()=> '生存20秒ごとに防御１回補充（３回まで）',spring:()=> '跳躍着地で攻撃待ち−1.2秒（終盤は連射速度アップ）',bossMove:v=>'操作巨獣の移動＋'+pct(25*v),bossArmor:v=>'操作巨獣の被弾を'+pct(25*Math.min(1,v))+'軽減',knockBrake:v=>'制動中の被弾を'+pct(35*Math.min(1,v))+'軽減',summonShield:()=> '召喚時、守護霊に防御１回',gasSaver:v=>'燃料消費−'+pct(20*v)+'（最大60%）',gasSeek:()=> 'ガス飛行の操舵性向上',airRescue:()=> 'ジャンプ予約が長持ち',jumpKick:v=>'空中攻撃の押し出し＋'+pct(25*v),fracture:v=>'攻撃による床の崩落待ち−'+pct(14*v)+'（最大28%）'};
+const effectLabels={edge:v=>'旋回力＋'+pct(65*v),grip:v=>'減速を強化・制動中の被弾25%軽減',hop:v=>'ジャンプ待ち−'+num(.5*v)+'秒（下限0.8秒）',linger:v=>'踏む床の寿命＋'+num(1.5*v)+'秒',air:v=>'空中時間＋'+num(.18*v)+'秒',boost:v=>'滑走＋'+pct(25*v)+'・跳躍速度＋'+pct(12*v),force:v=>'武器威力＋'+pct(60*v),anchor:v=>'被弾軽減＋'+pct(30*v)+'（最大70%）',reach:v=>'攻撃を前方へ＋'+num(2*v)+'マス',reload:v=>'攻撃待ち−'+num(1.5*v)+'秒（序盤下限4.5秒・終盤さらに短縮）',landing:v=>'着地後の被弾半減＋'+num(1.8*v)+'秒',shield:v=>'各戦の防御＋'+num(2*v)+'回',braced:v=>'制動射撃の威力＋'+pct(70*v),airshot:v=>'空中射撃の威力＋'+pct(70*v),collector:v=>'武器取得後の威力＋'+pct(45*v),recovery:v=>'復帰待ち−'+num(.6*v)+'秒・浮遊＋'+num(v)+'秒',rescue:v=>'復帰時の攻撃待ち−'+num(3*v)+'秒',combo:v=>'８秒以内の追撃威力＋'+pct(60*v),cut:v=>'床崩落撃破の評価＋'+pct(12*Math.min(3,v))+'・追加得点＋'+num(12*v),keeper:v=>'武器威力＋'+pct(40*v),double:()=> '２段ジャンプ解放・追加跳躍＋0.14秒',stomp:()=> '着地に衝撃波（重複で範囲拡大）',echo:()=> '1.15秒後に一部攻撃を65%で再発動',magnet:()=> 'アイテム取得範囲拡大',bond:()=> '各戦２体の味方・守護霊耐久＋１',phoenix:v=>'落下救済＋'+num(v)+'回／戦',feather:()=> '跳躍着地で被弾蓄積−１',guardForce:v=>'対守護霊の押し出し＋'+pct(70*v),titanForce:v=>'対巨獣の押し出し＋'+pct(70*v),guardArmor:v=>'守護霊からの押し出しを'+pct(35*Math.min(1,v))+'軽減',lateForce:v=>'残り20秒の武器威力＋'+pct(45*v),earlyForce:v=>'開始20秒の武器威力＋'+pct(40*v),comeback:v=>'落下ごとに武器威力＋'+pct(12*v)+'（最大＋'+pct(60*v)+'）',pristine:v=>'被弾蓄積０で武器威力＋'+pct(30*v),crowdForce:v=>'近くに敵２体以上で威力＋'+pct(40*v),cleanse:()=> '生存17秒ごとに被弾蓄積−１',hitCleanse:()=> '命中で被弾蓄積−１（間隔８秒）',spiritHp:v=>'守護霊耐久＋'+num(2*v)+'撃',spiritPower:v=>'守護霊の武器威力＋'+pct(40*v),spiritTempo:v=>'守護霊の攻撃間隔−'+pct(20*v)+'（下限1.3秒）',spiritWing:v=>'飛行守護霊の飛行＋'+num(1.6*v)+'秒・ミニ巨獣速度＋'+pct(4*v),spiritCall:()=> '復帰時に空き枠へ守護霊１体',shieldRegen:()=> '生存20秒ごとに防御１回補充（３回まで）',spring:()=> '跳躍着地で攻撃待ち−1.2秒（終盤は連射速度アップ）',bossMove:v=>'操作巨獣の移動＋'+pct(25*v),bossArmor:v=>'操作巨獣の被弾を'+pct(25*Math.min(1,v))+'軽減',knockBrake:v=>'制動中の被弾を'+pct(35*Math.min(1,v))+'軽減',summonShield:()=> '召喚時、守護霊に防御１回',gasSaver:v=>'燃料消費−'+pct(20*v)+'（最大60%）',gasSeek:()=> 'ガス飛行の操舵性向上',airRescue:()=> 'ジャンプ予約が長持ち',jumpKick:v=>'空中攻撃の押し出し＋'+pct(25*v),fracture:v=>'攻撃による床の崩落待ち−'+pct(14*v)+'（最大28%）'};
 function num(v){return String(Math.round(v*1000)/1000);}
 function pct(v){return num(v)+'%';}
 function effectText(stats){return Object.entries(stats).map(([k,v])=>effectLabels[k](v)).join('／');}
 // v90: a deliberate, optional build for players who want to cut off escape routes.
 perks.push(['fracture','断崖の設計師','自分の武器で作ったひび割れが14%早く崩壊（最大2段階）。逃げ道を先読みして攻める。']);
-BUNDLES.push(['c29','氷裂の布陣',{fracture:1,cut:1}]);
-perks.push(...EXTRA_PERKS,...BUNDLES.map(([id,name,stats])=>[id,name,effectText(stats)]));
-const singlePerks=new Set(['double','echo','magnet','bond','feather','cleanse','hitCleanse','spiritCall','shieldRegen','spring','summonShield']);
-const softCaps={guardArmor:1,bossArmor:1,knockBrake:1,gasSaver:3,gasSeek:1,airRescue:1,jumpKick:2,fracture:2};
+BUNDLES.push(['c37','氷裂の布陣',{fracture:1,cut:1}]);
+
+// v118: every new card has an active gameplay hook below; existing card IDs stay stable.
+const V118_PERKS=[
+ ['guardBattery','蓄光の防壁','ガードゲージ最大値＋20。長時間の防御にも余裕。'],
+ ['guardRecovery','盾の呼吸','ガードゲージ回復速度＋30%。'],
+ ['guardTiming','刹那の構え','直前ガードの猶予＋0.08秒、命中時のゲージ消費−22%。'],
+ ['missileDrive','彗星の推進器','追尾ミサイルの速度＋13%、旋回性能＋8%。'],
+ ['missileScout','遠見の弾頭','ミサイル発射時、標的の居場所を2.5秒間だけ捕捉。'],
+ ['crystalRadar','結晶の直感','黒・白クリスタルを通常より0.7マス遠くから発見。'],
+ ['crystalPulse','砕晶の連携','クリスタル破壊時に武器の待ち時間を1.2秒短縮。'],
+ ['miniOverdrive','幼獣の咆哮','ミニ巨獣の技の間隔−12%、威力＋16%。'],
+ ['miniHull','幼獣の装甲','ミニ巨獣の試合中の最大耐久力＋２。'],
+ ['shadowParry','影払い','黒騎士が近いとき、ガードゲージ回復＋40%。'],
+ ['bossTempo','王獣の呼吸','操作する巨獣の16技の再使用待ち−12%。'],
+ ['bossShock','巨躯の重撃','操作する巨獣の重撃と技の吹き飛び力＋15%。']
+];
+Object.assign(effectLabels,{
+ guardBattery:v=>'ガード最大値＋'+pct(20*v),guardRecovery:v=>'ガード回復＋'+pct(30*v),
+ guardTiming:v=>'直前ガード猶予＋'+num(.08*v)+'秒・消費−'+pct(22*v),
+ missileDrive:v=>'追尾ミサイル速度＋'+pct(13*v)+'・旋回＋'+pct(8*v),
+ missileScout:()=> 'ミサイル発射で標的の位置を2.5秒間捕捉',
+ crystalRadar:v=>'結晶を＋'+num(.7*v)+'マス遠くから発見',
+ crystalPulse:v=>'結晶破壊で武器待ち−'+num(1.2*v)+'秒',
+ miniOverdrive:v=>'ミニ巨獣の技威力＋'+pct(16*v)+'・間隔−'+pct(12*v),
+ miniHull:v=>'ミニ巨獣耐久＋'+num(2*v),
+ shadowParry:v=>'黒騎士接近中、ガード回復＋'+pct(40*v),
+ bossTempo:v=>'操作巨獣の全技の待ち時間−'+pct(12*v),
+ bossShock:v=>'操作巨獣の全攻撃の吹き飛び＋'+pct(15*v)
+});
+BUNDLES.push(
+ ['c38','星弾の索敵網',{missileDrive:1,missileScout:1}],
+ ['c39','双盾の型',{guardBattery:1,guardRecovery:1}],
+ ['c40','刹那の堅城',{guardTiming:1,anchor:1}],
+ ['c41','氷晶の追跡者',{crystalRadar:1,crystalPulse:1}],
+ ['c42','幼獣の鉄騎',{miniOverdrive:1,miniHull:1}],
+ ['c43','夜陰の守り',{shadowParry:1,guardRecovery:1}],
+ ['c44','轟天の巨獣',{bossTempo:1,bossShock:1}],
+ ['c45','王獣の咆哮',{bossShock:1,bossArmor:1}]
+);
+GOLD_CARDS.push(
+ ['g51','蒼晶の戦盾',{guardBattery:1,guardTiming:.5}],
+ ['g52','天翔の探査機',{missileDrive:1,missileScout:1}],
+ ['g53','白黒の探鉱印',{crystalRadar:1,crystalPulse:1}],
+ ['g54','小さき王獣の鎧',{miniHull:1,miniOverdrive:.5}],
+ ['g55','深夜の護符',{shadowParry:1,guardRecovery:.5}]
+);
+
+perks.push(...EXTRA_PERKS,...V118_PERKS,...BUNDLES.map(([id,name,stats])=>[id,name,effectText(stats)]));
+const singlePerks=new Set(['double','echo','magnet','bond','feather','cleanse','hitCleanse','spiritCall','shieldRegen','spring','summonShield','missileScout']);
+const softCaps={guardArmor:1,bossArmor:1,knockBrake:1,gasSaver:3,gasSeek:1,airRescue:1,jumpKick:2,fracture:2,guardBattery:2,guardRecovery:2,guardTiming:2,missileDrive:3,missileScout:1,crystalRadar:2,crystalPulse:2,miniOverdrive:3,miniHull:3,shadowParry:2,bossTempo:3,bossShock:3};
 let goldOwned=new Set(),goldDisabled=new Set(),goldStats={},goldSaveOK=true;
 const GOLD_DISABLED_KEY='frostbound.floe.legacy.disabled.v1';
 function addStats(target,stats,n=1){for(let [key,value] of Object.entries(stats))target[key]=(target[key]||0)+value*n;return target;}
@@ -4392,18 +4439,40 @@ function saveGold(id){if(!GOLD_CARDS.some(c=>c[0]===id))return false;try{let mer
 // Merge additions from another tab without changing the active draft or ever deleting our owned entries.
 window.addEventListener('storage',e=>{if(e.key===GOLD_KEY){try{for(let id of readGold(e.newValue))goldOwned.add(id);rebuildGold();}catch(_){} }if(e.key===GOLD_DISABLED_KEY){try{goldDisabled=readGoldDisabled(e.newValue);rebuildGold();}catch(_){}}});
 function rebuildCupStats(){run.comboStats={};for(let [id,name,stats] of BUNDLES)if(run.up[id])addStats(run.comboStats,stats,run.up[id]);}
-function perkLimit(k){if(k==='gasSaver')return 3;if(k==='jumpKick'||k==='fracture')return 2;if(singlePerks.has(k))return 1;return BUNDLES.some(c=>c[0]===k)?3:['phoenix','stomp'].includes(k)?2:5;}
+function perkLimit(k){if(k in softCaps)return softCaps[k];if(['recovery','bossMove','shield','stomp','phoenix'].includes(k))return 2;if(['hop','anchor','reload'].includes(k))return 3;if(singlePerks.has(k))return 1;return BUNDLES.some(c=>c[0]===k)?3:5;}
 function availablePerks(){let a={id:0};return perks.filter(u=>{let id=u[0],bundle=BUNDLES.find(c=>c[0]===id);return (run.up[id]||0)<perkLimit(id)&&(bundle?Object.entries(bundle[2]).some(([k,v])=>lv(a,k)<(singlePerks.has(k)?1:(softCaps[k]||perkLimit(k)))):lv(a,id)<(softCaps[id]||perkLimit(id)));});}
-function makeDraft(rng=Math.random){let options=shuffled(availablePerks()).slice(0,3).map(u=>({id:u[0],gold:false})),unowned=GOLD_CARDS.filter(c=>!goldOwned.has(c[0])),chance=goldChance();if(goldSaveOK&&run.difficulty!=='practice'&&unowned.length&&rng()<chance){record.goldChargeStreak=0;persist();options=[{id:pick(unowned)[0],gold:true}];}if(!options.length)options=[{id:'force',gold:false}];return {round:run.round,options,chance,claimed:false,error:''};}
+function cardFit(id){
+ let stats=BUNDLES.find(b=>b[0]===id)?.[2]||{[id]:1},keys=Object.keys(stats);
+ const mini=!!(miniGiantRecord||s?.summons?.some(v=>v.alive&&v.miniBoss&&v.owner===0));
+ let w=1;
+ for(const k of keys){
+  if(['bossArmor','bossMove','bossTempo','bossShock'].includes(k))w*=run.forceRaid==='boss'?1.5:run.forceRaid==='raid'?.20:.55;
+  if(['miniOverdrive','miniHull'].includes(k))w*=mini?1.9:.54;
+  if(['spiritWing','spiritCall','bond'].includes(k))w*=mini?.62:1;
+  if(['missileDrive','missileScout'].includes(k))w*=isHomingWeapon(run.loadout?.id)?2.2:.8;
+  if(['crystalRadar','crystalPulse'].includes(k))w*=1.35;
+  if(['guardBattery','guardRecovery','guardTiming','shadowParry'].includes(k))w*=1.3;
+  if(run.forceRaid==='boss'&&!keys.some(v=>['bossMove','bossArmor','bossTempo','bossShock'].includes(v)))return 0;
+  if(k==='double')w*=1.08;
+  if(k==='gasSaver'||k==='gasSeek')w*=s?.actors?.[0]?.gasFuel>0?1.6:.78;
+ }
+ return w<=0?0:Math.max(.08,Math.min(4,w));
+}
+function rollPerkOptions(count=3,rng=Math.random){
+ let pool=availablePerks().map(u=>({id:u[0],weight:cardFit(u[0])})).filter(x=>x.weight>0),out=[];
+ while(pool.length&&out.length<count){let total=pool.reduce((n,p)=>n+p.weight,0),r=rng()*total,i=0;for(;i<pool.length-1;i++){r-=pool[i].weight;if(r<=0)break;}out.push({id:pool.splice(i,1)[0].id,gold:false});}
+ return out;
+}
+function makeDraft(rng=Math.random){let options=rollPerkOptions(3,rng),unowned=GOLD_CARDS.filter(c=>!goldOwned.has(c[0])),chance=goldChance();if(goldSaveOK&&run.difficulty!=='practice'&&unowned.length&&rng()<chance){record.goldChargeStreak=0;persist();options=[{id:pick(unowned)[0],gold:true}];}if(!options.length)options=[{id:'force',gold:false}];return {round:run.round,options,chance,claimed:false,error:''};}
 function advanceRewardRound(){if(run.round>5)start(run.difficulty,run.forceRaid);else newRound();}
-function chooseCard(draft,index){if(screen!=='panel'||run.draft!==draft||draft.round!==run.round||draft.claimed)return;let choice=draft.options[index];if(!choice)return;if(choice.gold){if(goldOwned.has(choice.id)){draft.error='この永続カードは取得済みです。ほかのカードを選んでください。';cards();return;}if(!saveGold(choice.id)){draft.error='保存できませんでした。金カードをもう一度押して再試行するか、別のカードを選べます。';cards();return;}}else {run.up[choice.id]=(run.up[choice.id]||0)+1;if(run.difficulty!=='practice'&&(record.rankStreak||0)>0){record.streakUp={...run.up};persist();}}draft.claimed=true;run.round++;{const info=(choice.gold?GOLD_CARDS:perks).find(c=>c[0]===choice.id);pilotRecap(choice.gold?'gold':'pick','選択：'+(info?.[1]||choice.id),choice.gold?'永続強化を獲得':(info?.[2]||''),[],2.1);}if(choice.gold){let card=GOLD_CARDS.find(c=>c[0]===choice.id);panel('<div class="feyebrow">ETERNAL RELIC · SAVED</div><h2>永続強化を獲得！</h2><div class="flegacy flegacy-award"><span class="frelicsigil" aria-hidden="true">✦</span><b>'+card[1]+'</b><small>'+effectText(card[2])+'</small></div><p class="fmuted">保存済み · 次の戦いから有効。新しいカップ・次回起動にも引き継ぎます。<br>永続図鑑 '+goldOwned.size+' / 50</p><button class="fgold" id="fgcontinue">次の戦いへ</button>');pilotPage='award';let continued=false;bind('fgcontinue',()=>{if(continued)return;continued=true;advanceRewardRound();});}else advanceRewardRound();}
-function cards(){if(!run.draft||run.draft.round!==run.round)run.draft=makeDraft();let d=run.draft;if(d.options.some(o=>o.gold))stopPilot('gold');panel('<div class="feyebrow">'+perks.length+' CUP PERKS · 50 ETERNAL RELICS</div><h2>'+ (pilotGold?'金カード出現！':'強化を選択')+'</h2><p class="fmuted">'+(d.options.some(o=>o.gold)?'金のカードを取得':'１枚選択')+'　·　金 '+chanceText(d.chance)+'</p><div class="fbuildgrid">'+d.options.map((o,i)=>{let u=(o.gold?GOLD_CARDS:perks).find(c=>c[0]===o.id),owned=o.gold&&goldOwned.has(o.id);return '<button class="fcard '+(o.gold?'flegacy':'')+'" id="fc'+i+'" '+(owned?'disabled':'')+'>'+(o.gold?'<span class="frelicbadge">✦ 伝説 · 永続</span><span class="frelicsigil" aria-hidden="true">✦</span>':'')+u[1]+(o.gold?'':perkLimit(o.id)>1?' Lv.'+((run.up[o.id]||0)+1):'')+'<small>'+(o.gold?effectText(u[2]):u[2])+'</small>'+(o.gold?'<small class="frelicfooter">'+(owned?'取得済み':'タップで永続取得')+'</small>':'')+'</button>';}).join('')+'</div><p class="fmuted" role="status">'+(d.error||'')+'</p>');d.options.forEach((o,i)=>bind('fc'+i,()=>chooseCard(d,i)));pilotPage='cards';if(pilot)pilotRecap('cards','次の強化を選択中','CPUが3枚から判断します',d.options.map(o=>(o.gold?GOLD_CARDS:perks).find(u=>u[0]===o.id)?.[1]||o.id),2.8);}
+function chooseCard(draft,index){if(screen!=='panel'||run.draft!==draft||draft.round!==run.round||draft.claimed)return;let choice=draft.options[index];if(!choice)return;if(choice.gold){if(goldOwned.has(choice.id)){draft.error='この永続カードは取得済みです。ほかのカードを選んでください。';cards();return;}if(!saveGold(choice.id)){draft.error='保存できませんでした。金カードをもう一度押して再試行するか、別のカードを選べます。';cards();return;}}else {run.up[choice.id]=(run.up[choice.id]||0)+1;if(run.difficulty!=='practice'){record.streakUp={...run.up};persist();}}draft.claimed=true;run.round++;{const info=(choice.gold?GOLD_CARDS:perks).find(c=>c[0]===choice.id);pilotRecap(choice.gold?'gold':'pick','選択：'+(info?.[1]||choice.id),choice.gold?'永続強化を獲得':(info?.[2]||''),[],2.1);}if(choice.gold){let card=GOLD_CARDS.find(c=>c[0]===choice.id);panel('<div class="feyebrow">ETERNAL RELIC · SAVED</div><h2>永続強化を獲得！</h2><div class="flegacy flegacy-award"><span class="frelicsigil" aria-hidden="true">✦</span><b>'+card[1]+'</b><small>'+effectText(card[2])+'</small></div><p class="fmuted">保存済み · 次の戦いから有効。新しいカップ・次回起動にも引き継ぎます。<br>永続図鑑 '+goldOwned.size+' / '+GOLD_CARDS.length+'</p><button class="fgold" id="fgcontinue">次の戦いへ</button>');pilotPage='award';let continued=false;bind('fgcontinue',()=>{if(continued)return;continued=true;advanceRewardRound();});}else advanceRewardRound();}
+function cards(){if(!run.draft||run.draft.round!==run.round)run.draft=makeDraft();let d=run.draft;if(d.options.some(o=>o.gold))stopPilot('gold');panel('<div class="feyebrow">'+perks.length+' CUP PERKS · '+GOLD_CARDS.length+' ETERNAL RELICS</div><h2>'+ (pilotGold?'金カード出現！':'強化を選択')+'</h2><p class="fmuted">'+(d.options.some(o=>o.gold)?'金のカードを取得':'１枚選択')+'　·　金 '+chanceText(d.chance)+'</p><div class="fbuildgrid">'+d.options.map((o,i)=>{let u=(o.gold?GOLD_CARDS:perks).find(c=>c[0]===o.id),owned=o.gold&&goldOwned.has(o.id);return '<button class="fcard '+(o.gold?'flegacy':'')+'" id="fc'+i+'" '+(owned?'disabled':'')+'>'+(o.gold?'<span class="frelicbadge">✦ 伝説 · 永続</span><span class="frelicsigil" aria-hidden="true">✦</span>':'')+u[1]+(o.gold?'':perkLimit(o.id)>1?' Lv.'+((run.up[o.id]||0)+1):'')+'<small>'+(o.gold?effectText(u[2]):u[2])+'</small>'+(o.gold?'<small class="frelicfooter">'+(owned?'取得済み':'タップで永続取得')+'</small>':'')+'</button>';}).join('')+'</div><p class="fmuted" role="status">'+(d.error||'')+'</p>');d.options.forEach((o,i)=>bind('fc'+i,()=>chooseCard(d,i)));pilotPage='cards';if(pilot)pilotRecap('cards','次の強化を選択中','CPUが3枚から判断します',d.options.map(o=>(o.gold?GOLD_CARDS:perks).find(u=>u[0]===o.id)?.[1]||o.id),2.8);}
 function goldBook(back=lobby,page=0,ownedOnly=false){
  let cards=ownedOnly?GOLD_CARDS.filter(c=>goldOwned.has(c[0])):GOLD_CARDS,pages=Math.max(1,Math.ceil(cards.length/4));page=clamp(page,0,pages-1);
  const enabled=goldOwned.size-[...goldDisabled].filter(id=>goldOwned.has(id)).length;
  panel('<div class="feyebrow">ETERNAL · '+enabled+' ON / '+goldOwned.size+' OWNED</div><h2>永続の星宝 <small>'+ (page+1)+' / '+pages+'</small></h2><div class="fbookgrid fcollection">'+
  cards.slice(page*4,page*4+4).map(([id,name,stats])=>{let has=goldOwned.has(id),on=has&&!goldDisabled.has(id);return '<div class="'+(has?'flegacy':'freliclocked')+'"><b>'+(has?'✦ '+name:'◇ 未発見')+'</b><small>'+(has?effectText(stats):'未取得')+'</small>'+(has?'<button id="gt_'+id+'" class="'+(on?'fgold':'')+'" aria-pressed="'+on+'" style="width:100%;margin-top:8px">'+(on?'ON · タップでOFF':'OFF · タップでON')+'</button>':'')+'</div>';}).join('')+
- '</div><div class="frow"><button id="fgback">戻る</button><button id="fgfilter">'+(ownedOnly?'全50種':'取得済み')+'</button></div><div class="frow"><button id="fgallOn">全てON</button><button id="fgallOff">全てOFF</button></div><div class="frow"><button id="fgprev" '+(!page?'disabled':'')+'>前へ</button><button id="fgnext" '+(page===pages-1?'disabled':'')+'>次へ</button></div>');
+ '</div><div class="frow"><button id="fgback">戻る</button><button id="fgfilter">'+(ownedOnly?'全'+GOLD_CARDS.length+'種':'取得済み')+'</button></div><div class="frow"><button id="fgallOn">全てON</button><button id="fgallOff">全てOFF</button></div><div class="frow"><button id="fgprev" '+(!page?'disabled':'')+'>前へ</button><button id="fgnext" '+(page===pages-1?'disabled':'')+'>次へ</button></div>');
  for(const [id] of cards.slice(page*4,page*4+4))if(goldOwned.has(id))bind('gt_'+id,()=>{setGoldEnabled(id,goldDisabled.has(id));goldBook(back,page,ownedOnly);});
  bind('fgallOn',()=>{goldDisabled.clear();persistGoldDisabled();rebuildGold();goldBook(back,page,ownedOnly);});
  bind('fgallOff',()=>{for(const id of goldOwned)goldDisabled.add(id);persistGoldDisabled();rebuildGold();goldBook(back,page,ownedOnly);});
@@ -4441,7 +4510,7 @@ function syncPilotButton(){if(!root)return;let b=$f('fpilot');if(!b)return;b.tex
 function stopPilot(reason='manual'){if(pilot)auto=pilotPriorAuto;pilot=false;pilotWait=0;pilotToken=null;pilotVector=[0,0];pilotGold=reason==='gold';pilotRecapUntil=0;$f('fpilotRecap')?.classList.remove('fshow');clearSteer();brake=false;if(controlled())controlled().queued=false;syncPilotButton();}
 function togglePilot(){if(pilot){stopPilot();return;}if(pendingGold()){stopPilot('gold');return;}pilotPriorAuto=auto;auto=true;pilot=true;if(s?.actors?.[0])guardStop(s.actors[0]);pilotGold=false;pilotWait=0;pilotToken=null;pilotRecapUntil=0;clearSteer();brake=false;if(!s||!run)start('normal');else if(paused)togglePause();syncPilotButton();}
 function tickPilot(dt){if(!pilot||paused||document.hidden)return;if(pendingGold()){stopPilot('gold');return;}if(screen!=='panel'){pilotWait=0;pilotToken=null;return;}if(!['results','cards','award'].includes(pilotPage))return;let token=pilotPage==='cards'?run.draft:s;if(pilotToken!==token){pilotToken=token;pilotWait=0;}pilotWait+=dt;let delay=pilotPage==='results'?3.3:pilotPage==='cards'?3.0:1.4;if(pilotWait<delay)return;pilotWait=0;pilotToken=null;if(pilotPage==='results'){if(run.round<5||run.difficulty==='normal'&&run.lastRoundWon)cards();else start(run.difficulty,run.forceRaid);}else if(pilotPage==='award')advanceRewardRound();else{let d=run.draft;if(!d||d.claimed||d.round!==run.round)return;if(d.options.some(o=>o.gold)){stopPilot('gold');return;}let choices=d.options.map((o,i)=>({i,score:pilotCardScore(o.id)}));choices.sort((a,b)=>b.score-a.score);if(choices.length)chooseCard(d,choices[0].i);}}
-function pilotCardScore(id){let bundle=BUNDLES.find(b=>b[0]===id),stats=bundle?bundle[2]:{[id]:1},weight={gasSaver:4.2,gasSeek:3.5,airRescue:4.6,jumpKick:4.8,fracture:4.3,cut:3.8,double:6,hop:2.8,phoenix:6,feather:5,anchor:4,hop:4,linger:4,shield:3,shieldRegen:5,spiritCall:4,spiritHp:3,bond:5,force:3,air:3,boost:1.8,cleanse:4,hitCleanse:4,spiritPower:3,bossArmor:2,bossMove:2};return Object.entries(stats).reduce((v,[k,n])=>v+(singlePerks.has(k)&&lv({id:0},k)>=1?0:(weight[k]||2)*n/(1+lv({id:0},k)*.5)),0)+Math.random()*.8;}
+function pilotCardScore(id){let bundle=BUNDLES.find(b=>b[0]===id),stats=bundle?bundle[2]:{[id]:1},weight={guardBattery:4.6,guardRecovery:4.4,guardTiming:4.6,missileDrive:4.2,missileScout:3.9,crystalRadar:4.1,crystalPulse:4.0,miniOverdrive:4.4,miniHull:4.2,shadowParry:3.8,bossTempo:4.1,bossShock:4.1,gasSaver:3.4,gasSeek:3.1,airRescue:3.4,jumpKick:3.5,fracture:3.6,cut:2.7,double:4.2,hop:3.5,phoenix:5.2,feather:4,anchor:4.5,linger:3.8,shield:4,shieldRegen:4.4,spiritCall:3,spiritHp:3.4,bond:3.3,force:4,air:3,boost:3.4,cleanse:4,hitCleanse:4,spiritPower:3.7,bossArmor:2.6,bossMove:2.6};return cardFit(id)*Object.entries(stats).reduce((v,[k,n])=>v+(singlePerks.has(k)&&lv({id:0},k)>=1?0:(weight[k]||2.8)*n/(1+lv({id:0},k)*.45)),0)+Math.random()*.5;}
 /* v92: one fog-of-war model across both sides. The giant alone is a public
    illuminated target for every challenger, independent of distance. */
 function cpuWorldLight(x,y){
@@ -4460,6 +4529,7 @@ function cpuWorldLight(x,y){
 }
 function cpuCanSee(a,b){
  if(!a||!b?.alive||b.spectator||b.shadow&&s.t<(b.phaseUntil||0))return false;
+ if(s?.perkMissileReveal?.[a.id]?.[b.id]>s.t)return true;
  let d=distanceTo(a,b);
  // The giant is a luminous beacon: every raider knows its actual position on this map.
  if(s?.raid&&b.boss&&b===s.boss&&!a.boss)return true;
@@ -4522,7 +4592,7 @@ function floeActorVisible(target){
  const viewer=controlled();
  if(!viewer||target===viewer||friendly(viewer,target))return true;
  if(cpuCanSee(viewer,target))return true;
- if(s.missileReveals?.[String(target.id)]>s.t)return true;
+ if(s.missileReveals?.[String(target.id)]>s.t||s.perkMissileReveal?.[viewer.id]?.[target.id]>s.t)return true;
  // Human-only display advantage; the actual enemy and auto-pilot AI still use cpuCanSee.
  if(!pilot&&!s.playerBoss&&viewer.id===0&&!(target.shadow&&s.t<(target.phaseUntil||0))){
   const d=distanceTo(viewer,target),light=cpuWorldLight(target.x,target.y);
@@ -4726,11 +4796,13 @@ function pilotChase(a){
 // v115: charged, held bubble shield. The first hit always has a real cost;
 // early guarding also drains charge before impact. Both teams use the same rules.
 const GUARD_MAX=100,GUARD_DRAIN=12.5,GUARD_REGEN=20;
+function guardCapacity(a){return GUARD_MAX+20*lv(a,'guardBattery');}
+function guardRegenRate(a){let nearby=s?.shadow?.alive&&s.shadow.leaderIds?.includes(a.id)&&distanceTo(a,s.shadow)<5;return GUARD_REGEN*(1+.30*lv(a,'guardRecovery')+(nearby?.4*lv(a,'shadowParry'):0));}
 function guardReady(a){return !!(a?.alive&&!a.boss&&!a.guard&&!a.spectator&&(a.air||0)<=0&&(a.toss||0)<=0&&(a.float||0)<=0&&!a.teeter&&s?.t>=(a.guardBreakUntil||0)&&(a.guardMeter??GUARD_MAX)>=12);}
 function guardBegin(a,byCPU=false){
  if(!guardReady(a)||a.guardActive)return false;
  a.guardActive=true;a.guardStart=s.t;a.guardHeldByCPU=byCPU;
- a.guardMeter??=GUARD_MAX;
+ a.guardMeter??=guardCapacity(a);
  a.guardRegenAt=s.t+1.3;
  a.queued=false;
  if(a.id===0&&!byCPU)fbSfx('pickup');
@@ -4739,19 +4811,19 @@ function guardBegin(a,byCPU=false){
 function guardStop(a,delay=1.15){if(!a)return;a.guardActive=false;a.guardHeldByCPU=false;a.guardRegenAt=Math.max(a.guardRegenAt||0,(s?.t||0)+delay);}
 function tickGuard(a,dt){
  if(!a||a.guard||a.boss||a.spectator)return;
- a.guardMeter??=GUARD_MAX;
+ a.guardMeter??=guardCapacity(a);
  if(a.guardActive&&(!a.alive||a.air>0||a.toss>0||a.float>0||a.teeter||a.guardMeter<=0))guardStop(a);
  if(a.guardActive){a.guardMeter=Math.max(0,a.guardMeter-GUARD_DRAIN*dt);a.guardRegenAt=s.t+1.4;
   if(a.guardHeldByCPU&&s.t>=(a.guardAIUntil||0))guardStop(a);
   if(a.guardMeter<=0){guardStop(a,2.8);a.guardBreakUntil=s.t+2.8;}
- }else if(s.t>=(a.guardRegenAt||0))a.guardMeter=Math.min(GUARD_MAX,a.guardMeter+GUARD_REGEN*dt);
+ }else if(s.t>=(a.guardRegenAt||0))a.guardMeter=Math.min(guardCapacity(a),a.guardMeter+guardRegenRate(a)*dt);
 }
 function guardAbsorbHit(b,a,c,p){
  if(!b?.guardActive||!guardReady(b))return false;
  let held=Math.max(0,s.t-(b.guardStart||s.t));
  // Late blocks: >=9 charge + a modest sustain bill. Early blocks have paid the
  // passive drain already and lose more upon hit, yet remain usable defensively.
- let cost=9+Math.min(30,held*13)+(c.bossId?6:0);
+ let cost=(9+Math.min(30,held*13)+(c.bossId?6:0))*Math.max(.55,1-.22*lv(b,'guardTiming'));
  if((b.guardMeter||0)<cost){
   b.guardMeter=0;guardStop(b,2.8);b.guardBreakUntil=s.t+2.8;
   s.fx.push({x:b.x,y:b.y,victim:b.id,at:s.t,dx:0,dy:-1,until:s.t+.55,color:'#ffd0a4',label:'BREAK'});
@@ -4760,8 +4832,8 @@ function guardAbsorbHit(b,a,c,p){
  b.guardMeter=Math.max(0,b.guardMeter-cost);b.guardRegenAt=s.t+1.8;
  if(!c.hits)c.hits={};c.hits[b.id]=(c.hits[b.id]||0)+1;
  b.hitGrace=Math.max(b.hitGrace||0,s.t+.16);
- s.fx.push({x:b.x,y:b.y,victim:b.id,at:s.t,dx:0,dy:-1,until:s.t+.5,color:'#9af5ff',label:held<=.20?'JUST':'BLOCK'});
- if(b.id===0){s.hitNotice={text:held<=.20?'ジャストガード！':'ガード成功',until:s.t+.7,guard:true};fbSfx('pickup');}
+ s.fx.push({x:b.x,y:b.y,victim:b.id,at:s.t,dx:0,dy:-1,until:s.t+.5,color:'#9af5ff',label:held<=.20+.08*lv(b,'guardTiming')?'JUST':'BLOCK'});
+ if(b.id===0){s.hitNotice={text:held<=.20+.08*lv(b,'guardTiming')?'ジャストガード！':'ガード成功',until:s.t+.7,guard:true};fbSfx('pickup');}
  if(b.guardMeter<10){guardStop(b,2.8);b.guardBreakUntil=s.t+2.8;}
  return true;
 }
@@ -4797,7 +4869,7 @@ function cpuGuardDecision(a){
 }
 function drawGuardBubble(a,x,y,h=0){
  if(!a?.guardActive)return;
- const power=Math.max(0,(a.guardMeter||0)/GUARD_MAX),radius=11+17*Math.sqrt(power),cy=y-5-h;
+ const power=Math.max(0,(a.guardMeter||0)/guardCapacity(a)),radius=11+17*Math.sqrt(power),cy=y-5-h;
  g.save();
  const glow=g.createRadialGradient(x,cy,4,x,cy,radius);
  glow.addColorStop(0,'rgba(135,244,255,.065)');glow.addColorStop(.68,'rgba(70,172,236,.17)');glow.addColorStop(1,'rgba(140,234,255,.28)');
@@ -4810,7 +4882,7 @@ function drawGuardBubble(a,x,y,h=0){
 }
 function syncGuardButton(){
  const el=$f('fguard'),a=s?.actors?.[0];if(!el)return;
- const charge=a?Math.max(0,Math.min(100,a.guardMeter??GUARD_MAX)):GUARD_MAX;
+ const charge=a?Math.max(0,Math.min(100,100*(a.guardMeter??guardCapacity(a))/guardCapacity(a))):GUARD_MAX;
  el.style.setProperty('--shield-fill',charge+'%');
  el.classList.toggle('fguardActive',!!a?.guardActive);
  el.classList.toggle('fguardExhausted',!!a&&s?.t<(a.guardBreakUntil||0));
@@ -5021,12 +5093,29 @@ let matchTimes={normal:DURATION,raid:RAID_DURATION};
 try{const t=JSON.parse(localStorage.getItem(DURATION_KEY)||'{}');for(let k of ['normal','raid'])if(DURATION_CHOICES.includes(t[k]))matchTimes[k]=t[k];}catch(_){}
 function setMatchDuration(k,v){let n=Number(v);if(!DURATION_CHOICES.includes(n)||!['normal','raid'].includes(k))return;matchTimes[k]=n;try{localStorage.setItem(DURATION_KEY,JSON.stringify(matchTimes));}catch(_){saveOK=false;}}
 function roundLength(){return s?.duration||(s?.raid?matchTimes.raid:matchTimes.normal);}
+
+// Losing is painful but not always a full reset. At most 2-3 card levels survive;
+// gold relics remain unaffected and the first-place streak always resets.
+function retainCardsAfterLoss(rank=4,rng=Math.random){
+ const levels=[];
+ for(const [id,n] of Object.entries(run?.up||{}))if(perks.some(p=>p[0]===id))for(let i=0;i<Math.min(5,Math.floor(n));i++)levels.push(id);
+ const chance=rank===2?.64:rank===3?.47:.29,max=rank===2?3:2;
+ const kept={};
+ if(levels.length&&rng()<chance){
+  const shuffledLevels=shuffled(levels);
+  for(const id of shuffledLevels){if(Object.values(kept).reduce((a,b)=>a+b,0)>=max)break;if((kept[id]||0)<perkLimit(id))kept[id]=(kept[id]||0)+1;}
+ }
+ run.up=kept;record.streakUp={...kept};rebuildCupStats();
+ run.lastKeepNote=Object.keys(kept).length?'敗北後も残った強化：'+Object.entries(kept).map(([k,n])=>(perks.find(p=>p[0]===k)?.[1]||k)+(n>1?' ×'+n:'')).join('・'):'通常強化は失われた';
+ return kept;
+}
+
 function goldChance(){let seconds=s?.duration||matchTimes.normal,streak=clamp(record.goldChargeStreak??record.rankStreak??0,0,25);return Math.min(.038,GOLD_RATE+Math.min(.0028,Math.max(0,seconds-90)/30*.00035)+streak*.0012);}
 function chanceText(rate=goldChance()){return (rate*100).toFixed(2)+'%';}
 function showFloeSettings(back=lobby){panel('<div class="feyebrow">MATCH OPTIONS</div><h2>試合時間の設定</h2><p class="fmuted">90〜300秒 · 次の試合から反映</p>'+[['normal','通常戦'],['raid','巨獣戦']].map(([k,label])=>'<label class="fmuted" for="ftime_'+k+'">'+label+'</label><select id="ftime_'+k+'" style="display:block;margin:5px 0 12px;width:100%;font-size:16px">'+DURATION_CHOICES.map(t=>'<option value="'+t+'" '+(matchTimes[k]===t?'selected':'')+'>'+t+' 秒</option>').join('')+'</select>').join('')+'<p class="fmuted">金カード '+chanceText()+'　·　連続１位 '+(record.rankStreak||0)+'回</p><div class="frow"><button class="fgold" id="ftimeBack">戻る</button></div>');for(let k of ['normal','raid'])$f('ftime_'+k).onchange=e=>setMatchDuration(k,e.target.value);bind('ftimeBack',back);}
 
 
-try{Object.assign(record,JSON.parse(localStorage.getItem('frostbound.floe.v5')||'{}'));record.rankStreak=clamp(Number(record.rankStreak)||0,0,999);record.goldChargeStreak=clamp(Number(record.goldChargeStreak??record.rankStreak)||0,0,100);if(!record.streakUp||typeof record.streakUp!=='object'||Array.isArray(record.streakUp))record.streakUp={};record.streakUp=Object.fromEntries(Object.entries(record.streakUp).filter(([k,v])=>perks.some(p=>p[0]===k)&&Number.isInteger(v)&&v>0&&v<=perkLimit(k)));if(record.rankStreak===0)record.streakUp={};}catch(e){saveOK=false;}
+try{Object.assign(record,JSON.parse(localStorage.getItem('frostbound.floe.v5')||'{}'));record.rankStreak=clamp(Number(record.rankStreak)||0,0,999);record.goldChargeStreak=clamp(Number(record.goldChargeStreak??record.rankStreak)||0,0,100);if(!record.streakUp||typeof record.streakUp!=='object'||Array.isArray(record.streakUp))record.streakUp={};record.streakUp=Object.fromEntries(Object.entries(record.streakUp).filter(([k,v])=>perks.some(p=>p[0]===k)&&Number.isInteger(v)&&v>0&&v<=perkLimit(k)));/* Loss retention preserves a small build even when rankStreak is reset. */}catch(e){saveOK=false;}
 loadGuardianRoster();
 const $f=id=>document.getElementById(id),rnd=(a,b)=>a+Math.random()*(b-a),pick=a=>a[Math.floor(Math.random()*a.length)],inside=(x,y)=>x>=0&&y>=0&&x<N&&y<N,cell=(x,y)=>Math.floor(y)*N+Math.floor(x),clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 function shuffled(a){a=[...a];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
@@ -5097,13 +5186,17 @@ function spawnHomingVolley(a,plan=null){
  // Bounded concurrent rocket count: avoids an unbounded cloud when cooldowns halve.
  if(s.homingMissiles.length+spec.count>28)return false;
  const targetDistance=Math.hypot(target.x-a.x,target.y-a.y);
- const lifetime=Math.max(spec.life,Math.min(32,targetDistance/Math.max(1.9,spec.speed)*1.28+2.8));
+ const drive=1+.13*lv(a,'missileDrive'),lifetime=Math.max(spec.life,Math.min(32,targetDistance/Math.max(1.9,spec.speed*drive)*1.28+2.8));
  const launchPower=a.weapon.power*(1+(a.powerBuff>0?.7:0)+.6*lv(a,'force')+.4*lv(a,'keeper'));
  const aim=Math.atan2((target.y-a.y)||a.aimY||0,(target.x-a.x)||a.aimX||1),side=[-Math.sin(aim),Math.cos(aim)],palette=missilePalette(a.weapon.id);
  for(let i=0;i<spec.count;i++){
   let t=i-(spec.count-1)/2,spread=spec.spread||0,ang=aim+t*spread*0.42+(i%2?1:-1)*spread*0.08;
   let ox=a.x+side[0]*t*.35,oy=a.y+side[1]*t*.35;
-  s.homingMissiles.push({id:++s.seq,weaponId:a.weapon.id,x:ox,y:oy,angle:ang,target:target.id,owner:a.id,sourceId:a.id,life:lifetime,left:lifetime,age:0,trail:[],launchPower,launchDistance:targetDistance,speed:spec.speed,turn:spec.turn,blast:spec.blast,powerMult:spec.power,terrain:spec.terrain||0,arm:spec.arm||.25,reacquire:spec.reacquire!==false,palette,exploded:false,label:spec.label,behavior:spec.behavior||'',pull:!!spec.pull,slow:spec.slow||0,secondary:spec.secondary||0,crackMarks:0,phaseDone:false,side:t||1,baseSpeed:spec.speed});
+  s.homingMissiles.push({id:++s.seq,weaponId:a.weapon.id,x:ox,y:oy,angle:ang,target:target.id,owner:a.id,sourceId:a.id,life:lifetime,left:lifetime,age:0,trail:[],launchPower,launchDistance:targetDistance,speed:spec.speed*drive,turn:spec.turn*(1+.08*lv(a,'missileDrive')),blast:spec.blast,powerMult:spec.power,terrain:spec.terrain||0,arm:spec.arm||.25,reacquire:spec.reacquire!==false,palette,exploded:false,label:spec.label,behavior:spec.behavior||'',pull:!!spec.pull,slow:spec.slow||0,secondary:spec.secondary||0,crackMarks:0,phaseDone:false,side:t||1,baseSpeed:spec.speed*drive});
+ }
+ if(lv(a,'missileScout')&&target.alive&&!target.crystal){
+  s.perkMissileReveal??={};s.perkMissileReveal[a.id]??={};
+  s.perkMissileReveal[a.id][target.id]=s.t+2.5;
  }
  if(target.crystal||cpuCanSee(a,target)) {a.lockId=target.id;a.lockUntil=s.t+1.8;}
  return true;
@@ -5440,15 +5533,15 @@ function summonMiniGiant(a,saved=null){
  // Egg ownership is exclusive. Remove all live companions, preserving no roster.
  for(const v of s.summons.filter(v=>v.owner===a.id)){v.alive=false;v.route=[];}
  if(a.id===0){guardianRoster=[];saveGuardianRoster();}
- const baseHp=saved?.maxHp||9,spot=spots[0],uid=saved?.uid||('mg-'+Date.now().toString(36)+'-'+(++s.seq));
+ const baseHp=saved?.maxHp||9,bonusHp=2*lv(a,'spiritHp')+2*lv(a,'miniHull')+(lv(a,'bond')?1:0),spot=spots[0],uid=saved?.uid||('mg-'+Date.now().toString(36)+'-'+(++s.seq));
  const designs=[1,2,3,4,5,6,7];const inheritedDesign=designs.includes(saved?.design)?saved.design:designs[Math.floor(Math.random()*designs.length)];
  const v={id:'mg'+(++s.seq),owner:a.id,guard:true,miniBoss:true,miniUID:a.id===0?uid:null,
   giantDesign:inheritedDesign,giantCrest:saved?.crest??Math.floor(Math.random()*3),
   miniSkills:skills,movement:'land',combatStyle:'heavy',spiritName:'ミニ巨獣',species:4,size:1,
   hue:saved?.hue??({1:225,2:177,3:277,4:193,5:32,6:235,7:270}[inheritedDesign]||207),saturation:63,accent:38,ornament:1,pattern:0,phase:saved?.phase??rnd(0,6.28),
-  speed:2.75,maxHp:baseHp,hp:baseHp,baseHp,knockBonus:saved?.knockBonus||0,survived:saved?.survived||0,
+  speed:2.75,maxHp:baseHp+bonusHp,hp:baseHp+bonusHp,baseHp,knockBonus:saved?.knockBonus||0,survived:saved?.survived||0,
   weapon:makeWeapon('nova'),wingMax:0,wingTime:0,x:spot.x,y:spot.y,alive:true,kind:4,think:.1,dx:0,dy:0,vx:0,vy:0,
-  trail:[],kx:0,ky:0,gun:1.1,route:[],float:0,hitCount:0,shield:1,land:0,slow:0,mark:0,lastFire:-100,
+  trail:[],kx:0,ky:0,gun:1.1,route:[],float:0,hitCount:0,shield:1+(lv(a,'summonShield')?1:0),land:0,slow:0,mark:0,lastFire:-100,
   miniNextSkill:0,miniShotIndex:0,miniSkillCD:{},miniSafeAt:0,miniBuffs:{speed:0,power:0,armor:0},miniBarrier:0,miniBuffGlowUntil:0};
  s.summons.push(v);
  for(let i=0;i<departing.length;i++)miniGiantReward(a,'transmute');
@@ -5458,7 +5551,7 @@ function summonMiniGiant(a,saved=null){
 }
 // Match-only rewards. Never included in miniGiantFromUnit() or localStorage.
 function activeMiniGiant(owner){return s?.summons?.find(v=>v.alive&&v.miniBoss&&v.owner===owner?.id)||null;}
-function miniMoveSpeed(v){return (v.speed||GUARD_SPEED)*(v.miniBoss?1+.12*Math.min(4,v.miniBuffs?.speed||0):1);}
+function miniMoveSpeed(v){return (v.speed||GUARD_SPEED)*(v.miniBoss?1+.12*Math.min(4,v.miniBuffs?.speed||0)+.04*lv(s.actors[v.owner],'spiritWing'):1);}
 function miniGiantReward(owner,reason='spirit'){
  const v=activeMiniGiant(owner);if(!v)return false;
  v.miniBuffs??={speed:0,power:0,armor:0};v.miniBarrier??=0;
@@ -5506,9 +5599,9 @@ function miniGiantAttack(v,target){
  }
  pulses=pulses.filter(p=>p.cells.size);if(!pulses.length)return false;
  s.casts.push({id:++s.seq,owner:v.owner,summonId:v.id,miniGiant:true,w:{id:'nova',name:'小巨獣・'+(BOSS_SKILLS.find(b=>b[0]===id)?.[1]||id)},pulses,dx,dy,
-  power:Math.min(112,77+(v.survived||0)*2.1)*(1+(v.knockBonus||0))*(1+.18*Math.min(4,v.miniBuffs?.power||0)),hits:{},created:s.t,originX:v.x,originY:v.y,x:v.x,y:v.y});
- v.gun=Math.max(1.6,2.45-.08*Math.min(8,v.survived||0))+Math.random()*.5;
- v.miniSkillCD[id]=s.t+Math.max(4.3,BOSS_SKILLS.find(b=>b[0]===id)?.[2]*.42||5);
+  power:Math.min(112,77+(v.survived||0)*2.1)*(1+(v.knockBonus||0))*(1+.18*Math.min(4,v.miniBuffs?.power||0))*(1+.4*lv(s.actors[v.owner],'spiritPower')+.16*lv(s.actors[v.owner],'miniOverdrive')),hits:{},created:s.t,originX:v.x,originY:v.y,x:v.x,y:v.y});
+ v.gun=(Math.max(1.6,2.45-.08*Math.min(8,v.survived||0))+Math.random()*.5)*Math.max(.55,1-.2*lv(s.actors[v.owner],'spiritTempo')-.12*lv(s.actors[v.owner],'miniOverdrive'));
+ v.miniSkillCD[id]=s.t+Math.max(3.0,(BOSS_SKILLS.find(b=>b[0]===id)?.[2]*.42||5)*(1-.12*lv(s.actors[v.owner],'miniOverdrive')));
  v.miniShotIndex=(v.miniShotIndex||0)+1;v.lastFire=s.t;return true;
 }
 function drawMiniGiantVariantFace(design,body,light,dark,gold,time){
@@ -5797,7 +5890,7 @@ function bossDisk(x,y,r,inner=0,gaps=0,phase=0){let cells=new Set();for(let yy=M
 function bossRay(x,y,dx,dy,len,width=.5,start=0){let cells=new Set();for(let u=start;u<=len;u+=.23)for(let v=-width;v<=width;v+=.23){let px=x+dx*u-dy*v,py=y+dy*u+dx*v;if(inside(px,py))cells.add(cell(px,py));}return cells;}
 function bossPulse(cells,delay,cx,cy,extra={}){return {cells,at:s.t+delay,mult:1,cx,cy,done:false,...extra};}
 const BOSS_DAMAGE_SCALE=.5; // Giant knockback power only; attack areas and cooldowns remain intact.
-function bossCast(b,id,pulses,force=18,priority=false){pulses=pulses.filter(p=>p.cells.size);if(!pulses.length)return false;if(s.casts.length>=16){if(!priority)return false;let index=s.casts.findIndex(c=>c.bossId);if(index<0)index=0;s.casts.splice(index,1);}let [dx,dy]=bossAim(b),name=BOSS_SKILLS.find(c=>c[0]===id)?.[1]||'大地震',weapon={leap:'nova',rush:'iai',beam:'laser',trident:'prism',fan:'fan',meteor:'meteor',ring:'ring',cyclone:'spiral',vortex:'vortex',mines:'mine',reflect:'ricochet',chain:'chain',roar:'nova'}[id]||'nova';s.casts.push({id:++s.seq,owner:b.id,bossId:b.id,skill:id,w:{id:weapon,name},pulses,dx,dy,power:force*bossPower(b)*BOSS_DAMAGE_SCALE,hits:{},created:s.t,originX:b.x,originY:b.y,x:b.x,y:b.y});return true;}
+function bossCast(b,id,pulses,force=18,priority=false){pulses=pulses.filter(p=>p.cells.size);if(!pulses.length)return false;if(s.casts.length>=16){if(!priority)return false;let index=s.casts.findIndex(c=>c.bossId);if(index<0)index=0;s.casts.splice(index,1);}let [dx,dy]=bossAim(b),name=BOSS_SKILLS.find(c=>c[0]===id)?.[1]||'大地震',weapon={leap:'nova',rush:'iai',beam:'laser',trident:'prism',fan:'fan',meteor:'meteor',ring:'ring',cyclone:'spiral',vortex:'vortex',mines:'mine',reflect:'ricochet',chain:'chain',roar:'nova'}[id]||'nova';s.casts.push({id:++s.seq,owner:b.id,bossId:b.id,skill:id,w:{id:weapon,name},pulses,dx,dy,power:force*bossPower(b)*BOSS_DAMAGE_SCALE*(1+.15*lv(b,'bossShock')),hits:{},created:s.t,originX:b.x,originY:b.y,x:b.x,y:b.y});return true;}
 function quake(b){let pulses=[];for(let i=0;i<3;i++)pulses.push(bossPulse(bossDisk(b.x,b.y,3.6+i*2.7,i?2.6+i*2.7:0,6,.12),.3+i*.35,b.x,b.y));bossCast(b,'leap',pulses,21,true);s.fx.push({x:b.x,y:b.y,at:s.t,victim:b.id,dx:0,dy:-1,until:s.t+.65,color:'#ffe099',label:'QUAKE!'});say('大地震！ ３段の衝撃波');}
 function useBossSkill(id,byAI=false){let b=s?.boss,info=BOSS_SKILLS.find(k=>k[0]===id);if(!info||!s?.raid||!b?.alive||screen!=='play'||paused||s.count>0||(!b.controlled&&!byAI))return false;b.skillCD??={};if((b.skillCD[id]||0)>0){say(info[1]+' あと'+b.skillCD[id].toFixed(1)+'秒');return false;}if(s.t<(b.skillLock||0)){if(b.controlled&&!byAI){b.manualSkillQueue=id;b.manualSkillAt=s.t;}return false;}if(id==='leap'&&b.leap||id==='rush'&&b.leap){say('着地してから発動できます');return false;}if(b.controlled&&!byAI){const manualDirection=readStick();b.manualAimingUntil=(manualDirection[0]||manualDirection[1])?s.t+.35:0;}let [dx,dy]=bossAim(b),angle=Math.atan2(dy,dx),foes=(byAI||pilot||auto?cpuVisualContacts(b):opponents(b)).filter(a=>(a.float||0)<=0&&(a.inv||0)<=0).sort((a,c)=>bossEnemyOrder(b,a,c)),pulses=[],force=18;
 if(id==='leap'){b.leap={left:2.5,total:2.5,dx,dy};b.vx=dx*3.8;b.vy=dy*3.8;b.windup=0;b.stride=0;}
@@ -5818,7 +5911,7 @@ else if(id==='chain'){if(!foes.length){say('雷を落とせる敵がまだいま
 else if(id==='roar')pulses.push(bossPulse(bossDisk(b.x,b.y,6,0,6,0),.55,b.x,b.y));
 if(pulses.length&&!bossCast(b,id,pulses,force)){say('攻撃が重なっています。少し待って再発動');return false;}
 if(id==='rush'){b.stride=1.05;b.rushDir=[dx,dy];}if(id==='roar'){let cleared=0;for(let c of s.casts)if(!c.bossId&&c.pulses.some(p=>!p.done&&Math.hypot(p.cx-b.x,p.cy-b.y)<6)&&cleared++<2)for(let p of c.pulses)p.done=true;}
-b.skillCD[id]=info[2];b.skillLock=s.t+.22;if(b.controlled&&!byAI){if(id==='leap')b.autoLeap=false;b.lastManualSkillAt=s.t;b.manualSkillQueue=null;if(b.autoSkillSchedule)b.autoSkillSchedule[id]=s.t+info[2]+.8;}if(id==='leap')b.cool=info[2];b.skillUsage??={};b.skillUsage[id]=(b.skillUsage[id]||0)+1;b.lastAIAbility=id;say((byAI?'巨獣：':'')+info[1]+'！ '+(id==='leap'?'空中で方向調整 → 着地で大地震':id==='missile'?'12秒追跡':'発動'));if(b.controlled){bossHud();fbSfx(id==='leap'?'jump':'attack');}return true;}
+b.skillCD[id]=info[2]*Math.max(.64,1-.12*lv(b,'bossTempo'));b.skillLock=s.t+.22;if(b.controlled&&!byAI){if(id==='leap')b.autoLeap=false;b.lastManualSkillAt=s.t;b.manualSkillQueue=null;if(b.autoSkillSchedule)b.autoSkillSchedule[id]=s.t+info[2]*Math.max(.64,1-.12*lv(b,'bossTempo'))+.8;}if(id==='leap')b.cool=b.skillCD[id];b.skillUsage??={};b.skillUsage[id]=(b.skillUsage[id]||0)+1;b.lastAIAbility=id;say((byAI?'巨獣：':'')+info[1]+'！ '+(id==='leap'?'空中で方向調整 → 着地で大地震':id==='missile'?'12秒追跡':'発動'));if(b.controlled){bossHud();fbSfx(id==='leap'?'jump':'attack');}return true;}
 // Auto-attack for the giant the player is steering. Independent of the full CPU pilot:
 // every owned technique gets its own staggered firing window, while manual buttons
 // always work and take priority over the automatic queue.
@@ -5913,7 +6006,7 @@ function setupBossControls(){root.classList.toggle('fbossmode',!!s?.playerBoss);
 function bossBook(page=0){let entries=BOSS_SKILLS.slice(page*4,page*4+4);panel('<div class="feyebrow">GIANT ARSENAL · 16 TECHNIQUES</div><h2>巨獣の技 '+(page+1)+' / 4</h2><div class="fbookgrid">'+entries.map(c=>'<div><b>'+c[1]+' · '+c[3]+'</b><small>'+c[4]+'<br>再使用 '+c[2]+'秒</small></div>').join('')+'</div><div class="frow"><button id="fbbookprev" '+(!page?'disabled':'')+'>前へ</button><button id="fbbooknext" '+(page===3?'disabled':'')+'>次へ</button><button id="fbbookclose" class="fgold">戦闘へ戻る</button></div>');bind('fbbookprev',()=>bossBook(Math.max(0,page-1)));bind('fbbooknext',()=>bossBook(Math.min(3,page+1)));bind('fbbookclose',togglePause);}
 function updateBossButtons(){let b=s.boss;for(let [id,name,cd,key] of BOSS_SKILLS.slice(1)){let btn=$f('fbskill_'+id);if(!btn)continue;let left=b.skillCD?.[id]||0;btn.innerHTML=name+'<small>'+(left>0?left.toFixed(1)+'秒':key+' · READY')+'</small>';btn.classList.toggle('fcharging',left>0);btn.setAttribute('aria-disabled',String(left>0));}}
 
-function bossAttack(b){if(!b.alive||b.gun>0||s.casts.length>=16)return false;let target=cpuVisualContacts(b).filter(a=>a.float<=0).sort((a,c)=>bossEnemyOrder(b,a,c))[0];if(!target&&!b.controlled)return false;let angle=b.controlled&&!pilot&&(!auto||!target)||!target?Math.atan2(b.aimY??1,b.aimX??0):Math.atan2(target.y-b.y,target.x-b.x),dx=Math.cos(angle),dy=Math.sin(angle),side=[-dy,dx],cells=new Set(),start=bossRadius(b)-.3;for(let u=start;u<=start+4.5;u+=.25)for(let v=-1.05-(u-start)*.2;v<=1.05+(u-start)*.2;v+=.25){let x=b.x+dx*u+side[0]*v,y=b.y+dy*u+side[1]*v;if(inside(x,y))cells.add(cell(x,y));}let stomp=new Set();for(let p of footprint(b))for(let [ox,oy] of [[0,0],[1,0],[-1,0],[0,1],[0,-1]])if(inside(p.x+ox,p.y+oy))stomp.add(cell(p.x+ox,p.y+oy));let windup=1.25+b.size*.1;b.windup=windup;b.gun=7+b.size*.2;s.casts.push({id:++s.seq,owner:'boss',bossId:'boss',w:{id:'shears',name:'巨獣の重撃 ×'+Math.round(bossPower(b)*BOSS_DAMAGE_SCALE)},pulses:[{cells,at:s.t+windup,mult:1,cx:b.x,cy:b.y,done:false},{cells:stomp,at:s.t+windup,mult:1,cx:b.x,cy:b.y,done:false,onlyGuards:true}],dx,dy,power:32*bossPower(b)*BOSS_DAMAGE_SCALE,hits:{},created:s.t,originX:b.x,originY:b.y,x:b.x,y:b.y});say(b.controlled?'重撃！ 予告した方向へ振り下ろす':'巨獣の重撃！ 赤い予告の外へ');if(b.controlled)fbSfx('attack');return true;}
+function bossAttack(b){if(!b.alive||b.gun>0||s.casts.length>=16)return false;let target=cpuVisualContacts(b).filter(a=>a.float<=0).sort((a,c)=>bossEnemyOrder(b,a,c))[0];if(!target&&!b.controlled)return false;let angle=b.controlled&&!pilot&&(!auto||!target)||!target?Math.atan2(b.aimY??1,b.aimX??0):Math.atan2(target.y-b.y,target.x-b.x),dx=Math.cos(angle),dy=Math.sin(angle),side=[-dy,dx],cells=new Set(),start=bossRadius(b)-.3;for(let u=start;u<=start+4.5;u+=.25)for(let v=-1.05-(u-start)*.2;v<=1.05+(u-start)*.2;v+=.25){let x=b.x+dx*u+side[0]*v,y=b.y+dy*u+side[1]*v;if(inside(x,y))cells.add(cell(x,y));}let stomp=new Set();for(let p of footprint(b))for(let [ox,oy] of [[0,0],[1,0],[-1,0],[0,1],[0,-1]])if(inside(p.x+ox,p.y+oy))stomp.add(cell(p.x+ox,p.y+oy));let windup=1.25+b.size*.1;b.windup=windup;b.gun=7+b.size*.2;s.casts.push({id:++s.seq,owner:'boss',bossId:'boss',w:{id:'shears',name:'巨獣の重撃 ×'+Math.round(bossPower(b)*BOSS_DAMAGE_SCALE)},pulses:[{cells,at:s.t+windup,mult:1,cx:b.x,cy:b.y,done:false},{cells:stomp,at:s.t+windup,mult:1,cx:b.x,cy:b.y,done:false,onlyGuards:true}],dx,dy,power:32*bossPower(b)*BOSS_DAMAGE_SCALE*(1+.15*lv(b,'bossShock')),hits:{},created:s.t,originX:b.x,originY:b.y,x:b.x,y:b.y});say(b.controlled?'重撃！ 予告した方向へ振り下ろす':'巨獣の重撃！ 赤い予告の外へ');if(b.controlled)fbSfx('attack');return true;}
 
 function bossCorrectLeap(b,dt){
  if(!b?.leap||!(pilot&&b.controlled||!b.controlled||b.autoLeap))return;
@@ -5996,7 +6089,7 @@ g.translate(fx,fy);g.scale(k,k);let pulse=b.windup>0?Math.sin(s.t*25)*2:Math.sin
 drawGiantFaceDesign(b.design,b.crest,body,light,dark,gold,pulse,b.windup>0);g.restore();
 g.save();g.strokeStyle='#ffd793';g.lineWidth=1.5;g.setLineDash([5,4]);g.beginPath();for(let p of cells)for(let [dx,dy,e] of [[0,-1,[0,0,24,0]],[0,1,[0,24,24,24]],[-1,0,[0,0,0,24]],[1,0,[24,0,24,24]]])if(!occupied.has((p.x+dx)+','+(p.y+dy))){g.moveTo(p.x*S+e[0],p.y*S+e[1]);g.lineTo(p.x*S+e[2],p.y*S+e[3]);}g.stroke();g.restore();g.font='bold 12px sans-serif';g.fillStyle='#ffe5ac';g.textAlign='center';g.fillText((b.controlled?'YOU · ':'')+['覇王の鎧','獄角の魔獣','結晶の巨神','深淵の王'][b.design||0]+' · '+bossLabel(b)+' '+bossArea(b)+'マス',cx,sy-30-bossLift(b));}
 function drawRaidHud(){if(!s.raid||!s.boss)return;let b=s.boss,w=Math.min(W-20,420),y=H-HEADER-54;rect((W-w)/2,y,w,23,'#422e43e8');g.font='bold 10px sans-serif';g.textAlign='center';g.fillStyle='#ffe5b1';g.fillText((s.playerBoss?'巨獣操作 · '+roundLength()+'秒耐えろ！ 足場 ':'共闘 · 足場 ')+supportCount(b)+'/'+bossArea(b),W/2,y+15);}
-function finishRaid(){guardianRoundComplete();s.finish=true;let won=s.playerBoss?s.outcome==='timeout':s.outcome==='clear',points=run.difficulty==='practice'?0:won?100:25;run.points+=points;run.history.push(s.playerBoss?(won?'巨獣生存':'巨獣転落'):(won?'討伐':'未討伐'));run.lastRoundWon=won;if(run.difficulty!=='practice'){if(won){record.crowns++;record.rankStreak=Math.min(999,(record.rankStreak||0)+1);record.goldChargeStreak=Math.min(100,(record.goldChargeStreak||0)+1);record.streakUp={...run.up};}else{record.rankStreak=0;record.goldChargeStreak=0;record.streakUp={};run.up={};rebuildCupStats();}if(run.round===5){record.runs++;record.best=Math.max(record.best,run.points);}persist();}let title=s.playerBoss?(won?'巨獣として生き残った！':'巨獣、討伐された。'):(won?'巨獣撃破！':'巨獣は残った。'),desc=s.playerBoss?(won?'包囲をしのいで'+roundLength()+'秒生存。あなたの勝利！':'全身分の足場を失い転落。大穴と集中攻撃に注意。'):(won?'全員で巨体を落としました。':'自分の武器で足元を割り、大穴へ押し出そう。守護霊は床を割りません。');panel('<div class="fresultgrid"><div><div class="feyebrow">'+(s.playerBoss?'YOU ARE THE GIANT':'COOPERATIVE GIANT RAID')+'</div><h2>'+title+'</h2><div class="fstats"><div>'+bossArea(s.boss)+'<small>全身のマス数</small></div><div>'+points+'<small>'+(s.playerBoss?'獲得点':'全員の獲得点')+'</small></div><div>'+run.points+'<small>カップ / 500</small></div></div><div class="frow"><button class="fgold" id="fnext">'+(run.round<5||run.difficulty==='normal'&&run.lastRoundWon?'強化を選ぶ':'新しいカップ')+'</button><button id="flobby">ロビー</button></div></div><div class="franking"><p class="fmuted">'+(s.playerBoss?'あなたを討伐する挑戦者':'今回の仲間 · 勝敗は全員共通')+'</p>'+s.actors.filter(a=>!a.spectator).map(a=>'<div class="frankrow"><b>'+names[a.id]+'</b><span>'+a.falls+'落下</span><span>'+Math.floor(a.score)+'点</span></div>').join('')+'</div></div>');$f('fsheet').classList.add('fresult');bindResults();pilotRecap('result',title,(s.playerBoss?'巨獣としての戦い': '巨獣討伐戦')+' · '+points+'点 · 累計'+run.points+'点',[],3.1);requestAnimationFrame(fitPanel);}
+function finishRaid(){guardianRoundComplete();s.finish=true;let won=s.playerBoss?s.outcome==='timeout':s.outcome==='clear',points=run.difficulty==='practice'?0:won?100:25;run.points+=points;run.history.push(s.playerBoss?(won?'巨獣生存':'巨獣転落'):(won?'討伐':'未討伐'));run.lastRoundWon=won;if(run.difficulty!=='practice'){if(won){record.crowns++;record.rankStreak=Math.min(999,(record.rankStreak||0)+1);record.goldChargeStreak=Math.min(100,(record.goldChargeStreak||0)+1);record.streakUp={...run.up};run.lastKeepNote='連勝中 · 強化は次戦へ継承';}else{record.rankStreak=0;record.goldChargeStreak=0;retainCardsAfterLoss(4);}if(run.round===5){record.runs++;record.best=Math.max(record.best,run.points);}persist();}let title=s.playerBoss?(won?'巨獣として生き残った！':'巨獣、討伐された。'):(won?'巨獣撃破！':'巨獣は残った。'),desc=s.playerBoss?(won?'包囲をしのいで'+roundLength()+'秒生存。あなたの勝利！':'全身分の足場を失い転落。大穴と集中攻撃に注意。'):(won?'全員で巨体を落としました。':'自分の武器で足元を割り、大穴へ押し出そう。守護霊は床を割りません。');panel('<div class="fresultgrid"><div><div class="feyebrow">'+(s.playerBoss?'YOU ARE THE GIANT':'COOPERATIVE GIANT RAID')+'</div><h2>'+title+'</h2><div class="fstats"><div>'+bossArea(s.boss)+'<small>全身のマス数</small></div><div>'+points+'<small>'+(s.playerBoss?'獲得点':'全員の獲得点')+'</small></div><div>'+run.points+'<small>カップ / 500</small></div></div><p class="fmuted">'+(run.lastKeepNote||'')+'</p><div class="frow"><button class="fgold" id="fnext">'+(run.round<5||run.difficulty==='normal'&&run.lastRoundWon?'強化を選ぶ':'新しいカップ')+'</button><button id="flobby">ロビー</button></div></div><div class="franking"><p class="fmuted">'+(s.playerBoss?'あなたを討伐する挑戦者':'今回の仲間 · 勝敗は全員共通')+'</p>'+s.actors.filter(a=>!a.spectator).map(a=>'<div class="frankrow"><b>'+names[a.id]+'</b><span>'+a.falls+'落下</span><span>'+Math.floor(a.score)+'点</span></div>').join('')+'</div></div>');$f('fsheet').classList.add('fresult');bindResults();pilotRecap('result',title,(s.playerBoss?'巨獣としての戦い': '巨獣討伐戦')+' · '+points+'点 · 累計'+run.points+'点',[],3.1);requestAnimationFrame(fitPanel);}
 function raidPushPoint(b){let pit=s.raidGoal||s.lands[0].pits?.[0]||[3,N/2],dx=pit[0]-b.x,dy=pit[1]-b.y,d=Math.hypot(dx,dy)||1;return [b.x-dx/d*(bossRadius(b)+2),b.y-dy/d*(bossRadius(b)+2)];}
 function crackBossFloor(b,a){let qs=footprint(b).filter(p=>p.q>=0&&s.layers[0][p.q].end>s.t+.7&&s.layers[0][p.q].group>=0).sort((p,q)=>Math.hypot(p.x+.5-a.x,p.y+.5-a.y)-Math.hypot(q.x+.5-a.x,q.y+.5-a.y)),left=b.size-2;for(let p of qs){let gr=s.lands[0].groups[s.layers[0][p.q].group];if(gr.hold>s.t)continue;gr.start=s.t;gr.end=s.t+.7;gr.owner=a.id;for(let q of gr.cells)Object.assign(s.layers[0][q],{start:s.t,end:gr.end,owner:a.id});if(--left<=0)break;}}
 function drawRaidGoal(){if(!s.raidGoal)return;let [x,y]=s.raidGoal;g.save();g.strokeStyle='#ffe09d';g.lineWidth=2;g.setLineDash([8,7]);g.strokeRect((x-2.5)*S,(y-2.5)*S,5*S,5*S);g.setLineDash([]);g.textAlign='center';g.fillStyle='#ffe7ad';g.font='bold 13px sans-serif';g.fillText('ここへ落とせ！',x*S,y*S);g.restore();}
@@ -6012,9 +6105,9 @@ function bossHud(){let b=s.boss;$f('fhud').textContent='第'+run.round+'/5戦 ·
 function drawBossPlayerHeader(x,w){let b=s.boss;rect(x+1,2,w-2,HEADER-7,'#412f3c');rect(x+3,5,4,HEADER-18,'#ffe090');g.textAlign='left';g.fillStyle='#ffe090';g.font='bold 10px sans-serif';g.fillText('YOU 巨獣',x+10,15);g.font='9px sans-serif';g.fillText(bossLabel(b)+' · ×'+multiplierText(b),x+10,29);if(HEADER>40){g.fillText('重撃 '+Math.round(bossPower(b)*BOSS_DAMAGE_SCALE)+'倍相当',x+10,44);g.fillText('残り '+Math.max(0,Math.ceil(roundLength()-s.t))+'秒',x+10,58);}}
 
 function close(){stopPilot();root?.classList.remove('fcinema');resizeObs?.disconnect();resizeObs=null;clearSteer();cancelAnimationFrame(raf);root.remove();root=null;s=null;keys={};showTitle();}
-function lobby(){stopPilot();s=null;setupBossControls();paused=false;$f('fpause').textContent='停止 · 長押し';$f('fweapon').textContent='';panel('<div class="feyebrow">FROSTFALL · ARCHIPELAGO</div><h2>落ちずに、奪え。</h2><p class="fmuted">４〜６人 · 全５戦　　撃破＋１ / 落下−１</p><div class="frow flobbyLaunch"><button class="fgold flobbyStart" id="fnormal"><span class="fstartIcon" aria-hidden="true">▶</span><span class="fstartText">対戦開始<small>氷界争奪戦へ</small></span><span class="fstartArrow" aria-hidden="true">›</span></button></div><div class="flobbyActions"><button id="fgcollection">✦ 永続強化 '+goldOwned.size+'/50</button><button id="fmatchSettings">試合時間</button><button id="fraid">巨獣討伐</button><button id="fbeast">巨獣になる</button><button id="fcatalog">操作・武器図鑑</button></div><div class="flobbyQuick">移動：スティック　ジャンプ：２度押し　攻撃：⚔</div><div class="flobbyRecord">最高 '+record.best+'pt　·　１位 '+record.crowns+'回　·　'+(miniGiantRecord?'ミニ巨獣 Lv'+(miniGiantRecord.survived+1):'守護霊 '+guardianRoster.length+'/3')+'</div>');$f('fsheet').classList.add('fready');$f('fsheet').querySelector('.fpanel')?.classList.add('flobbyCompact');bind('fnormal',()=>fbSceneSwitch(()=>start('normal')));bind('fraid',()=>fbSceneSwitch(()=>start('practice',true)));bind('fbeast',()=>fbSceneSwitch(()=>start('practice','boss')));bind('fcatalog',()=>fbSceneSwitch(()=>book(lobby)));bind('fgcollection',()=>fbSceneSwitch(()=>goldBook(lobby)));bind('fmatchSettings',()=>fbSceneSwitch(()=>showFloeSettings(lobby)));}
+function lobby(){stopPilot();s=null;setupBossControls();paused=false;$f('fpause').textContent='停止 · 長押し';$f('fweapon').textContent='';panel('<div class="feyebrow">FROSTFALL · ARCHIPELAGO</div><h2>落ちずに、奪え。</h2><p class="fmuted">４〜６人 · 全５戦　　撃破＋１ / 落下−１</p><div class="frow flobbyLaunch"><button class="fgold flobbyStart" id="fnormal"><span class="fstartIcon" aria-hidden="true">▶</span><span class="fstartText">対戦開始<small>氷界争奪戦へ</small></span><span class="fstartArrow" aria-hidden="true">›</span></button></div><div class="flobbyActions"><button id="fgcollection">✦ 永続強化 '+goldOwned.size+'/'+GOLD_CARDS.length+'</button><button id="fmatchSettings">試合時間</button><button id="fraid">巨獣討伐</button><button id="fbeast">巨獣になる</button><button id="fcatalog">操作・武器図鑑</button></div><div class="flobbyQuick">移動：スティック　ジャンプ：２度押し　攻撃：⚔</div><div class="flobbyRecord">最高 '+record.best+'pt　·　１位 '+record.crowns+'回　·　'+(miniGiantRecord?'ミニ巨獣 Lv'+(miniGiantRecord.survived+1):'守護霊 '+guardianRoster.length+'/3')+'</div>');$f('fsheet').classList.add('fready');$f('fsheet').querySelector('.fpanel')?.classList.add('flobbyCompact');bind('fnormal',()=>fbSceneSwitch(()=>start('normal')));bind('fraid',()=>fbSceneSwitch(()=>start('practice',true)));bind('fbeast',()=>fbSceneSwitch(()=>start('practice','boss')));bind('fcatalog',()=>fbSceneSwitch(()=>book(lobby)));bind('fgcollection',()=>fbSceneSwitch(()=>goldBook(lobby)));bind('fmatchSettings',()=>fbSceneSwitch(()=>showFloeSettings(lobby)));}
 function book(back,page=0){let pages=Math.ceil(catalog.length/4),body=page===0?'<div class="fbookgrid"><div><b>移動</b><small>スティック / WASD</small></div><div><b>ジャンプ</b><small>方向２度押し / 中央２度タップ / Space。長押しでガス飛行。</small></div><div><b>攻撃</b><small>⚔ / F。自動攻撃も切替可。拾った武器は残弾制。</small></div><div><b>勝負</b><small>撃破＋１、落下−１。黒晶は破壊で速度＋20％。２個で黒刃の標的外。</small></div></div>':'<div class="fbookgrid">'+catalog.slice((page-1)*4,page*4).map(w=>'<div><b>'+w.name+'</b><small>'+details[w.id]+'<br>威力 '+w.power+' · '+w.wait.toFixed(1)+'秒</small></div>').join('')+'</div>';panel('<div class="feyebrow">FROSTFALL · GUIDE</div><h2>'+ (page===0?'操作':'武器図鑑')+' <small>'+ (page+1)+' / '+(pages+1)+'</small></h2>'+body+'<div class="frow"><button id="fbookback">戻る</button><button id="fbookprev" '+(page===0?'disabled':'')+'>前へ</button><button id="fbooknext" '+(page===pages?'disabled':'')+'>次へ</button></div>');bind('fbookback',back);bind('fbookprev',()=>book(back,Math.max(0,page-1)));bind('fbooknext',()=>book(back,Math.min(pages,page+1)));}
-function start(difficulty,forceRaid=false){run={round:1,points:0,up:difficulty==='normal'&&record.rankStreak>0?{...record.streakUp}:{},difficulty,history:[],loadout:makeWeapon(),loadoutCharges:null,reserveWeapon:null,forceRaid,raidSeen:false,raidCount:0};newRound();}
+function start(difficulty,forceRaid=false){run={round:1,points:0,up:difficulty==='normal'?{...record.streakUp}:{},difficulty,history:[],loadout:makeWeapon(),loadoutCharges:null,reserveWeapon:null,forceRaid,raidSeen:false,raidCount:0};newRound();}
 
 function makeLand(){let cells=Array.from({length:N*N},()=>({end:0,start:0,owner:-1,group:-1})),groups=[],centers=[];let grid=N<28?3:4,spacing=(N-8)/(grid-1),shape=pick(['散島','環礁','入り江','双島']);
 function group(points,kind='island'){let qs=[...new Set(points.filter(p=>inside(...p)).map(p=>cell(...p)))].filter(q=>cells[q].group<0);if(!qs.length)return;let id=groups.length;groups.push({id,cells:qs,kind,hold:0,end:Infinity,start:0,owner:-1});qs.forEach(q=>cells[q]={end:Infinity,start:0,owner:-1,group:id});}
@@ -6028,7 +6121,7 @@ return {cells,groups,centers,shape,total:present.size};}
 function spawnPositions(){let pool=shuffled(s.lands[s.layer].centers),chosen=[];while(chosen.length<COUNT){let candidates=pool.filter(p=>!chosen.includes(p));let p=chosen.length?candidates.sort((a,b)=>Math.min(...chosen.map(q=>Math.hypot(b[0]-q[0],b[1]-q[1])))-Math.min(...chosen.map(q=>Math.hypot(a[0]-q[0],a[1]-q[1]))))[0]:candidates[0];chosen.push(p);}return shuffled(chosen).map(p=>[...p]);}
 function inward(a){let best=-1,dir=[0,-1];for(let d=0;d<16;d++){let dx=Math.cos(d*Math.PI/8),dy=Math.sin(d*Math.PI/8),value=0;for(let k=1;k<=5;k++)value+=solid(a.x+dx*k*.6,a.y+dy*k*.6,s.t+2)?1:0;if(value>best){best=value;dir=[dx,dy];}}a.dx=dir[0];a.dy=dir[1];a.dir=Math.atan2(a.dy,a.dx);}
 function newRound(){pilotPage='';pilotWait=0;pilotToken=null;pilotGold=false;syncPilotButton();rebuildCupStats();paused=false;let raid=!!(run.forceRaid||run.difficulty!=='practice'&&run.round>1&&(run.round===3&&!run.raidSeen||Math.random()<.45));if(raid){run.raidSeen=true;run.raidCount++;}N=raid?29:pick([25,29,33]);COUNT=4+Math.floor(Math.random()*3);s={t:0,duration:raid?matchTimes.raid:matchTimes.normal,count:raid?5:3,raid,playerBoss:!!(raid&&(run.forceRaid==='boss'||!run.forceRaid&&Math.random()<.35)),boss:null,shadow:null,shadowSpawned:false,shadowFX:[],blackCrystals:[],whiteCrystal:null,whiteKnight:null,whiteFX:[],whiteTeleFX:[],crystalFX:[],layer:0,lands:[],layers:[],actors:[],casts:[],loot:[],fx:[],shotFX:[],homingMissiles:[],summons:[],hitNotice:null,supplies:[],nextSupply:5,nextLoot:5,hudAt:0,seq:0,message:'',msgUntil:0,finish:false};for(let l=0;l<1;l++){let land=raid?makeRaidLand():makeLand();s.lands.push(land);s.layers.push(land.cells);}let roles=shuffled(traits),levels=shuffled(run.difficulty==='normal'?[1,2,3,4,5]:[1,1,2,2,3]),positions=spawnPositions();
-for(let i=0;i<COUNT;i++){let [x,y]=positions[i],a={id:i,x,y,vx:0,vy:0,dx:0,dy:-1,kx:0,ky:0,dir:0,alive:true,respawn:0,level:i?levels[i-1]:3,trait:roles[i],air:0,cool:0,gun:0,weapon:i?makeWeapon():{...run.loadout},weaponCharges:i?null:(run.loadoutCharges??null),reserveWeapon:i?null:(run.reserveWeapon?{...run.reserveWeapon}:null),think:0,trail:[],score:0,falls:0,kos:0,cuts:0,pickups:0,lastHit:null,inv:3,float:0,queued:false,slow:0,mark:0,powerBuff:0,holeWard:0,shield:2*lv({id:i},'shield'),land:0,pickLock:0,teeter:null,edgeLock:0,jumpBuffer:0,hitCount:0,toss:0,jumps:0,saves:0,gasFuel:0,gasMax:3.4,gasToggle:false,gasHold:false,autoGas:false,recentKnockUntil:0,doubleCharges:0,doubleUnlocked:false,blackCrystalCount:0,crystalSpeedBoost:0,guardMeter:GUARD_MAX,guardActive:false,guardStart:-100,guardRegenAt:0,guardAINext:1.0,guardBreakUntil:0};s.actors.push(a);reserve([x,y],4.5);inward(a);}
+for(let i=0;i<COUNT;i++){let [x,y]=positions[i],a={id:i,x,y,vx:0,vy:0,dx:0,dy:-1,kx:0,ky:0,dir:0,alive:true,respawn:0,level:i?levels[i-1]:3,trait:roles[i],air:0,cool:0,gun:0,weapon:i?makeWeapon():{...run.loadout},weaponCharges:i?null:(run.loadoutCharges??null),reserveWeapon:i?null:(run.reserveWeapon?{...run.reserveWeapon}:null),think:0,trail:[],score:0,falls:0,kos:0,cuts:0,pickups:0,lastHit:null,inv:3,float:0,queued:false,slow:0,mark:0,powerBuff:0,holeWard:0,shield:2*lv({id:i},'shield'),land:0,pickLock:0,teeter:null,edgeLock:0,jumpBuffer:0,hitCount:0,toss:0,jumps:0,saves:0,gasFuel:0,gasMax:3.4,gasToggle:false,gasHold:false,autoGas:false,recentKnockUntil:0,doubleCharges:0,doubleUnlocked:false,blackCrystalCount:0,crystalSpeedBoost:0,guardMeter:guardCapacity({id:i}),guardActive:false,guardStart:-100,guardRegenAt:0,guardAINext:1.0,guardBreakUntil:0};s.actors.push(a);reserve([x,y],4.5);inward(a);}
 s.life=run.difficulty==='normal'?3.2:4.2;if(raid){s.boss=createBoss();if(s.playerBoss){Object.assign(s.boss,{controlled:true,cool:0,stride:0,queued:false,aimX:0,aimY:1,shield:2*lv(s.actors[0],'shield')});Object.assign(s.actors[0],{alive:false,spectator:true,respawn:Infinity});}s.raidGoal=pick(s.lands[0].pits);reserve([s.boss.x,s.boss.y],2.4);}initialLoot();for(let a of s.actors)if(!a.spectator){if(a.id===0&&miniGiantRecord&&(!raid||!miniGiantRecord.pendingReturn))summonMiniGiant(a,miniGiantRecord);if(a.id===0&&!miniGiantRecord)for(let saved of guardianRoster.slice(0,3))if(!raid||!saved.pendingReturn)summon(a,true,saved);if(!s.summons.some(v=>v.alive&&v.owner===a.id)&&!(a.id===0&&miniGiantRecord))summon(a,true);if(!s.summons.some(v=>v.alive&&v.owner===a.id&&v.miniBoss)&&lv(a,'bond')&&s.summons.filter(v=>v.alive&&v.owner===a.id).length<2)summon(a,true);}placeBlackCrystals();placeWhiteCrystal();setupBossControls();screen='play';camera.ready=false;clearSteer();root.classList.remove('fmenu');$f('fsheet').style.display='none';$f('fpause').textContent='停止 · 長押し';keys={};brake=false;updateHud();}
 function reserve(point,until){let ids=new Set();for(let dy=-2;dy<=2;dy++)for(let dx=-2;dx<=2;dx++){let t=tile(point[0]+dx,point[1]+dy);if(t?.group>=0&&t.end>s.t)ids.add(t.group);}for(let id of ids){let gr=s.lands[s.layer].groups[id];gr.hold=Math.max(gr.hold,until);if(gr.end<until)gr.end=until+.8;for(let q of gr.cells)s.layers[s.layer][q].end=gr.end;}}
 function restoreGroup(gr,hold=3){gr.end=Infinity;gr.start=0;gr.owner=-1;gr.weaponCrack=false;gr.crackLastHit=-1e5;gr.hold=s.t+hold;for(let q of gr.cells)Object.assign(s.layers[s.layer][q],{end:Infinity,start:0,owner:-1});}
@@ -6123,7 +6216,7 @@ function hasUnlimitedDouble(a){return !!a&&(a.doubleUnlocked||lv(a,'double')>0);
 function canDouble(a){return (a.air>0||a.toss>0)&&(a.jumps||0)<2&&hasUnlimitedDouble(a);}
 function activeGas(a){return !!(a&&(a.gasFuel||0)>.005&&(a.gasToggle||a.gasHold||a.autoGas)&&(a.air>0||a.toss>0));}
 function toggleGas(){let a=s?.actors?.[0];if(!a||!a.alive||s.playerBoss||screen!=='play')return;if((a.gasFuel||0)<=0){say('ガスボンベを拾うと飛べます');return;}a.gasToggle=!a.gasToggle;if(a.gasToggle&&(a.air||0)<=0){a.gasToggle=false;say('ジャンプしてからガス飛行をONにしてください');return;}say(a.gasToggle?'ガス噴射 ON · 方向転換可能':'ガス噴射 OFF');updateHud();}
-function jump(a){if(!s||screen!=='play'||s.count>0||!a?.alive)return false;let airborne=a.air>0||a.toss>0,second=airborne&&canDouble(a);if(airborne&&!second||!airborne&&a.cool>0)return false;if(a.teeter){a.x=a.teeter.x;a.y=a.teeter.y;a.teeter=null;a.edgeLock=s.t+2;}a.jumpBuffer=0;a.jumpAt=s.t;a.jumps=second?2:1;a.toss=0;let dx=a.dx,dy=a.dy;if(Math.hypot(dx,dy)<.1){dx=a.aimX??0;dy=a.aimY??-1;}let n=Math.hypot(dx,dy)||1;a.airDx=dx/n;a.airDy=dy/n;a.air=(second?.7:.86)+.18*lv(a,'air');a.airTotal=a.air;a.cool=Math.max(.8,2.2-.5*lv(a,'hop'));let speed=3.15*(1+.12*lv(a,'boost'));a.vx=a.airDx*speed;a.vy=a.airDy*speed;if(a.id===0)fbSfx('jump');if(second){s.fx.push({x:a.x,y:a.y,at:s.t,victim:a.id,dx:0,dy:-1,until:s.t+.65,color:'#a5eaff',label:'AIR JUMP'});if(a.id===0)say('２段ジャンプ！');}return true;}
+function jump(a){if(!s||screen!=='play'||s.count>0||!a?.alive)return false;let airborne=a.air>0||a.toss>0,second=airborne&&canDouble(a);if(airborne&&!second||!airborne&&a.cool>0)return false;if(a.teeter){a.x=a.teeter.x;a.y=a.teeter.y;a.teeter=null;a.edgeLock=s.t+2;}a.jumpBuffer=0;a.jumpAt=s.t;a.jumps=second?2:1;a.toss=0;let dx=a.dx,dy=a.dy;if(Math.hypot(dx,dy)<.1){dx=a.aimX??0;dy=a.aimY??-1;}let n=Math.hypot(dx,dy)||1;a.airDx=dx/n;a.airDy=dy/n;a.air=(second?.7:.86)+.18*lv(a,'air')+(second?.14*lv(a,'double'):0);a.airTotal=a.air;a.cool=Math.max(.8,2.2-.5*lv(a,'hop'));let speed=3.15*(1+.12*lv(a,'boost'));a.vx=a.airDx*speed;a.vy=a.airDy*speed;if(a.id===0)fbSfx('jump');if(second){s.fx.push({x:a.x,y:a.y,at:s.t,victim:a.id,dx:0,dy:-1,until:s.t+.65,color:'#a5eaff',label:'AIR JUMP'});if(a.id===0)say('２段ジャンプ！');}return true;}
 function useGasInAir(a,dt){if(a.air<=0&&a.toss<=0){a.gasToggle=false;a.autoGas=false;a.aiGasLanding=null;a.aiLanding=null;return;}if(!activeGas(a))return;const efficiency=Math.max(.4,1-.2*lv(a,'gasSaver')),steer=lv(a,'gasSeek')?10:7;a.gasFuel=Math.max(0,a.gasFuel-dt*efficiency);a.air=Math.max(a.air,.14);a.airTotal=Math.max(a.airTotal,.86);a.toss=0;let [x,y]=a.id===0&&pilot?[a.dx,a.dy]:[a.dx,a.dy];let n=Math.hypot(x,y);if(n>.12){a.airDx+=(x/n-a.airDx)*Math.min(1,dt*steer);a.airDy+=(y/n-a.airDy)*Math.min(1,dt*steer);let nn=Math.hypot(a.airDx,a.airDy)||1;a.airDx/=nn;a.airDy/=nn;a.dx=a.airDx;a.dy=a.airDy;}if(a.gasFuel<=0){a.gasToggle=false;a.gasHold=false;a.autoGas=false;if(a.id===0)say('ガス欠！ 床の上へ着地できなければ落下！');}}
 function directionTap(dir,source='key'){if(!s||screen!=='play'||s.playerBoss||paused||s.count>0)return;let a=s.actors[0];if(!a?.alive)return;const now=performance.now(),last=directionTap.last;if(last&&last.dir===dir&&last.source===source&&now-last.at<340&&now-last.at>50){let v={up:[0,-1],down:[0,1],left:[-1,0],right:[1,0]}[dir];if(v){a.dx=v[0];a.dy=v[1];a.aimX=v[0];a.aimY=v[1];if(jump(a)){directionTap.hold={dir,source,at:now};}else if(a.cool<.32&&!a.air){a.jumpBuffer=.35+.2*lv(a,'airRescue');}updateHud();}directionTap.last=null;}else directionTap.last={dir,source,at:now};}
 function gasHoldTick(a,dt){let h=directionTap.hold;if(!h||!a)return;let held=h.source==='key'?!!keys[h.dir]:movePointer!==null&&moveSurface==='joy';if(!held){a.gasHold=false;directionTap.hold=null;return;}if(performance.now()-h.at>=160&&a.air>0&&(a.gasFuel||0)>0)a.gasHold=true;}
@@ -6538,7 +6631,7 @@ function placeWhiteCrystal(){
  s.whiteCrystal=pick(possible)||null;
 }
 function nearbyWhiteCrystal(a,maxDistance=5.2){
- if(!a||a.boss||!s?.whiteCrystal||!crystalVisibleTo(a,s.whiteCrystal,Math.min(maxDistance,WHITE_CRYSTAL_SIGHT)))return null;
+ if(!a||a.boss||!s?.whiteCrystal||!crystalVisibleTo(a,s.whiteCrystal,Math.min(maxDistance,WHITE_CRYSTAL_SIGHT+.7*lv(a,'crystalRadar'))))return null;
  return crystalTargetObject(s.whiteCrystal);
 }
 function whiteSummon(owner,g){
@@ -6561,12 +6654,19 @@ function crystalAttackOwner(c,p){
  const owner=entity(c.owner);
  return owner?.alive&&!owner.boss&&!owner.shadow&&!owner.white&&!owner.spectator&&Number.isInteger(owner.id)?owner:null;
 }
+function crystalPerkReward(owner){
+ const lvl=lv(owner,'crystalPulse');if(!lvl||!owner?.alive)return;
+ const gain=1.2*lvl;
+ owner.lastFire=(owner.lastFire??-100)-gain;
+ owner.gun=Math.max(0,(owner.gun||0)-gain);
+ if(owner.id===0)say('砕晶の連携 · 装填短縮');
+}
 function smashWhiteCrystal(c,p){
  const gem=s?.whiteCrystal;
  if(!gem||gem.broken||!p?.cells?.has(gem.q))return;
  const owner=crystalAttackOwner(c,p);
  if(!owner)return;
- gem.broken=true;gem.brokenBy=owner.id;gem.brokenAt=s.t;
+ gem.broken=true;gem.brokenBy=owner.id;gem.brokenAt=s.t;crystalPerkReward(owner);
  for(const a of s.actors)if(a.crystalLockQ===gem.q){a.crystalLockQ=null;a.lockId=null;}
  (s.crystalFX??=[]).push({x:gem.x,y:gem.y,at:s.t,until:s.t+1,white:true});
  whiteSummon(owner,gem);
@@ -6723,13 +6823,13 @@ function maybeHitWhiteKnight(c,p){
 }
 
 const BLACK_CRYSTAL_SIGHT=3.25;
-function crystalVisibleTo(actor,gem,range=BLACK_CRYSTAL_SIGHT){
+function crystalVisibleTo(actor,gem,range=BLACK_CRYSTAL_SIGHT+.7*lv(actor,'crystalRadar')){
  return !!(actor?.alive&&!actor.spectator&&gem&&!gem.broken&&inside(gem.x,gem.y)&&solid(gem.x,gem.y,s.t+.05)&&Math.hypot(gem.x-actor.x,gem.y-actor.y)<=range);
 }
 function crystalTargetObject(gem){return gem&&{id:'crystal:'+gem.q,crystal:true,white:!!gem.white,q:gem.q,x:gem.x,y:gem.y,alive:!gem.broken,inv:0,float:0,guard:false};}
 function nearbyBlackCrystal(a,maxDistance=5.2){
  if(!a||a.boss||!s?.blackCrystals)return null;
- const gems=s.blackCrystals.filter(v=>crystalVisibleTo(a,v,Math.min(maxDistance,BLACK_CRYSTAL_SIGHT)));
+ const gems=s.blackCrystals.filter(v=>crystalVisibleTo(a,v,Math.min(maxDistance,BLACK_CRYSTAL_SIGHT+.7*lv(a,'crystalRadar'))));
  if(!gems.length)return null;
  gems.sort((b,c)=>Math.hypot(b.x-a.x,b.y-a.y)-Math.hypot(c.x-a.x,c.y-a.y));
  const locked=gems.find(v=>v.q===a.crystalLockQ);
@@ -6771,7 +6871,7 @@ function smashBlackCrystals(c,p){
  if(!shooter)return;
  for(const gem of s.blackCrystals){
   if(gem.broken||!p.cells.has(gem.q))continue;
-  gem.broken=true;gem.brokenAt=s.t;gem.brokenBy=shooter.id;
+  gem.broken=true;gem.brokenAt=s.t;gem.brokenBy=shooter.id;crystalPerkReward(shooter);
   shooter.blackCrystalCount=Math.min(5,(shooter.blackCrystalCount||0)+1);
   shooter.crystalSpeedBoost=.20*shooter.blackCrystalCount;
   for(const actor of s.actors)if(actor.crystalLockQ===gem.q){actor.crystalLockQ=null;actor.lockId=null;}
@@ -7299,8 +7399,8 @@ a.trail.push([a.x,a.y]);if(a.trail.length>24)a.trail.shift();if(a.pickLock<=0&&a
 if(a.id===0&&a.queued&&a.float<=0)fire(a);else if(a.id===0&&auto&&a.gun<=0&&a.float<=0){if((a.autoAt||0)<=s.t){a.autoAt=s.t+.2;let plan=autoPlan(a);if(plan)fire(a,plan);}}}
 tickShadow(dt);tickWhiteKnight(dt);tickSummons(dt);tickBoss(dt);if(screen==='ending')return;tickBossMissiles(dt);tickHomingMissiles(dt);tickCombat(dt);s.loot=s.loot.filter(b=>b.until>s.t&&(b.fixed||solid(b.x,b.y)));if(!trialReturn&&s.t>s.nextLoot){s.nextLoot=s.t+2.4;spawnLoot();}if(s.t>s.hudAt){s.hudAt=s.t+.1;updateHud();syncGuardButton();}}
 function persist(){try{localStorage.setItem('frostbound.floe.v5',JSON.stringify(record));}catch(e){saveOK=false;}}
-function battleScore(a){return (a.kos||0)+(a.cuts||0)-(a.falls||0);}
-function finish(){if(s.finish)return;if(s.raid){finishRaid();return;}guardianRoundComplete();s.finish=true;let ranked=[...s.actors].sort((a,b)=>battleScore(b)-battleScore(a)||((b.kos+b.cuts)-(a.kos+a.cuts))||a.falls-b.falls||b.score-a.score||a.id-b.id),rank=ranked.findIndex(a=>a.id===0)+1,points=run.difficulty==='practice'?0:[0,100,65,45,30,20,10][rank];run.points+=points;run.history.push(rank);run.lastRoundWon=rank===1;if(run.difficulty!=='practice'){if(rank===1){record.crowns++;record.rankStreak=Math.min(999,(record.rankStreak||0)+1);record.goldChargeStreak=Math.min(100,(record.goldChargeStreak||0)+1);record.streakUp={...run.up};}else{record.rankStreak=0;record.goldChargeStreak=0;record.streakUp={};run.up={};rebuildCupStats();}if(run.round===5){record.runs++;record.best=Math.max(record.best,run.points);}persist();}let a=s.actors[0];panel('<div class="fresultgrid"><div><div class="feyebrow">ROUND '+run.round+' / 5 COMPLETE</div><h2>'+rank+'位 · '+(rank===1?'乱戦を制した。':'次の群島へ。')+'</h2><div class="fstats"><div>'+a.falls+'<small>落下回数</small></div><div>'+a.kos+'<small>武器で落とした数</small></div><div>'+run.points+'<small>カップ / 500</small></div></div><p class="fmuted">順位 '+run.history.join(' → ')+'　·　足場撃破 '+a.cuts+'</p><div class="frow"><button class="fgold" id="fnext">'+(run.round<5||run.difficulty==='normal'&&run.lastRoundWon?'強化を選ぶ':'新しいカップ')+'</button><button id="flobby">ロビー</button></div></div><div class="franking"><div class="frankrow fmuted"><span>順位 / 名前</span><span>撃破</span><span>評価</span></div>'+ranked.map((b,i)=>'<div class="frankrow '+(b.id===0?'fyou':'')+'"><b>'+(i+1)+' '+names[b.id]+'</b><span>'+(b.kos+b.cuts)+'</span><span>'+battleScore(b)+'</span></div>').join('')+'</div></div>'+(!saveOK?'<small>この環境では記録を保存できません。</small>':''));$f('fsheet').classList.add('fresult');bindResults();pilotRecap('result',rank+'位 / '+COUNT+'人','撃破 '+(a.kos+a.cuts)+' · 落下 '+a.falls+' · 累計 '+run.points+'pt',[],3.1);requestAnimationFrame(fitPanel);}
+function battleScore(a){return (a.kos||0)+(a.cuts||0)*(1+.12*Math.min(3,lv(a,'cut')))-(a.falls||0);}
+function finish(){if(s.finish)return;if(s.raid){finishRaid();return;}guardianRoundComplete();s.finish=true;let ranked=[...s.actors].sort((a,b)=>battleScore(b)-battleScore(a)||((b.kos+b.cuts)-(a.kos+a.cuts))||a.falls-b.falls||b.score-a.score||a.id-b.id),rank=ranked.findIndex(a=>a.id===0)+1,points=run.difficulty==='practice'?0:[0,100,65,45,30,20,10][rank];run.points+=points;run.history.push(rank);run.lastRoundWon=rank===1;if(run.difficulty!=='practice'){if(rank===1){record.crowns++;record.rankStreak=Math.min(999,(record.rankStreak||0)+1);record.goldChargeStreak=Math.min(100,(record.goldChargeStreak||0)+1);record.streakUp={...run.up};run.lastKeepNote='連勝中 · 強化は次戦へ継承';}else{record.rankStreak=0;record.goldChargeStreak=0;retainCardsAfterLoss(rank);}if(run.round===5){record.runs++;record.best=Math.max(record.best,run.points);}persist();}let a=s.actors[0];panel('<div class="fresultgrid"><div><div class="feyebrow">ROUND '+run.round+' / 5 COMPLETE</div><h2>'+rank+'位 · '+(rank===1?'乱戦を制した。':'次の群島へ。')+'</h2><div class="fstats"><div>'+a.falls+'<small>落下回数</small></div><div>'+a.kos+'<small>武器で落とした数</small></div><div>'+run.points+'<small>カップ / 500</small></div></div><p class="fmuted">順位 '+run.history.join(' → ')+'　·　足場撃破 '+a.cuts+'</p><p class="fmuted">'+(run.lastKeepNote||'')+'</p><div class="frow"><button class="fgold" id="fnext">'+(run.round<5||run.difficulty==='normal'&&run.lastRoundWon?'強化を選ぶ':'新しいカップ')+'</button><button id="flobby">ロビー</button></div></div><div class="franking"><div class="frankrow fmuted"><span>順位 / 名前</span><span>撃破</span><span>評価</span></div>'+ranked.map((b,i)=>'<div class="frankrow '+(b.id===0?'fyou':'')+'"><b>'+(i+1)+' '+names[b.id]+'</b><span>'+(b.kos+b.cuts)+'</span><span>'+battleScore(b)+'</span></div>').join('')+'</div></div>'+(!saveOK?'<small>この環境では記録を保存できません。</small>':''));$f('fsheet').classList.add('fresult');bindResults();pilotRecap('result',rank+'位 / '+COUNT+'人','撃破 '+(a.kos+a.cuts)+' · 落下 '+a.falls+' · 累計 '+run.points+'pt',[],3.1);requestAnimationFrame(fitPanel);}
 function bindResults(){pilotPage='results';bind('fnext',()=>fbSceneSwitch(()=>run.round<5||run.difficulty==='normal'&&run.lastRoundWon?cards():start(run.difficulty,run.forceRaid)));bind('flobby',()=>fbSceneSwitch(lobby));}
 let trialReturn=null;
 function startTrial(){
